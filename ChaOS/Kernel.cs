@@ -16,7 +16,7 @@ namespace ChaOS
             Console.WriteLine("Boot successful...\n\n");
             Console.WriteLine("Welcome to...");
             Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-            Console.WriteLine("Private beta 1.3");
+            Console.WriteLine("Private beta 1.4");
             //var available_space = VFSManager.GetAvailableFreeSpace(@"0:\");
             //Console.WriteLine("Available Storage: " + available_space);
             Console.WriteLine("\nType \"help\" to get started!\n\n");
@@ -45,7 +45,10 @@ namespace ChaOS
                     Console.WriteLine(" help - Shows all functions.");
                     Console.WriteLine(" username - Allows you to use usernames, use the info command for more info.");
                     Console.WriteLine(" info function-here - Shows more detail about commands.");
-                    Console.WriteLine(" credits - Shows all of the wonderful people that make ChaOS work.\n");
+                    Console.WriteLine(" credits - Shows all of the wonderful people that make ChaOS work.");
+                    Console.WriteLine(" clear - Clears the screen.");
+                    //
+                    Console.WriteLine("");
                 }
             }
 
@@ -113,6 +116,11 @@ namespace ChaOS
                 {
                     Console.WriteLine("\nCredits:\nekeleze - Owner\nMrDumbrava - Contributor\n");
                 }
+            }
+
+            if (input.Contains("clear"))
+            {
+                Console.Clear();
             }
         }
     }
