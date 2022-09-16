@@ -15,7 +15,9 @@ namespace ChaOS
             Console.Clear();
             Console.WriteLine("Boot successful...\n\n");
             Console.WriteLine("Welcome to...");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Private beta 1.4");
             //var available_space = VFSManager.GetAvailableFreeSpace(@"0:\");
             //Console.WriteLine("Available Storage: " + available_space);
@@ -26,12 +28,12 @@ namespace ChaOS
         {
             //Sys.FileSystem.CosmosVFS fs = new Sys.FileSystem.CosmosVFS();
             //Sys.FileSystem.VFS.VFSManager.RegisterVFS(fs);
-            
+
             string syspath = @"0:\system";
             string usrfile = "usrnam.txt";
 
             StringComparison comp = StringComparison.OrdinalIgnoreCase;
-            
+
 
             Console.Write(usr);
             Console.Write(" > ");
@@ -39,7 +41,7 @@ namespace ChaOS
 
             if (input.Contains("help", comp))
             {
-                if (!input.Contains("info"))
+                if (!input.Contains("info", comp))
                 {
                     Console.WriteLine("\nFunctions:");
                     Console.WriteLine(" help - Shows all functions.");
@@ -47,6 +49,7 @@ namespace ChaOS
                     Console.WriteLine(" info function-here - Shows more detail about commands.");
                     Console.WriteLine(" credits - Shows all of the wonderful people that make ChaOS work.");
                     Console.WriteLine(" clear - Clears the screen.");
+                    Console.WriteLine(" color - Changes text color, do 'color list' to list all colors.");
                     //
                     Console.WriteLine("");
                 }
@@ -54,9 +57,9 @@ namespace ChaOS
 
             if (input.Contains("username", comp))
             {
-                if (!input.Contains("info"))
+                if (!input.Contains("info", comp))
                 {
-                    if (input.Contains("current"))
+                    if (input.Contains("current", comp))
                     {
                         Console.Write("\nCurrent username: ");
                         Console.Write(usr);
@@ -65,7 +68,7 @@ namespace ChaOS
 
                     else
                     {
-                        if (input.Contains("change"))
+                        if (input.Contains("change", comp))
                         {
                             var text = input;
                             var start = text.IndexOf("\"") + 1;//add one to not include quote
@@ -81,20 +84,20 @@ namespace ChaOS
                 }
             }
 
-            if (input.Contains("info"))
+            if (input.Contains("info", comp))
             {
-                if (input.Contains("help"))
+                if (input.Contains("help", comp))
                 {
                     Console.WriteLine("\nFunction: help\nShows all functions.\n");
                 }
 
-                if (input.Contains("username"))
+                if (input.Contains("username", comp))
                 {
                     Console.WriteLine("\nFunction: username\nSubFunctions: current, change");
                     Console.WriteLine("Allows you to change, or view the current username by using the SubFunctions.\n");
                 }
-                
-                if (input.Contains("info info"))
+
+                if (input.Contains("info info", comp))
                 {
                     Console.WriteLine("\nFunction: info\nGives info on functions.\n");
                 }
@@ -104,7 +107,7 @@ namespace ChaOS
                     Console.WriteLine("\nPlease specify the function at the end of the \"info\" command.\n");
                 }
 
-                if (input.Contains("credits"))
+                if (input.Contains("credits", comp))
                 {
                     Console.WriteLine("\nFunction: credits\nShows all of the wonderful people that make ChaOS work.\n");
                 }
@@ -118,9 +121,144 @@ namespace ChaOS
                 }
             }
 
-            if (input.Contains("clear"))
+            if (input.Contains("clear", comp))
             {
                 Console.Clear();
+            }
+            if (input.Contains("color", comp))
+            {
+                if (input.Contains("list", comp)) //Black
+                {
+                    Console.WriteLine("\nColor list\n black - Black with white background.\n");
+                }
+
+                if (input.Contains("black", comp)) //Black
+                {
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.Clear();
+                }
+
+                if (input.Contains("dark_blue", comp)) //Dark blue
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Clear();
+                }
+
+                if (input.Contains("dark_green", comp)) //Dark green
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Clear();
+                }
+
+                if (input.Contains("dark_cyan", comp)) //Dark cyan
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Clear();
+                }
+
+                if (input.Contains("dark_gray", comp)) //Dark gray
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Clear();
+
+                    if (input.Contains("black", comp)) //06
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Clear();
+                    }
+
+                    if (input.Contains("black", comp)) //07
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Clear();
+                    }
+
+                    if (input.Contains("black", comp)) //08
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Clear();
+                    }
+
+                    if (input.Contains("black", comp)) //09
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Clear();
+                    }
+
+                    if (input.Contains("black", comp)) //10
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Clear();
+                    }
+
+                    if (input.Contains("black", comp)) //11
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Clear();
+                    }
+
+                    if (input.Contains("black", comp)) //12
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Clear();
+                    }
+
+                    if (input.Contains("black", comp)) //13
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Clear();
+                    }
+
+                    if (input.Contains("black", comp)) //14
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Clear();
+                    }
+
+                    if (input.Contains("black", comp)) //15
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Clear();
+                    }
+
+                    if (input.Contains("black", comp)) //16
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Clear();
+                    }
+                }
+            }
+
+            if (input.Contains("i like goos", comp))
+            {
+                var OldColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("\nFuck you, ChaOS is 10 times better.\n");
+                Console.ForegroundColor = OldColor;
+            }
+
+            if (input.Contains("color goos", comp))
+            {
+                var OldColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nLet's color GoOS red, shall we?\n");
+                Console.ForegroundColor = OldColor;
             }
         }
     }
