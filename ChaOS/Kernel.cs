@@ -16,7 +16,7 @@ namespace ChaOS
             Console.WriteLine("Boot successful...\n\n");
             Console.WriteLine("Welcome to...");
             Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-            Console.WriteLine("Public beta 1.2");
+            Console.WriteLine("Private beta 1.3");
             //var available_space = VFSManager.GetAvailableFreeSpace(@"0:\");
             //Console.WriteLine("Available Storage: " + available_space);
             Console.WriteLine("\nType \"help\" to get started!\n\n");
@@ -43,8 +43,9 @@ namespace ChaOS
                 {
                     Console.WriteLine("\nFunctions:");
                     Console.WriteLine(" help - Shows all functions.");
-                    Console.WriteLine(" username - Allows you to do stuff related to usernames, use the info command for more info.");
-                    Console.WriteLine(" info function-here - Shows more detail about commands.\n");
+                    Console.WriteLine(" username - Allows you to use usernames, use the info command for more info.");
+                    Console.WriteLine(" info function-here - Shows more detail about commands.");
+                    Console.WriteLine(" credits - Shows all of the wonderful people that make ChaOS work.\n");
                 }
             }
 
@@ -99,7 +100,20 @@ namespace ChaOS
                 {
                     Console.WriteLine("\nPlease specify the function at the end of the \"info\" command.\n");
                 }
-            } 
+
+                if (input.Contains("credits"))
+                {
+                    Console.WriteLine("\nFunction: credits\nShows all of the wonderful people that make ChaOS work.\n");
+                }
+            }
+
+            if (input.Contains("credits"))
+            {
+                if (!input.Contains("info"))
+                {
+                    Console.WriteLine("\nCredits:\nekeleze - Owner\nMrDumbrava - Contributor\n");
+                }
+            }
         }
     }
 }

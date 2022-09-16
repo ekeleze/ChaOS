@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "J71zj4LnI7YcSHPTE3Wukj0Y7mJjs6N3ILbq7xBmaV0WjlvT44xDot4ym1XtI0bJIv1Oq8dpQbN+cntgKNJ3WQ==",
+  "dgSpecHash": "/mvNQ+o9ByqGTk/vpuD3Kqb3+JGqNptFiv6M51xTbb1EWMx8VMWgR/qROnzVTuaVzJ7d8rHZKzi0RPso5ugqdA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ekeleze\\source\\repos\\ChaOS\\ChaOS\\ChaOS.csproj",
+  "projectFilePath": "C:\\Users\\ekeleze\\Documents\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ekeleze\\.nuget\\packages\\cosmos.build\\0.1.0-localbuild20220914030949\\cosmos.build.0.1.0-localbuild20220914030949.nupkg.sha512",
     "C:\\Users\\ekeleze\\.nuget\\packages\\cosmos.common\\0.1.0-localbuild20220914031004\\cosmos.common.0.1.0-localbuild20220914031004.nupkg.sha512",

@@ -10,3 +10,15 @@ C:\Users\ekeleze\source\repos\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.dll
 C:\Users\ekeleze\source\repos\ChaOS\ChaOS\obj\Debug\net6.0\refint\ChaOS.dll
 C:\Users\ekeleze\source\repos\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.pdb
 C:\Users\ekeleze\source\repos\ChaOS\ChaOS\obj\Debug\net6.0\ref\ChaOS.dll
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\bin\Debug\net6.0\ChaOS.deps.json
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\bin\Debug\net6.0\ChaOS.dll
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\bin\Debug\net6.0\ChaOS.pdb
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.csproj.AssemblyReference.cache
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.AssemblyInfoInputs.cache
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.AssemblyInfo.cs
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.csproj.CoreCompileInputs.cache
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.dll
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\refint\ChaOS.dll
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.pdb
+C:\Users\ekeleze\Documents\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ref\ChaOS.dll

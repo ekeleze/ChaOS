@@ -536,11 +536,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ekeleze\\source\\repos\\ChaOS\\ChaOS\\ChaOS.csproj",
+      "projectUniqueName": "C:\\Users\\ekeleze\\Documents\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj",
       "projectName": "ChaOS",
-      "projectPath": "C:\\Users\\ekeleze\\source\\repos\\ChaOS\\ChaOS\\ChaOS.csproj",
+      "projectPath": "C:\\Users\\ekeleze\\Documents\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj",
       "packagesPath": "C:\\Users\\ekeleze\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ekeleze\\source\\repos\\ChaOS\\ChaOS\\obj\\",
+      "outputPath": "C:\\Users\\ekeleze\\Documents\\GitHub\\ChaOS\\ChaOS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
