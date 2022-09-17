@@ -9,19 +9,21 @@ namespace ChaOS
     public class Kernel : Sys.Kernel
     {
         string usr = "usr";
+        string ver = "Beta 1.7";
 
         protected override void BeforeRun()
         {
             Console.Clear();
-            Console.WriteLine("Boot successful...\n\n");
-            Console.WriteLine("Welcome to...");
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Boot successful...\n");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Private beta 1.6");
+            Console.WriteLine("\n" + ver);
+            Console.WriteLine("Copyright 2022 (c) Kastle Grounds");
+
             //var available_space = VFSManager.GetAvailableFreeSpace(@"0:\");
             //Console.WriteLine("Available Storage: " + available_space);
-            Console.WriteLine("\nType \"help\" to get started!\n\n");
+            Console.WriteLine("\nType \"help\" to get started!\n");
         }
 
         protected override void Run()
@@ -124,7 +126,7 @@ namespace ChaOS
                 Console.Clear();
             }
 
-            #region color
+            #region color functions
             if (input.Contains("color"))
             {
                 if (input.Contains("list"))
@@ -137,6 +139,9 @@ namespace ChaOS
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.BackgroundColor = ConsoleColor.White;
                     Console.Clear();
+                    Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                    Console.WriteLine("\n" + ver);
+                    Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
                 }
 
                 if (input.Contains("dark blue")) //Dark blue
@@ -144,6 +149,9 @@ namespace ChaOS
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.Clear();
+                    Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                    Console.WriteLine("\n" + ver);
+                    Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
                 }
 
                 if (input.Contains("dark green")) //Dark green
@@ -151,6 +159,9 @@ namespace ChaOS
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.Clear();
+                    Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                    Console.WriteLine("\n" + ver);
+                    Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
                 }
 
                 if (input.Contains("dark cyan")) //Dark cyan
@@ -158,6 +169,9 @@ namespace ChaOS
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.Clear();
+                    Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                    Console.WriteLine("\n" + ver);
+                    Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
                 }
 
                 if (input.Contains("dark gray")) //Dark gray
@@ -165,27 +179,48 @@ namespace ChaOS
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.Clear();
+                    Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                    Console.WriteLine("\n" + ver);
+                    Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
                 }
 
-                if (input.Contains("blue")) //Blue
+                if (!input.Contains("dark"))
                 {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Clear();
+                    if (input.Contains("blue")) //Blue
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Clear();
+                        Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                        Console.WriteLine("\n" + ver);
+                        Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
+                    }
                 }
 
-                if (input.Contains("green")) //Green
+                if (!input.Contains("dark"))
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Clear();
+                    if (input.Contains("green")) //Green
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Clear();
+                        Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                        Console.WriteLine("\n" + ver);
+                        Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
+                    }
                 }
 
-                if (input.Contains("cyan")) //Cyan
+                if (!input.Contains("dark"))
                 {
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Clear();
+                    if (input.Contains("cyan")) //Cyan
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Clear();
+                        Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                        Console.WriteLine("\n" + ver);
+                        Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
+                    }
                 }
 
                 if (input.Contains("dark red")) //Dark red
@@ -193,6 +228,9 @@ namespace ChaOS
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.Clear();
+                    Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                    Console.WriteLine("\n" + ver);
+                    Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
                 }
 
                 if (input.Contains("dark magenta")) //Dark magenta
@@ -200,6 +238,9 @@ namespace ChaOS
                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.Clear();
+                    Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                    Console.WriteLine("\n" + ver);
+                    Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
                 }
 
                 if (input.Contains("dark yellow")) //Dark yellow
@@ -207,34 +248,61 @@ namespace ChaOS
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.Clear();
+                    Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                    Console.WriteLine("\n" + ver);
+                    Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
                 }
 
-                if (input.Contains("gray")) //Gray
+                if (!input.Contains("dark"))
                 {
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Clear();
+                    if (input.Contains("gray")) //Gray
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Clear();
+                        Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                        Console.WriteLine("\n" + ver);
+                        Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
+                    }
                 }
 
-                if (input.Contains("red")) //red
+                if (!input.Contains("dark"))
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Clear();
+                    if (input.Contains("red")) //red
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Clear();
+                        Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                        Console.WriteLine("\n" + ver);
+                        Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
+                    }
                 }
 
-                if (input.Contains("magenta")) //Magenta
+                if (!input.Contains("dark"))
                 {
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Clear();
+                    if (input.Contains("magenta")) //Magenta
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Clear();
+                        Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                        Console.WriteLine("\n" + ver);
+                        Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
+                    }
                 }
 
-                if (input.Contains("yellow")) //Yellow
+                if (!input.Contains("dark"))
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Clear();
+                    if (input.Contains("yellow")) //Yellow
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Clear();
+                        Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                        Console.WriteLine("\n" + ver);
+                        Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
+                    }
                 }
 
                 if (input.Contains("white")) //White
@@ -242,6 +310,9 @@ namespace ChaOS
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.Clear();
+                    Console.WriteLine("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                    Console.WriteLine("\n" + ver);
+                    Console.WriteLine("Copyright 2022 (c) Kastle Grounds\n");
                 }
 
                 if (input.Contains("test"))
