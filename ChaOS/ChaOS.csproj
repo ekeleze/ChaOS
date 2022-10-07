@@ -17,8 +17,10 @@
         <Profile>VMware</Profile>
         <Description>Use VMware Player or Workstation to deploy and debug.</Description>
         <PxeInterface>192.168.0.8</PxeInterface>
-        <BinFormat>Elf</BinFormat>
+        <BinFormat>Bin</BinFormat>
         <DebugEnabled>False</DebugEnabled>
+        <VMWareEdition>Player</VMWareEdition>
+        <CompressionType>Gzip</CompressionType>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
