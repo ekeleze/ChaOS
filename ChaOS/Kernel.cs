@@ -7,20 +7,27 @@ using Cosmos.Core.IOGroup;
 using Cosmos.System;
 using System.Threading;
 using System.Threading.Tasks.Sources;
+using Cosmos.System.FileSystem.VFS;
+using Cosmos.System.FileSystem;
+using Cosmos.HAL.BlockDevice.Registers;
 
 namespace ChaOS
 {
     public class Kernel : Sys.Kernel
     {
+        readonly string ver = "1.0.0 Prerelease 1";
         string usr = "usr";
-        readonly string ver = "Beta 1.9.3";
         int r;
         bool gs;
         int item = 0;
+        int command = 1;
+        string dir = "0:\\";
         ConsoleKeyInfo cki;
 
         protected override void BeforeRun()
         {
+            clear();
+
             #region Tip randomness
             Random rnd = new Random();
             r = rnd.Next(0, 4);
@@ -28,53 +35,51 @@ namespace ChaOS
             r = rnd.Next(0, 4);
             #endregion
 
-            clear();
-            print("Boot successful...\n");
+            log("Boot successful...\n");
             System.Console.ForegroundColor = ConsoleColor.DarkGreen;
-            print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+            log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
             System.Console.ForegroundColor = ConsoleColor.White;
-            print("\n" + ver);
-            print("Dev build 13\n");
-            print("Copyright 2022 (c) Kastle Grounds");
+            log("\n" + ver + "\nBuild 14\n" + "\nCopyright 2022 (c) Kastle Grounds" + "\nType \"help\" to get started!\n");
+
+            CosmosVFS fs = new Sys.FileSystem.CosmosVFS();
+            Sys.FileSystem.VFS.VFSManager.RegisterVFS(fs);
+
+            Directory.SetCurrentDirectory(dir);
+
+            if (!File.Exists(@"0:\"))
+            {
+                //File.Create(@"0:\");
+            }
 
             //var available_space = VFSManager.GetAvailableFreeSpace(@"0:\");
             //Console.WriteLine("Available Storage: " + available_space);
-            print("\nType \"help\" to get started!\n");
-            ShowTips();
         }
-
-        #region Tips & Tricks
-        protected void ShowTips()
-        {
-            System.Console.ForegroundColor = ConsoleColor.Green;
-            print("/// Tips & Tricks ///\n");
-            System.Console.ForegroundColor = ConsoleColor.Yellow;
-            if (r < 2)
-            {
-                print("ChaOS is all loaded into RAM when booted, that means you can take the CD out of the computer and ChaOS will still run!\n");
-            }
-            else if (r == 2)
-            {
-                print("You can boot from other disks while ChaOS is loaded!\n");
-            }
-            else if (r > 2)
-            {
-                print("ChaOS is all loaded into RAM when booted, that means you can take the CD out of the computer and ChaOS will still run!\n");
-            }
-            System.Console.ForegroundColor = ConsoleColor.White;
-        }
-        #endregion
 
         #region ChaOS Core
-        protected void print(string text)
+        protected void log(string text)
         {
             System.Console.WriteLine(text);
+        }
+        protected void colorlog(string text, ConsoleColor color)
+        {
+            var OldColor = System.Console.ForegroundColor;
+            var OldColorBack = System.Console.BackgroundColor;
+            System.Console.ForegroundColor = color;
+            System.Console.WriteLine(text);
+            System.Console.ForegroundColor = OldColor;
+            System.Console.BackgroundColor = OldColorBack;
         }
         protected void clear()
         {
             System.Console.Clear();
         }
+        protected void line()
+        {
+            System.Console.WriteLine("");
+        }
         #endregion
+
+        #region Abandoned GUI
 
         protected void RewriteMenu(string ItemText)
         {
@@ -107,7 +112,6 @@ namespace ChaOS
                 cki = System.Console.ReadKey(true);
                 if (cki.Key == ConsoleKey.Tab)
                 {
-                    print("IT WORKS");
                     item += 1;
                     if (item == 2)
                         item = 0;
@@ -132,48 +136,81 @@ namespace ChaOS
 
         protected void SystemInfo()
         {
-            print("\n------SYSTEM INFO------");
-            print("   ChaOS Beta 1.9.2    ");
-            print(" Developement build 13 ");
-            print("(c) Kastle Grounds 2022");
+            log("\n------SYSTEM INFO------");
+            log("   ChaOS Beta 1.9.2    ");
+            log(" Developement build 13 ");
+            log("(c) Kastle Grounds 2022");
         }
 
         protected void Help()
         {
-            print("\nFunctions:");
-            print(" help - Shows all functions.");
-            print(" username - Allows you to use usernames");
-            print(" info  - Shows more detail about commands even tho it's broken");
-            print(" credits - Shows all of the wonderful people that make ChaOS work.");
-            print(" clear - Clears the screen.");
-            print(" color - Changes text color, do 'color list' to list all colors.");
-            print(" shutdown - Shuts down ChaOS");
-            print(" boot - Reboots the system");
-            print(" gs - See a test!");
-            print("");
+            log("\nFunctions:");
+            log(" help - Shows all functions.");
+            log(" username - Allows you to use usernames");
+            log(" info  - Shows more detail about commands even tho it's broken");
+            log(" credits - Shows all of the wonderful people that make ChaOS work.");
+            log(" clear - Clears the screen.");
+            log(" color - Changes text color, do 'color list' to list all colors.");
+            log(" shutdown - Shuts down ChaOS");
+            log(" boot - Reboots the system");
+            log(" gs - See a test!");
+            log("");
         }
+        #endregion
+
         protected override void Run()
         {
-            if (gs == true) {}
-
-            else
+            if (!gs)
             { 
                 try
                 {
                     //Sys.FileSystem.CosmosVFS fs = new Sys.FileSystem.CosmosVFS();
                     //Sys.FileSystem.VFS.VFSManager.RegisterVFS(fs);
 
-                    string syspath = @"0:\system";
-                    string usrfile = "usrnam.txt";
+                    dir = Directory.GetCurrentDirectory();
+                    string userfile = "userfile.txt";
 
-                    System.Console.Write(usr);
-                    System.Console.Write(" > ");
+                    System.Console.Write(usr + " (" + dir + ")");
+                    System.Console.Write(": ");
                     var input_beforelower = System.Console.ReadLine();
                     var input = input_beforelower.ToLower();
 
                     if (input.Contains("help"))
                     {
-                        if (!input.Contains("info")) Help();
+                        if (!input.Contains("info"))
+                        {
+                            colorlog("\nFunctions:", ConsoleColor.DarkGreen);
+
+                            log(" help - Shows all functions.");
+                            log(" username - Allows you to use usernames");
+                            log(" info  - Shows more detail about commands even tho it's broken");
+                            log(" credits - Shows all of the wonderful people that make ChaOS work.");
+                            log(" clear - Clears the screen.");
+                            log(" color - Changes text color, do 'color list' to list all colors.");
+                            log(" gs - See a test!");
+                            log(" tips - Get some tips");
+
+
+                            colorlog("\nPower Functions:", ConsoleColor.DarkGreen);
+                            log(" shutdown - Shuts down ChaOS");
+                            log(" reboot - Reboots the system");
+
+                            colorlog("\nPress any key to continue...", ConsoleColor.Yellow);
+                            System.Console.ReadKey();
+
+                            colorlog("\nDisk Functions:", ConsoleColor.DarkGreen);
+                            log(" disk - Lists disk subcommands");
+                            log(" diskinfo - Gives info about the disk");
+                            log(" list - Lists files on the current folder");
+                            log(" cd - Browses to folder, works as in Windows");
+                            log(" list - Lists files in current folder");
+                            log(" mkdir - Makes folder, with dirname argument");
+                            log(" mkfile - Makes file, with filename argument");
+                            log(" deldir - Makes folder, with dirname argument");
+                            log(" delfile - Makes folder, with filename argument");
+
+                            line();
+                        }
                     }
 
                     else if (input.Contains("username"))
@@ -199,7 +236,7 @@ namespace ChaOS
                                 }
                                 else
                                 {
-                                    print("\nusername SubFunctions:\n current - shows current username.\n change \"username-here\" - changes current username.\n");
+                                    log("\nusername SubFunctions:\n current - shows current username.\n change \"username-here\" - changes current username.\n");
                                 }
                             }
                         }
@@ -221,13 +258,129 @@ namespace ChaOS
                         Power.Shutdown();
                     }
 
-                    else if (input.Contains("boot"))
+                    else if (input.Contains("reboot"))
                     {
-                        if (input == "boot")
+                        if (input == "reboot")
                         {
-                            print("\nPlease insert the OS disc you want to boot and hit any key.");
+                            log("\nPlease insert the OS disc you want to boot and hit any key.");
                             System.Console.ReadKey();
                             Power.Reboot();
+                        }
+                    }
+
+                    else if (input.Contains("tips"))
+                    {
+                        System.Console.ForegroundColor = ConsoleColor.Green;
+                        log("/// Tips & Tricks ///\n");
+                        System.Console.ForegroundColor = ConsoleColor.Yellow;
+                        if (r < 2)
+                        {
+                            log("ChaOS is all loaded into RAM when booted, that means you can take the CD out of the computer and ChaOS will still run!\n");
+                        }
+                        else if (r == 2)
+                        {
+                            log("You can boot from other disks while ChaOS is loaded!\n");
+                        }
+                        else if (r > 2)
+                        {
+                            log("ChaOS is all loaded into RAM when booted, that means you can take the CD out of the computer and ChaOS will still run!\n");
+                        }
+                        System.Console.ForegroundColor = ConsoleColor.White;
+                    }
+
+                    if (input.Contains("mkdir"))
+                    {
+                        var potato = input_beforelower;
+                        if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
+                        potato = potato.Split("md ")[1];
+
+                        if (!Directory.Exists(potato))
+                        {
+                            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory() + potato));
+                        }
+                    }
+
+                    else if (input.Contains("mkfile"))
+                    {
+                        var potato = input_beforelower;
+                        if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
+                        potato = potato.Split("md ")[1];
+
+                        if (!Directory.Exists(potato))
+                        {
+                            File.Create(Path.Combine(Directory.GetCurrentDirectory() + potato));
+                        }
+                    }
+
+                    if (input.Contains("deldir"))
+                    {
+                        var potato = input_beforelower;
+                        if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
+                        potato = potato.Split("md ")[1];
+
+                        if (!Directory.Exists(potato))
+                        {
+                            Directory.Delete(Path.Combine(Directory.GetCurrentDirectory() + potato));
+                        }
+                    }
+
+                    if (input.Contains("delfile"))
+                    {
+                        var potato = input_beforelower;
+                        if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
+                        potato = potato.Split("md ")[1];
+
+                        if (!Directory.Exists(potato))
+                        {
+                            File.Delete(Path.Combine(Directory.GetCurrentDirectory() + potato));
+                        }
+                    }
+
+                    else if (input.Contains("cd"))
+                    {
+                        if (input == "cd..")
+                        {
+                            
+                        }
+                        else
+                        {
+                            var potato = input_beforelower;
+                            if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
+                            potato = potato.Split("cd ")[1];
+
+                            if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory() + potato)))
+                            {
+                                dir = Path.Combine(Directory.GetCurrentDirectory(), potato);
+                                Directory.SetCurrentDirectory(dir);
+                            }
+                        }
+                    }
+
+                    else if (input.Contains("list"))
+                    {
+                        colorlog("\nDirectory listing at " + Directory.GetCurrentDirectory(), ConsoleColor.Yellow);
+                        var directoryList = Sys.FileSystem.VFS.VFSManager.GetDirectoryListing(dir);
+                        var files = 0;
+                        foreach (var directoryEntry in directoryList)
+                        {
+                            colorlog(directoryEntry.mName, ConsoleColor.Gray);
+                            files += 1;
+                        }
+                        colorlog("\nFound " + files + " files & directories", ConsoleColor.Yellow);
+                    }
+
+                    else if (input.Contains("disk"))
+                    {
+                        if (input.Contains("diskinfo"))
+                        {
+                            long availableSpace = Sys.FileSystem.VFS.VFSManager.GetAvailableFreeSpace(@"0:\");
+                            string fsType = Sys.FileSystem.VFS.VFSManager.GetFileSystemType("0:\\");
+                            colorlog("\nAvailable Free Space: " + availableSpace / 1e+6 + " MB free", ConsoleColor.Yellow);
+                            colorlog("\nFilesystem Type: " + fsType + "\n", ConsoleColor.Yellow);
+                        }
+                        else
+                        {
+                            log("\n? Invalid command syntax, do command 'help' for more info.\n");
                         }
                     }
 
@@ -237,28 +390,28 @@ namespace ChaOS
                     {
                         if (input.Contains("help"))
                         {
-                            print("\nFunction: help\nShows all functions.\n");
+                            log("\nFunction: help\nShows all functions.\n");
                         }
 
                         if (input.Contains("username"))
                         {
-                            print("\nFunction: username\nSubFunctions: current, change");
-                            print("Allows you to change, or view the current username by using the SubFunctions.\n");
+                            log("\nFunction: username\nSubFunctions: current, change");
+                            log("Allows you to change, or view the current username by using the SubFunctions.\n");
                         }
 
                         if (input.Contains("info info"))
                         {
-                            print("\nFunction: info\nGives info on functions.\n");
+                            log("\nFunction: info\nGives info on functions.\n");
                         }
 
                         if (input == "info")
                         {
-                            print("\nPlease specify the function at the end of the \"info\" command.\n");
+                            log("\nPlease specify the function at the end of the \"info\" command.\n");
                         }
 
                         if (input.Contains("credits"))
                         {
-                            print("\nFunction: credits\nShows all of the wonderful people that make ChaOS work.\n");
+                            log("\nFunction: credits\nShows all of the wonderful people that make ChaOS work.\n");
                         }
                     }
 
@@ -266,7 +419,7 @@ namespace ChaOS
                     {
                         if (!input.Contains("info"))
                         {
-                            print("\nCredits:\nekeleze - Owner\nMrDumbrava - Contributor\n");
+                            log("\nCredits:\nekeleze - Owner\nMrDumbrava - Contributor\n");
                         }
                     }
 
@@ -280,7 +433,7 @@ namespace ChaOS
                             var OldColor = System.Console.ForegroundColor;
                             var OldColorBack = System.Console.BackgroundColor;
                             System.Console.ForegroundColor = ConsoleColor.Yellow;
-                            print("\nPlease do 'color list' to list colors\n");
+                            log("\nPlease do 'color list' to list colors\n");
                             System.Console.ForegroundColor = OldColor;
                             System.Console.BackgroundColor = OldColorBack;
                         }
@@ -289,7 +442,7 @@ namespace ChaOS
                             var OldColor = System.Console.ForegroundColor;
                             var OldColorBack = System.Console.BackgroundColor;
                             System.Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            print("\nColor list");
+                            log("\nColor list");
 
                             System.Console.Write(" ");
                             System.Console.ForegroundColor = ConsoleColor.Black;
@@ -297,40 +450,40 @@ namespace ChaOS
                             System.Console.Write("black - Black with white background\n");
                             System.Console.ForegroundColor = ConsoleColor.DarkBlue;
                             System.Console.BackgroundColor = ConsoleColor.Black;
-                            print(" dark blue - Dark blue with black background");
+                            log(" dark blue - Dark blue with black background");
                             System.Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            print(" dark green - Dark green with black background");
+                            log(" dark green - Dark green with black background");
                             System.Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            print(" dark cyan - Dark cyan with black background");
+                            log(" dark cyan - Dark cyan with black background");
                             System.Console.ForegroundColor = ConsoleColor.DarkGray;
-                            print(" dark gray - Dark gray with black background");
+                            log(" dark gray - Dark gray with black background");
                             System.Console.ForegroundColor = ConsoleColor.Blue;
-                            print(" blue - Light blue with black background");
+                            log(" blue - Light blue with black background");
                             System.Console.ForegroundColor = ConsoleColor.Green;
-                            print(" green - Light green with black background");
+                            log(" green - Light green with black background");
                             System.Console.ForegroundColor = ConsoleColor.Cyan;
-                            print(" cyan - Light blue/cyan with black background");
+                            log(" cyan - Light blue/cyan with black background");
                             System.Console.ForegroundColor = ConsoleColor.DarkRed;
-                            print(" dark red - Dark red with black background");
+                            log(" dark red - Dark red with black background");
                             System.Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                            print(" dark magenta - Dark magenta with black background");
+                            log(" dark magenta - Dark magenta with black background");
                             System.Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            print(" dark yellow - Orange/dark yellow/brown with black background");
+                            log(" dark yellow - Orange/dark yellow/brown with black background");
                             System.Console.ForegroundColor = ConsoleColor.Gray;
-                            print(" gray - Light gray with black background");
+                            log(" gray - Light gray with black background");
                             System.Console.ForegroundColor = ConsoleColor.Red;
-                            print(" red - Light red with black background");
+                            log(" red - Light red with black background");
                             System.Console.ForegroundColor = ConsoleColor.Magenta;
-                            print(" magenta - Light magenta with black background");
+                            log(" magenta - Light magenta with black background");
                             System.Console.ForegroundColor = ConsoleColor.Yellow;
-                            print(" yellow - Light yellow with black background");
+                            log(" yellow - Light yellow with black background");
                             System.Console.ForegroundColor = ConsoleColor.White;
-                            print(" white - Pure white with black background");
+                            log(" white - Pure white with black background");
                             Thread.Sleep(100);
                             System.Console.ForegroundColor = OldColor;
                             System.Console.BackgroundColor = OldColorBack;
                             Thread.Sleep(100);
-                            print("");
+                            log("");
                             Thread.Sleep(100);
                         }
 
@@ -339,9 +492,9 @@ namespace ChaOS
                             System.Console.ForegroundColor = ConsoleColor.Black;
                             System.Console.BackgroundColor = ConsoleColor.White;
                             clear();
-                            print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                            print("\n" + ver);
-                            print("Copyright 2022 (c) Kastle Grounds\n");
+                            log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                            log("\n" + ver);
+                            log("Copyright 2022 (c) Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark blue")) //Dark blue
@@ -349,9 +502,9 @@ namespace ChaOS
                             System.Console.ForegroundColor = ConsoleColor.DarkBlue;
                             System.Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                            print("\n" + ver);
-                            print("Copyright 2022 (c) Kastle Grounds\n");
+                            log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                            log("\n" + ver);
+                            log("Copyright 2022 (c) Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark green")) //Dark green
@@ -359,9 +512,9 @@ namespace ChaOS
                             System.Console.ForegroundColor = ConsoleColor.DarkGreen;
                             System.Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                            print("\n" + ver);
-                            print("Copyright 2022 (c) Kastle Grounds\n");
+                            log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                            log("\n" + ver);
+                            log("Copyright 2022 (c) Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark cyan")) //Dark cyan
@@ -369,9 +522,9 @@ namespace ChaOS
                             System.Console.ForegroundColor = ConsoleColor.DarkCyan;
                             System.Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                            print("\n" + ver);
-                            print("Copyright 2022 (c) Kastle Grounds\n");
+                            log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                            log("\n" + ver);
+                            log("Copyright 2022 (c) Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark gray")) //Dark gray
@@ -379,9 +532,9 @@ namespace ChaOS
                             System.Console.ForegroundColor = ConsoleColor.DarkGray;
                             System.Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                            print("\n" + ver);
-                            print("Copyright 2022 (c) Kastle Grounds\n");
+                            log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                            log("\n" + ver);
+                            log("Copyright 2022 (c) Kastle Grounds\n");
                         }
 
                         if (!input.Contains("dark"))
@@ -391,9 +544,9 @@ namespace ChaOS
                                 System.Console.ForegroundColor = ConsoleColor.Blue;
                                 System.Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                                print("\n" + ver);
-                                print("Copyright 2022 (c) Kastle Grounds\n");
+                                log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                                log("\n" + ver);
+                                log("Copyright 2022 (c) Kastle Grounds\n");
                             }
                         }
 
@@ -404,9 +557,9 @@ namespace ChaOS
                                 System.Console.ForegroundColor = ConsoleColor.Green;
                                 System.Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                                print("\n" + ver);
-                                print("Copyright 2022 (c) Kastle Grounds\n");
+                                log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                                log("\n" + ver);
+                                log("Copyright 2022 (c) Kastle Grounds\n");
                             }
                         }
 
@@ -417,9 +570,9 @@ namespace ChaOS
                                 System.Console.ForegroundColor = ConsoleColor.Cyan;
                                 System.Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                                print("\n" + ver);
-                                print("Copyright 2022 (c) Kastle Grounds\n");
+                                log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                                log("\n" + ver);
+                                log("Copyright 2022 (c) Kastle Grounds\n");
                             }
                         }
 
@@ -428,9 +581,9 @@ namespace ChaOS
                             System.Console.ForegroundColor = ConsoleColor.DarkRed;
                             System.Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                            print("\n" + ver);
-                            print("Copyright 2022 (c) Kastle Grounds\n");
+                            log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                            log("\n" + ver);
+                            log("Copyright 2022 (c) Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark magenta")) //Dark magenta
@@ -438,9 +591,9 @@ namespace ChaOS
                             System.Console.ForegroundColor = ConsoleColor.DarkMagenta;
                             System.Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                            print("\n" + ver);
-                            print("Copyright 2022 (c) Kastle Grounds\n");
+                            log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                            log("\n" + ver);
+                            log("Copyright 2022 (c) Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark yellow")) //Dark yellow
@@ -448,9 +601,9 @@ namespace ChaOS
                             System.Console.ForegroundColor = ConsoleColor.DarkYellow;
                             System.Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                            print("\n" + ver);
-                            print("Copyright 2022 (c) Kastle Grounds\n");
+                            log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                            log("\n" + ver);
+                            log("Copyright 2022 (c) Kastle Grounds\n");
                         }
 
                         if (!input.Contains("dark"))
@@ -460,9 +613,9 @@ namespace ChaOS
                                 System.Console.ForegroundColor = ConsoleColor.Gray;
                                 System.Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                                print("\n" + ver);
-                                print("Copyright 2022 (c) Kastle Grounds\n");
+                                log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                                log("\n" + ver);
+                                log("Copyright 2022 (c) Kastle Grounds\n");
                             }
                         }
 
@@ -473,9 +626,9 @@ namespace ChaOS
                                 System.Console.ForegroundColor = ConsoleColor.Red;
                                 System.Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                                print("\n" + ver);
-                                print("Copyright 2022 (c) Kastle Grounds\n");
+                                log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                                log("\n" + ver);
+                                log("Copyright 2022 (c) Kastle Grounds\n");
                             }
                         }
 
@@ -486,9 +639,9 @@ namespace ChaOS
                                 System.Console.ForegroundColor = ConsoleColor.Magenta;
                                 System.Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                                print("\n" + ver);
-                                print("Copyright 2022 (c) Kastle Grounds\n");
+                                log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                                log("\n" + ver);
+                                log("Copyright 2022 (c) Kastle Grounds\n");
                             }
                         }
 
@@ -499,9 +652,9 @@ namespace ChaOS
                                 System.Console.ForegroundColor = ConsoleColor.Yellow;
                                 System.Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                                print("\n" + ver);
-                                print("Copyright 2022 (c) Kastle Grounds\n");
+                                log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                                log("\n" + ver);
+                                log("Copyright 2022 (c) Kastle Grounds\n");
                             }
                         }
 
@@ -510,62 +663,50 @@ namespace ChaOS
                             System.Console.ForegroundColor = ConsoleColor.White;
                             System.Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            print("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
-                            print("\n" + ver);
-                            print("Copyright 2022 (c) Kastle Grounds\n");
+                            log("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ");
+                            log("\n" + ver);
+                            log("Copyright 2022 (c) Kastle Grounds\n");
                         }
 
                         if (input.Contains("test"))
                         {
                             var OldColor = System.Console.ForegroundColor;
-                            print("");
+                            log("");
 
                             System.Console.ForegroundColor = ConsoleColor.DarkBlue;
-                            print("1");
+                            log("1");
                             System.Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            print("2");
+                            log("2");
                             System.Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            print("3");
+                            log("3");
                             System.Console.ForegroundColor = ConsoleColor.DarkGray;
-                            print("4");
+                            log("4");
                             System.Console.ForegroundColor = ConsoleColor.Blue;
-                            print("5");
+                            log("5");
                             System.Console.ForegroundColor = ConsoleColor.Green;
-                            print("6");
+                            log("6");
                             System.Console.ForegroundColor = ConsoleColor.Cyan;
-                            print("7");
+                            log("7");
                             System.Console.ForegroundColor = ConsoleColor.DarkRed;
-                            print("8");
+                            log("8");
                             System.Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                            print("9");
+                            log("9");
                             System.Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            print("10");
+                            log("10");
                             System.Console.ForegroundColor = ConsoleColor.Gray;
-                            print("11");
+                            log("11");
                             System.Console.ForegroundColor = ConsoleColor.Red;
-                            print("12");
+                            log("12");
                             System.Console.ForegroundColor = ConsoleColor.Magenta;
-                            print("13");
+                            log("13");
                             System.Console.ForegroundColor = ConsoleColor.Yellow;
-                            print("14");
+                            log("14");
 
                             System.Console.ForegroundColor = OldColor;
-                            print("\ndone\n");
+                            log("\ndone\n");
                         }
                     }
 
-                    #endregion
-
-                    #region Others
-                    else if (input.Contains("i like goos"))
-                    {
-                        var OldColor = System.Console.ForegroundColor;
-                        var OldBackground = System.Console.BackgroundColor;
-                        System.Console.ForegroundColor = ConsoleColor.DarkRed;
-                        print("\nFuck you, ChaOS is 10 times better.\n");
-                        System.Console.ForegroundColor = OldColor;
-                        System.Console.BackgroundColor = OldBackground;
-                    }
                     #endregion
 
                     #region Unknown command handling
@@ -577,7 +718,7 @@ namespace ChaOS
                         System.Console.ForegroundColor = ConsoleColor.Red;
                         System.Console.BackgroundColor = ConsoleColor.Black;
                         System.Console.Beep(880, 5);
-                        print("\nUnknown command.\n");
+                        log("\n? Unknown command.\n");
                         System.Console.ForegroundColor = OldColor;
                         System.Console.BackgroundColor = OldBackground;
                     }
@@ -593,7 +734,7 @@ namespace ChaOS
                     var OldBackground = System.Console.BackgroundColor;
                     System.Console.ForegroundColor = ConsoleColor.Red;
                     System.Console.BackgroundColor = ConsoleColor.Black;
-                    print("\nSorry, an error occured while running command.\n" + e + "\n");
+                    log("\n! An exception occured. " + e + command + "\n");
                     System.Console.Beep(880, 5);
                     System.Console.ForegroundColor = OldColor;
                     System.Console.BackgroundColor = OldBackground;

@@ -1,7 +1,0 @@
-﻿=============
- Credits for
-    ChaOS
-=============
-
-1. Ekeleze (starter of project).
-2. MrDumbrava (helper).

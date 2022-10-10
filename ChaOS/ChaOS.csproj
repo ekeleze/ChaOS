@@ -17,7 +17,7 @@
         <Profile>VMware</Profile>
         <Description>Use VMware Player or Workstation to deploy and debug.</Description>
         <PxeInterface>192.168.0.8</PxeInterface>
-        <BinFormat>Bin</BinFormat>
+        <BinFormat>Elf</BinFormat>
         <DebugEnabled>False</DebugEnabled>
         <VMWareEdition>Player</VMWareEdition>
         <CompressionType>Gzip</CompressionType>
