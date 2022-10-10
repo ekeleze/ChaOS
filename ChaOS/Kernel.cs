@@ -195,15 +195,11 @@ namespace ChaOS
                             log(" shutdown - Shuts down ChaOS");
                             log(" reboot - Reboots the system");
 
-                            colorlog("\nPress any key to continue...", ConsoleColor.Yellow);
-                            System.Console.ReadKey();
-
                             colorlog("\nDisk Functions:", ConsoleColor.DarkGreen);
                             log(" disk - Lists disk subcommands");
                             log(" diskinfo - Gives info about the disk");
-                            log(" list - Lists files on the current folder");
                             log(" cd - Browses to folder, works as in Windows");
-                            log(" list - Lists files in current folder");
+                            log(" dir - Lists files in current folder");
                             log(" mkdir - Makes folder, with dirname argument");
                             log(" mkfile - Makes file, with filename argument");
                             log(" deldir - Makes folder, with dirname argument");
@@ -288,7 +284,7 @@ namespace ChaOS
                         System.Console.ForegroundColor = ConsoleColor.White;
                     }
 
-                    if (input.Contains("mkdir"))
+                    else if (input.Contains("mkdir"))
                     {
                         var potato = input_beforelower;
                         if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
@@ -312,7 +308,7 @@ namespace ChaOS
                         }
                     }
 
-                    if (input.Contains("deldir"))
+                    else if (input.Contains("deldir"))
                     {
                         var potato = input_beforelower;
                         if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
@@ -324,7 +320,7 @@ namespace ChaOS
                         }
                     }
 
-                    if (input.Contains("delfile"))
+                    else if (input.Contains("delfile"))
                     {
                         var potato = input_beforelower;
                         if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
@@ -356,7 +352,7 @@ namespace ChaOS
                         }
                     }
 
-                    else if (input.Contains("list"))
+                    else if (input.Contains("dir"))
                     {
                         colorlog("\nDirectory listing at " + Directory.GetCurrentDirectory(), ConsoleColor.Yellow);
                         var directoryList = Sys.FileSystem.VFS.VFSManager.GetDirectoryListing(dir);
