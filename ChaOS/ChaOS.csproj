@@ -19,7 +19,7 @@
         <PxeInterface>192.168.0.8</PxeInterface>
         <BinFormat>Elf</BinFormat>
         <DebugEnabled>False</DebugEnabled>
-        <VMWareEdition>Player</VMWareEdition>
+        <VMWareEdition>Workstation</VMWareEdition>
         <CompressionType>Gzip</CompressionType>
     </PropertyGroup>
 
