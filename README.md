@@ -1,7 +1,7 @@
 # ChaOS
 ### A simple command-line OS
 
-How to run OS in VMware (with source code):
+### How to run OS in VMware (with source code):
 1. Install visual studio 2022
 2. Install the cosmos dev-kit (must be dev-kit)
 3. Download the project
@@ -11,7 +11,7 @@ How to run OS in VMware (with source code):
 7. Grab the finished .iso file from project-foler\ChaOS\bin\Debug\net6.0
 8. Run it in VMware
 
-How to run OS in VMware (without source code):
+### How to run OS in VMware (without source code):
 1. Download the latest ISO
 2. Make a new VM with the ISO
 3. Run it!
