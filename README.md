@@ -1,5 +1,5 @@
 # ChaOS
-A simple command-line OS
+### A simple command-line OS
 
 How to run OS in VMware (with source code):
 1. Install visual studio 2022
