@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Here are the supported versions of ChaOS:
+Here's a list of all the supported and unsupported versions of ChaOS:
 
 | Version  | Supported              | Support ends |
 | -------- | ---------------------- | ------------ |
