@@ -26,6 +26,7 @@ namespace ChaOS
         //Not readonly
         string usr = "usr";
         public static string dir = root;
+        public static string truedir = root + "/";
         bool gui = false;
         bool disk;
         string input;
@@ -213,6 +214,7 @@ namespace ChaOS
                         dir = Directory.GetCurrentDirectory();
                         write(usr + " (" + dir + ")");
                         write(": ");
+                        
                     }
                     else if (!disk)
                     {

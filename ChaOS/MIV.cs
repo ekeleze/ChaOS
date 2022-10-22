@@ -278,14 +278,14 @@ namespace ChaOS
             var file = Console.ReadLine();
             try
             {
-                if (File.Exists(Path.Combine(Kernel.dir + file)))
+                if (File.Exists(Path.Combine(Kernel.dir + "\\" + file)))
                 {
                     Console.WriteLine("Found file!");
                 }
-                else if (!File.Exists(Path.Combine(Kernel.dir + file)))
+                else if (!File.Exists(Path.Combine(Kernel.dir + "\\" + file)))
                 {
                     Console.WriteLine("Creating file!");
-                    File.Create(Path.Combine(Kernel.dir + file));
+                    File.Create(Path.Combine(Kernel.dir + "\\" + file));
                 }
                 Console.Clear();
             }
@@ -295,10 +295,10 @@ namespace ChaOS
             }
 
             String text = String.Empty;
-            Console.WriteLine("Do you want to open " + Path.Combine(Kernel.dir + file) + " content? (Yes/No)");
+            Console.WriteLine("Do you want to open " + Path.Combine(Kernel.dir + "\\" + file) + " content? (Yes/No)");
             if (Console.ReadLine().ToLower() == "yes" || Console.ReadLine().ToLower() == "y")
             {
-                text = miv(File.ReadAllText(Path.Combine(Kernel.dir + file)));
+                text = miv(File.ReadAllText(Path.Combine(Kernel.dir + "\\" + file)));
             }
             else
             {
@@ -309,8 +309,8 @@ namespace ChaOS
 
             if (text != null)
             {
-                File.WriteAllText(Path.Combine(Kernel.dir + file), text);
-                Console.WriteLine("Content has been saved to " + Path.Combine(Kernel.dir + file));
+                File.WriteAllText(Path.Combine(Kernel.dir + "\\" + file), text);
+                Console.WriteLine("Content has been saved to " + Path.Combine(Kernel.dir + "\\" + file));
             }
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey(true);
