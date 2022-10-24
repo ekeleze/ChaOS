@@ -21,10 +21,10 @@ namespace ChaOS
             Console.WriteLine("~                           Minor additions by CaveSponge");
             Console.WriteLine("~                     MIV is open source and freely distributable");
             Console.WriteLine("~");
-            Console.WriteLine("~                     type :help<Enter>          For information");
-            Console.WriteLine("~                     type :q<Enter>             To exit");
-            Console.WriteLine("~                     type :wq<Enter>            Save to file and exit");
-            Console.WriteLine("~                     press I                    To write");
+            Console.WriteLine("~                          type :help        For information");
+            Console.WriteLine("~                          type :q           To exit");
+            Console.WriteLine("~                          type :wq          Save to file and exit");
+            Console.WriteLine("~                          press I           To write");
             Console.WriteLine("~");
             Console.WriteLine("~");
             Console.WriteLine("~");
@@ -272,14 +272,14 @@ namespace ChaOS
             var file = Console.ReadLine();
             try
             {
-                if (File.Exists(Path.Combine(Kernel.dir + file)))
+                if (File.Exists(Kernel.dir + "\\" + file))
                 {
                     Console.WriteLine("Found file!");
                 }
-                else if (!File.Exists(Path.Combine(Kernel.dir + file)))
+                else if (!File.Exists(Kernel.dir + "\\" + file))
                 {
                     Console.WriteLine("Creating file!");
-                    File.Create(Path.Combine(Kernel.dir + file));
+                    File.Create(Kernel.dir + "\\" + file);
                 }
                 Console.Clear();
             }

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ekeleze\\Documents\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj": {}
+    "D:\\Documentos\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ekeleze\\Documents\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj": {
+    "D:\\Documentos\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ekeleze\\Documents\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj",
+        "projectUniqueName": "D:\\Documentos\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj",
         "projectName": "ChaOS",
-        "projectPath": "C:\\Users\\ekeleze\\Documents\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj",
-        "packagesPath": "C:\\Users\\ekeleze\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ekeleze\\Documents\\GitHub\\ChaOS\\ChaOS\\obj\\",
+        "projectPath": "D:\\Documentos\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj",
+        "packagesPath": "C:\\Users\\Eric\\.nuget\\packages\\",
+        "outputPath": "D:\\Documentos\\GitHub\\ChaOS\\ChaOS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ekeleze\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Eric\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,8 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\Users\\ekeleze\\AppData\\Roaming\\Cosmos User Kit\\packages\\": {},
+          "C:\\Users\\Eric\\AppData\\Roaming\\Cosmos User Kit\\packages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -84,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
