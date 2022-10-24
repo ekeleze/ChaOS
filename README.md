@@ -10,3 +10,8 @@ How to run OS in VMware:
   6. Compile/build/run
   7. Grab the finished .iso file from project-foler\ChaOS\bin\Debug\net6.0
   8. Run it in VMware
+
+OR:
+  1. Grab a random vm
+  2. Put the iso in
+  3. Run it, why not?
