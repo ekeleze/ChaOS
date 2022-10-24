@@ -8,6 +8,8 @@ using Cosmos.System.Audio.IO;
 using Cosmos.System.Audio;
 using Cosmos.System.Graphics;
 using System.Drawing;
+using System.Reflection.Metadata;
+using Cosmos.System.Graphics.Fonts;
 
 namespace ChaOS
 {
@@ -19,7 +21,6 @@ namespace ChaOS
         readonly string langdir = @"0:\SYSTEM\LANG";
         readonly string userfile = @"0:\SYSTEM\userfile.sys";
         readonly string diskfile = @"0:\disk.hid";
-        readonly string deflangfile = @"0:\SYSTEM\LANG\en_us.lang";
         readonly static string root = @"0:\";
 
         //Not readonly
@@ -136,6 +137,38 @@ namespace ChaOS
             Console.WriteLine("");
         }
         #endregion
+	
+	    #region GUI methods
+	    protected void InitGUI()
+	    {
+            //Sys.MouseManager.ScreenWidth = 640;
+            //Sys.MouseManager.ScreenHeight = 480;
+            //Sys.MouseManager.MouseSensitivity = 0.5F;
+            canvas = FullScreenCanvas.GetFullScreenCanvas(new Mode(640, 480, ColorDepth.ColorDepth32));
+            canvas.Clear(Color.DimGray);
+		    gui = true;
+	    }
+        protected void MakeWindow(int x, int y, int w, int h, string type)
+        {
+            Pen pen = new Pen(Color.Black);
+            canvas.DrawFilledRectangle(new Pen(Color.LightGray), x, y, w, h);
+            canvas.DrawRectangle(pen, x, y, w, h);
+            canvas.DrawFilledRectangle(new Pen(Color.White), x, y, w, 15);
+            canvas.DrawRectangle(pen, x, y, w, 15);
+            PCScreenFont font = PCScreenFont.Default;
+            if (type == "aboutwindow")
+            {
+                canvas.DrawString("About ChaOS Gui", font, pen, new Sys.Graphics.Point(x + 1, y + 1));
+                canvas.DrawString("This is a demo of the Gui", font, pen, new Sys.Graphics.Point(x + 1, y + 17));
+                canvas.DrawString("Press any key to close", font, pen, new Sys.Graphics.Point(x + 1, y + 33));
+            }
+        }
+	    protected void DisableGUI()
+	    {
+		    canvas.Disable();
+            gui = false;
+	    }
+	    #endregion
 
         protected override void Run()
         {
@@ -143,41 +176,18 @@ namespace ChaOS
             {
                 #region GUI
 
-                // You don't have to specify the Mode, but here we do to show that you can.
-                canvas = FullScreenCanvas.GetFullScreenCanvas(new Mode(640, 480, ColorDepth.ColorDepth32));
-                canvas.Clear(Color.Blue);
+                //uint x = Sys.MouseManager.X;
+                //uint y = Sys.MouseManager.Y;
 
-                Pen pen = new Pen(Color.Red);
+                //canvas.DrawPoint(new Pen(Color.Aqua), x, y);
 
-                // A red Point
-                canvas.DrawPoint(pen, 69, 69);
+                MakeWindow(50, 50, 200, 160, "aboutwindow");
 
-                // A GreenYellow horizontal line
-                pen.Color = Color.GreenYellow;
-                canvas.DrawLine(pen, 250, 100, 400, 100);
-
-                // An IndianRed vertical line
-                pen.Color = Color.IndianRed;
-                canvas.DrawLine(pen, 350, 150, 350, 250);
-
-                // A MintCream diagonal line
-                pen.Color = Color.MintCream;
-                canvas.DrawLine(pen, 250, 150, 400, 250);
-
-                // A PaleVioletRed rectangle
-                pen.Color = Color.PaleVioletRed;
-                canvas.DrawRectangle(pen, 350, 350, 80, 60);
-
-                // A LimeGreen rectangle
-                pen.Color = Color.LimeGreen;
-                canvas.DrawRectangle(pen, 450, 450, 80, 60);
-
-                canvas.Display(); // Required for something to be displayed when using a double buffered driver
+                canvas.Display(); //Required for something to be displayed when using a double buffered driver
 
                 Console.ReadKey();
 
-                canvas.Disable();
-                gui = false;
+                DisableGUI();
 
                 #endregion
             }
@@ -593,7 +603,7 @@ namespace ChaOS
 
                     else if (input.Contains("gui") && !input.Contains("open"))
                     {
-                        gui = true;
+			InitGUI();
                     }
 
                     else if (input.Contains("lang") && !input.Contains("open") && !input.Contains("cd"))
