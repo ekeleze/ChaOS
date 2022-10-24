@@ -16,8 +16,10 @@ namespace ChaOS
         //Readonly
         readonly string ver = "1.0.0 Prerelease 7";
         readonly string systempath = @"0:\SYSTEM";
+        readonly string langdir = @"0:\SYSTEM\LANG";
         readonly string userfile = @"0:\SYSTEM\userfile.sys";
         readonly string diskfile = @"0:\disk.hid";
+        readonly string deflangfile = @"0:\SYSTEM\LANG\en_us.lang";
         readonly static string root = @"0:\";
 
         //Not readonly
@@ -27,6 +29,8 @@ namespace ChaOS
         bool disk;
         string input;
         string input_beforelower;
+        string[] lang;
+        string langsetting;
         Canvas canvas;
         protected override void BeforeRun()
         {
@@ -86,7 +90,7 @@ namespace ChaOS
             log("\n" + ver + "\nCopyright 2022 (c) Kastle Grounds\nType \"help\" to get started!");
             if (!disk)
             {
-                log("No disks detected, ChaOS will continue in ClassiChaOS mode!");
+                log(lang[3]);
             }
             line();
         }
@@ -239,7 +243,7 @@ namespace ChaOS
 
                     else if (input.Contains("username") && !input.Contains("open"))
                     {
-                        cwrite("\nCurrent username: ", ConsoleColor.Gray);
+                        cwrite("\n" + lang[5], ConsoleColor.Gray);
                         cwrite(File.ReadAllText(userfile), ConsoleColor.Gray);
                         write("\n\n");
 
@@ -333,31 +337,31 @@ namespace ChaOS
                             Console.BackgroundColor = ConsoleColor.Black; Console.ForegroundColor = ConsoleColor.DarkBlue;
                             log(" dark blue - Dark blue with black background");
                             Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            log(" dark green - Dark green with black background");
+                            log(lang[65]);
                             Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            log(" dark cyan - Dark cyan with black background");
+                            log(lang[66]);
                             Console.ForegroundColor = ConsoleColor.DarkGray;
-                            log(" dark gray - Dark gray with black background");
+                            log(lang[67]);
                             Console.ForegroundColor = ConsoleColor.Blue;
                             log(" blue - Normal blue with black background");
                             Console.ForegroundColor = ConsoleColor.Green;
-                            log(" green - Light green with black background");
+                            log(lang[69]);
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            log(" cyan - Light blue/cyan with black background");
+                            log(lang[70]);
                             Console.ForegroundColor = ConsoleColor.DarkRed;
-                            log(" dark red - Dark red with black background");
+                            log(lang[71]);
                             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                            log(" dark magenta - Dark magenta with black background");
+                            log(lang[72]);
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            log(" dark yellow - Orange/dark yellow/brown with black background");
+                            log(lang[73]);
                             Console.ForegroundColor = ConsoleColor.Gray;
-                            log(" gray - Light gray with black background");
+                            log(lang[74]);
                             Console.ForegroundColor = ConsoleColor.Red;
-                            log(" red - Light red with black background");
+                            log(lang[75]);
                             Console.ForegroundColor = ConsoleColor.Magenta;
-                            log(" magenta - Light magenta with black background");
+                            log(lang[76]);
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            log(" yellow - Light yellow with black background");
+                            log(lang[77]);
                             Console.ForegroundColor = ConsoleColor.White;
                             log(" white - Pure white with black background");
                             Console.ForegroundColor = OldColor;
@@ -592,6 +596,28 @@ namespace ChaOS
                         gui = true;
                     }
 
+                    else if (input.Contains("lang") && !input.Contains("open") && !input.Contains("cd"))
+                    {
+                        var potato = input_beforelower;
+                        bool passed;
+                        try
+                        {
+                            potato = potato.Split("lang ")[1];
+                            lang = File.ReadAllLines(Path.Combine(langdir + "\\" + potato));
+                            langsetting = Path.Combine(langdir + potato);
+                            passed = true;
+                        }
+                        catch
+                        {
+                            clog("\n" + lang[10] + "\n", ConsoleColor.Gray);
+                            passed = false;
+                        }
+                        if (passed == true)
+                        {
+                            clog("\n" + lang[36] + "\n", ConsoleColor.Gray);
+                        }
+                    }
+
                     else if (input.Contains("clear") && !input.Contains("open") || input.Contains("cls") && !input.Contains("open"))
                     {
                         clear();
@@ -606,13 +632,13 @@ namespace ChaOS
 
                     else if (input.Contains("shutdown") && !input.Contains("open") || input.Contains("sd") && !input.Contains("open"))
                     {
-                        clog("\nShutting down...", ConsoleColor.Gray);
+                        clog("\n" + lang[8], ConsoleColor.Gray);
                         Sys.Power.Shutdown();
                     }
 
                     else if (input.Contains("reboot") && !input.Contains("open") || input.Contains("rb") && !input.Contains("open"))
                     {
-                        clog("\nRestarting...", ConsoleColor.Gray);
+                        clog("\n" + lang[9], ConsoleColor.Gray);
                         Sys.Power.Reboot();
                     }
 
