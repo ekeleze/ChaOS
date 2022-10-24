@@ -13,5 +13,5 @@ How to run OS in VMware:
 
 OR:
   1. Grab a random vm
-  2. Put the iso
+  2. Put the iso in
   3. Run it, why not?
