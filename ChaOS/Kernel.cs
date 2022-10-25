@@ -208,73 +208,97 @@ namespace ChaOS
                     input_beforelower = Console.ReadLine();
                     input = input_beforelower.ToLower();
 
-                    if (input.Contains("help") && !input.Contains("info"))
+                    if (input.Equals("help"))
                     {
                         var diskcommandcolor = ConsoleColor.White;
                         var unavailabletext = "";
-                        if (input == "help" || input.Contains("1"))
                         {
-                            if (!disk)
+                            if (disk)
                             {
-                                diskcommandcolor = ConsoleColor.Gray;
-                                unavailabletext = " (unsupported by ClassiChaOS)";
+                                clog("\nFunctions:", ConsoleColor.DarkGreen);
+                                log(" help - Shows all functions");
+                                log(" username - Allows you to use usernames");
+                                log(" info  - Shows more detail about commands");
+                                log(" credits - Shows all of the wonderful people that make ChaOS work");
+                                log(" cls/clear - Clears the screen");
+                                log(" color - Changes text color, do 'color list' to list all colors");
+                                log(" gui - See a test!");
+                                log(" t/time - Tells you the time");
+                                log(" echo - Echoes what you say");
+                                log(" sd/shutdown - Shuts down ChaOS");
+                                log(" rb/reboot - Reboots the system");
+                                log(" disk - Gives info about the disk");
+                                log(" cd - Browses to folder, works as in MS-DOS");
+                                log(" cd.. - Returns to root");
+                                log(" dir - Lists files in the current folder");
+                                log(" mkdir - Makes folder, with dirname argument");
+                                log(" mkfile - Makes file, with filename argument");
+                                log(" deldir - Deletes folder, with dirname argument");
+                                log(" delfile - Deletes file, with filename argument");
+                                log(" open - Opens file. Supported formats: .txt .sys .wav");
+                                log(" lb - Relabels disk");
+                                log(" notepad - Opens MIV notepad.\n");
                             }
-                            clog("\nFunctions (1/1):", ConsoleColor.DarkGreen);
-                            log(" help - Shows all functions");
-                            log(" username - Allows you to use usernames");
-                            log(" info  - Shows more detail about commands");
-                            log(" credits - Shows all of the wonderful people that make ChaOS work");
-                            log(" cls/clear - Clears the screen");
-                            log(" color - Changes text color, do 'color list' to list all colors");
-                            log(" gui - See a test!");
-                            log(" t/time - Tells you the time");
-                            log(" echo - Echoes what you say");
-                            log(" sd/shutdown - Shuts down ChaOS");
-                            log(" rb/reboot - Reboots the system");
-                            clog(" disk - Gives info about the disk" + unavailabletext, diskcommandcolor);
-                            clog(" cd - Browses to folder, works as in Windows" + unavailabletext, diskcommandcolor);
-                            clog(" cd.. - Returns to root" + unavailabletext, diskcommandcolor);
-                            clog(" dir - Lists files in the current folder" + unavailabletext, diskcommandcolor);
-                            clog(" mkdir - Makes folder, with dirname argument" + unavailabletext, diskcommandcolor);
-                            clog(" mkfile - Makes file, with filename argument" + unavailabletext, diskcommandcolor);
-                            clog(" deldir - Deletes folder, with dirname argument" + unavailabletext, diskcommandcolor);
-                            clog(" delfile - Deletes file, with filename argument" + unavailabletext, diskcommandcolor);
-                            clog(" open - Opens file. Supported formats: .txt .sys .wav" + unavailabletext, diskcommandcolor);
-                            clog(" lb - Relabels disk" + unavailabletext, diskcommandcolor);
-                            clog(" notepad - Opens MIV notepad" + unavailabletext + "\n", diskcommandcolor);
+                            else
+                            {
+                                clog("\nFunctions (ClassiChaOS Mode):", ConsoleColor.DarkGreen);
+                                log(" help - Shows all functions");
+                                log(" username - Allows you to use usernames");
+                                log(" info  - Shows more detail about commands");
+                                log(" credits - Shows all of the wonderful people that make ChaOS work");
+                                log(" cls/clear - Clears the screen");
+                                log(" color - Changes text color, do 'color list' to list all colors");
+                                log(" gui - See a test!");
+                                log(" t/time - Tells you the time");
+                                log(" echo - Echoes what you say");
+                                log(" sd/shutdown - Shuts down ChaOS");
+                                log(" rb/reboot - Reboots the system");
+                                //clog(" disk - Gives info about the disk" + unavailabletext, diskcommandcolor);
+                                //clog(" cd - Browses to folder, works as in Windows" + unavailabletext, diskcommandcolor);
+                                //clog(" cd.. - Returns to root" + unavailabletext, diskcommandcolor);
+                                //clog(" dir - Lists files in the current folder" + unavailabletext, diskcommandcolor);
+                                //clog(" mkdir - Makes folder, with dirname argument" + unavailabletext, diskcommandcolor);
+                                //clog(" mkfile - Makes file, with filename argument" + unavailabletext, diskcommandcolor);
+                                //clog(" deldir - Deletes folder, with dirname argument" + unavailabletext, diskcommandcolor);
+                                //clog(" delfile - Deletes file, with filename argument" + unavailabletext, diskcommandcolor);
+                                //clog(" open - Opens file. Supported formats: .txt .sys .wav" + unavailabletext, diskcommandcolor);
+                                //clog(" lb - Relabels disk" + unavailabletext, diskcommandcolor);
+                                //clog(" notepad - Opens MIV notepad" + unavailabletext + "\n", diskcommandcolor);
+                            }
                         }
-                        //else if (input.Contains("2"))
-                        //{
-                            //clog("\nFunctions (2/2):", ConsoleColor.DarkGreen);
-                        //}
                     }
 
                     //Username commands
 
-                    else if (input.Contains("username") && !input.Contains("open"))
+                    else if (input.Contains("username") && !input.Contains(".sys"))
                     {
-                        cwrite("\n" + lang[5], ConsoleColor.Gray);
-                        cwrite(File.ReadAllText(userfile), ConsoleColor.Gray);
-                        write("\n\n");
-
-                        if (input.Contains("change"))
+                        if (!input.Contains(".txt"))
                         {
-                            var text = input;
-                            var start = text.IndexOf("\"") + 1; //Add one to not include quote
-                            var end = text.LastIndexOf("\"") - start;
-                            var nur = text.Substring(start, end);
-                            usr = nur;
-
-                            if (File.Exists(userfile))
+                            if (!input.Contains("open"))
                             {
-                                try { File.WriteAllText(userfile, usr); ilog("Username changed successfully\n"); } catch { }
+                                cwrite("\n" + lang[5], ConsoleColor.Gray);
+                                cwrite(File.ReadAllText(userfile), ConsoleColor.Gray);
+                                write("\n\n");
+
+                                if (input.Contains("change"))
+                                {
+                                    var text = input;
+                                    var start = text.IndexOf(" ") + 1; //Add one to not include quote
+                                    var nur = text.Substring(start);
+                                    usr = nur;
+
+                                    if (File.Exists(userfile))
+                                    {
+                                        try { File.WriteAllText(userfile, usr); ilog("Username changed successfully\n"); } catch { }
+                                    }
+                                }
                             }
                         }
                     }
 
                     //CrEdItS!
 
-                    else if (input.Contains("credits"))
+                    else if (input.Equals("credits"))
                     {
                         cwrite("\n\nC", ConsoleColor.Blue);
                         cwrite("r", ConsoleColor.Green);
@@ -295,41 +319,8 @@ namespace ChaOS
 
                     //Misc
 
-                    #region Info commands
-
-                    else if (input.Contains("info") && !input.Contains("open") && !input.Contains("fiinfo"))
-                    {
-                        if (input.Contains("help"))
-                        {
-                            log("\nFunction: help\nShows all functions.\n");
-                        }
-
-                        if (input.Contains("username"))
-                        {
-                            log("\nFunction: username\nSubFunctions: current, change");
-                            log("Allows you to change, or view the current username by using the SubFunctions.\n");
-                        }
-
-                        if (input.Contains("info info"))
-                        {
-                            log("\nFunction: info\nGives info on functions.\n");
-                        }
-
-                        if (input == "info")
-                        {
-                            log("\nPlease specify the function at the end of the \"info\" command.\n");
-                        }
-
-                        if (input.Contains("credits"))
-                        {
-                            log("\nFunction: credits\nShows all of the wonderful people that make ChaOS work.\n");
-                        }
-                    }
-
-                    #endregion
-
                     #region Color functions
-                    else if (input.Contains("color") && !input.Contains("open"))
+                    else if (input.Contains("color") && !input.Contains("open") && !input.Contains("."))
                     {
                         if (input == "color")
                         {
@@ -603,7 +594,7 @@ namespace ChaOS
 
                     else if (input.Contains("gui") && !input.Contains("open"))
                     {
-			InitGUI();
+			            InitGUI();
                     }
 
                     else if (input.Contains("lang") && !input.Contains("open") && !input.Contains("cd"))
