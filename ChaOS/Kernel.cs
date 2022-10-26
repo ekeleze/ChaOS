@@ -164,7 +164,10 @@ namespace ChaOS
 		    canvas.Disable();
             gui = false;
 	    }
-	    #endregion
+        #endregion
+
+        private Pen black = new Pen(Color.Black);
+        private Pen white = new Pen(Color.White);
 
         protected override void Run()
         {
@@ -176,10 +179,10 @@ namespace ChaOS
 
                 //canvas.DrawPoint(new Pen(Color.Aqua), x, y);
 
-                canvas.DrawFilledRectangle(new Pen(Color.Black), 0, 465, 640, 15);
+                canvas.DrawFilledRectangle(black, 0, 465, 640, 15);
                 canvas.DrawSquare(p, x, y, 50);
                 // Ain't finished!: canvas.DrawString("Exit", f, new Pen(Color.White), new Sys.Graphics.Point(2, 466));
-                canvas.DrawString("ChaBar (Alpha)", f, new Pen(Color.White), new Sys.Graphics.Point(52, 466));
+                canvas.DrawString("ChaBar (Alpha)", f, white, new Sys.Graphics.Point(52, 466));
 
                 Window(x, y, 200, 160);
                 canvas.DrawString("About ChaOS Gui", f, p, new Sys.Graphics.Point(x + 1, y + 1));
