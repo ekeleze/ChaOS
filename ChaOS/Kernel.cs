@@ -1,20 +1,28 @@
 ﻿using System;
+using System.Threading;
 using System.IO;
 using Cosmos.System.FileSystem;
 using Sys = Cosmos.System;
+using Cos = Cosmos;
 using Cosmos.System.FileSystem.VFS;
 using Cosmos.HAL.Drivers.PCI.Audio;
 using Cosmos.System.Audio.IO;
 using Cosmos.System.Audio;
 using Cosmos.System.Graphics;
 using System.Drawing;
-using System.Reflection.Metadata;
 using Cosmos.System.Graphics.Fonts;
+using System.Xml;
+using Cosmos.Core.IOGroup;
 
 namespace ChaOS
 {
     public class Kernel : Sys.Kernel
     {
+        //GUI variables
+        Canvas canvas;
+        Pen p = new Pen(Color.Black);
+        PCScreenFont f = PCScreenFont.Default;
+
         //Readonly
         readonly string ver = "1.0.0 Prerelease 7";
         readonly string systempath = @"0:\SYSTEM";
@@ -31,8 +39,6 @@ namespace ChaOS
         string input;
         string input_beforelower;
         string[] lang;
-        string langsetting;
-        Canvas canvas;
         protected override void BeforeRun()
         {
             //Early initialization
@@ -141,29 +147,19 @@ namespace ChaOS
 	    #region GUI methods
 	    protected void InitGUI()
 	    {
-            //Sys.MouseManager.ScreenWidth = 640;
-            //Sys.MouseManager.ScreenHeight = 480;
-            //Sys.MouseManager.MouseSensitivity = 0.5F;
+            Sys.MouseManager.MouseSensitivity = 0.5F;
             canvas = FullScreenCanvas.GetFullScreenCanvas(new Mode(640, 480, ColorDepth.ColorDepth32));
             canvas.Clear(Color.DimGray);
 		    gui = true;
 	    }
-        protected void MakeWindow(int x, int y, int w, int h, string type)
+        protected void Window(int x, int y, int w, int h)
         {
-            Pen pen = new Pen(Color.Black);
             canvas.DrawFilledRectangle(new Pen(Color.LightGray), x, y, w, h);
-            canvas.DrawRectangle(pen, x, y, w, h);
+            canvas.DrawRectangle(p, x, y, w, h);
             canvas.DrawFilledRectangle(new Pen(Color.White), x, y, w, 15);
-            canvas.DrawRectangle(pen, x, y, w, 15);
-            PCScreenFont font = PCScreenFont.Default;
-            if (type == "aboutwindow")
-            {
-                canvas.DrawString("About ChaOS Gui", font, pen, new Sys.Graphics.Point(x + 1, y + 1));
-                canvas.DrawString("This is a demo of the Gui", font, pen, new Sys.Graphics.Point(x + 1, y + 17));
-                canvas.DrawString("Press any key to close", font, pen, new Sys.Graphics.Point(x + 1, y + 33));
-            }
+            canvas.DrawRectangle(p, x, y, w, 15);
         }
-	    protected void DisableGUI()
+        protected void DisableGUI()
 	    {
 		    canvas.Disable();
             gui = false;
@@ -176,18 +172,25 @@ namespace ChaOS
             {
                 #region GUI
 
-                //uint x = Sys.MouseManager.X;
-                //uint y = Sys.MouseManager.Y;
+                int s = 17; int x = 50; int y = 50;
 
                 //canvas.DrawPoint(new Pen(Color.Aqua), x, y);
 
-                MakeWindow(50, 50, 200, 160, "aboutwindow");
+                canvas.DrawFilledRectangle(new Pen(Color.Black), 0, 465, 640, 15);
+                canvas.DrawSquare(p, x, y, 50);
+                // Ain't finished!: canvas.DrawString("Exit", f, new Pen(Color.White), new Sys.Graphics.Point(2, 466));
+                canvas.DrawString("ChaBar (Alpha)", f, new Pen(Color.White), new Sys.Graphics.Point(52, 466));
 
-                canvas.Display(); //Required for something to be displayed when using a double buffered driver
+                Window(x, y, 200, 160);
+                canvas.DrawString("About ChaOS Gui", f, p, new Sys.Graphics.Point(x + 1, y + 1));
+                canvas.DrawString("This is a demo of the Gui", f, p, new Sys.Graphics.Point(x + 1, y + s));
+                canvas.DrawString("that ChaOS currently has!", f, p, new Sys.Graphics.Point(x + 1, y + s * 2));
 
-                Console.ReadKey();
+                Pen pen = new Pen(Color.Black);
+                canvas.DrawFilledRectangle(pen, (int)Cosmos.System.MouseManager.X, (int)Cosmos.System.MouseManager.Y, 2, 2);
 
-                DisableGUI();
+                canvas.Display();
+                canvas.Clear(Color.DimGray);
 
                 #endregion
             }
@@ -210,61 +213,31 @@ namespace ChaOS
 
                     if (input.Equals("help"))
                     {
-                        var diskcommandcolor = ConsoleColor.White;
-                        var unavailabletext = "";
+                        clog("\nFunctions (ClassiChaOS Mode):", ConsoleColor.DarkGreen);
+                        log(" help - Shows all functions");
+                        log(" username - Allows you to use usernames");
+                        log(" info  - Shows more detail about commands");
+                        log(" credits - Shows all of the wonderful people that make ChaOS work");
+                        log(" cls/clear - Clears the screen");
+                        log(" color - Changes text color, do 'color list' to list all colors");
+                        log(" gui - See a test!");
+                        log(" t/time - Tells you the time");
+                        log(" echo - Echoes what you say");
+                        log(" sd/shutdown - Shuts down ChaOS");
+                        log(" rb/reboot - Reboots the system");
+                        if (disk)
                         {
-                            if (disk)
-                            {
-                                clog("\nFunctions:", ConsoleColor.DarkGreen);
-                                log(" help - Shows all functions");
-                                log(" username - Allows you to use usernames");
-                                log(" info  - Shows more detail about commands");
-                                log(" credits - Shows all of the wonderful people that make ChaOS work");
-                                log(" cls/clear - Clears the screen");
-                                log(" color - Changes text color, do 'color list' to list all colors");
-                                log(" gui - See a test!");
-                                log(" t/time - Tells you the time");
-                                log(" echo - Echoes what you say");
-                                log(" sd/shutdown - Shuts down ChaOS");
-                                log(" rb/reboot - Reboots the system");
-                                log(" disk - Gives info about the disk");
-                                log(" cd - Browses to folder, works as in MS-DOS");
-                                log(" cd.. - Returns to root");
-                                log(" dir - Lists files in the current folder");
-                                log(" mkdir - Makes folder, with dirname argument");
-                                log(" mkfile - Makes file, with filename argument");
-                                log(" deldir - Deletes folder, with dirname argument");
-                                log(" delfile - Deletes file, with filename argument");
-                                log(" open - Opens file. Supported formats: .txt .sys .wav");
-                                log(" lb - Relabels disk");
-                                log(" notepad - Opens MIV notepad.\n");
-                            }
-                            else
-                            {
-                                clog("\nFunctions (ClassiChaOS Mode):", ConsoleColor.DarkGreen);
-                                log(" help - Shows all functions");
-                                log(" username - Allows you to use usernames");
-                                log(" info  - Shows more detail about commands");
-                                log(" credits - Shows all of the wonderful people that make ChaOS work");
-                                log(" cls/clear - Clears the screen");
-                                log(" color - Changes text color, do 'color list' to list all colors");
-                                log(" gui - See a test!");
-                                log(" t/time - Tells you the time");
-                                log(" echo - Echoes what you say");
-                                log(" sd/shutdown - Shuts down ChaOS");
-                                log(" rb/reboot - Reboots the system");
-                                //clog(" disk - Gives info about the disk" + unavailabletext, diskcommandcolor);
-                                //clog(" cd - Browses to folder, works as in Windows" + unavailabletext, diskcommandcolor);
-                                //clog(" cd.. - Returns to root" + unavailabletext, diskcommandcolor);
-                                //clog(" dir - Lists files in the current folder" + unavailabletext, diskcommandcolor);
-                                //clog(" mkdir - Makes folder, with dirname argument" + unavailabletext, diskcommandcolor);
-                                //clog(" mkfile - Makes file, with filename argument" + unavailabletext, diskcommandcolor);
-                                //clog(" deldir - Deletes folder, with dirname argument" + unavailabletext, diskcommandcolor);
-                                //clog(" delfile - Deletes file, with filename argument" + unavailabletext, diskcommandcolor);
-                                //clog(" open - Opens file. Supported formats: .txt .sys .wav" + unavailabletext, diskcommandcolor);
-                                //clog(" lb - Relabels disk" + unavailabletext, diskcommandcolor);
-                                //clog(" notepad - Opens MIV notepad" + unavailabletext + "\n", diskcommandcolor);
-                            }
+                            log(" disk - Gives info about the disk");
+                            log(" cd - Browses to folder, works as in MS-DOS");
+                            log(" cd.. - Returns to root");
+                            log(" dir - Lists files in the current folder");
+                            log(" mkdir - Makes folder, with dirname argument");
+                            log(" mkfile - Makes file, with filename argument");
+                            log(" deldir - Deletes folder, with dirname argument");
+                            log(" delfile - Deletes file, with filename argument");
+                            log(" open - Opens file. Supported formats: .txt .sys .wav");
+                            log(" lb - Relabels disk");
+                            log(" notepad - Opens MIV notepad.\n");
                         }
                     }
 
@@ -272,26 +245,26 @@ namespace ChaOS
 
                     else if (input.Contains("username") && !input.Contains(".sys"))
                     {
-                        if (!input.Contains(".txt"))
+                        if (!input.Contains("open"))
                         {
-                            if (!input.Contains("open"))
+                            cwrite("\n" + lang[5], ConsoleColor.Gray);
+                            cwrite(File.ReadAllText(userfile), ConsoleColor.Gray);
+                            write("\n\n");
+                        }
+                        if (input.Contains("change"))
+                        {
+                            var text = input;
+                            var start = text.IndexOf(" ") + 1; //Add one to not include quote
+                            var nur = text.Substring(start);
+                            usr = nur;
+
+                            if (disk && File.Exists(userfile))
                             {
-                                cwrite("\n" + lang[5], ConsoleColor.Gray);
-                                cwrite(File.ReadAllText(userfile), ConsoleColor.Gray);
-                                write("\n\n");
-
-                                if (input.Contains("change"))
-                                {
-                                    var text = input;
-                                    var start = text.IndexOf(" ") + 1; //Add one to not include quote
-                                    var nur = text.Substring(start);
-                                    usr = nur;
-
-                                    if (File.Exists(userfile))
-                                    {
-                                        try { File.WriteAllText(userfile, usr); ilog("Username changed successfully\n"); } catch { }
-                                    }
-                                }
+                                try { File.WriteAllText(userfile, usr); ilog("Username changed successfully\n"); } catch { }
+                            }
+                            else
+                            {
+                                ilog("Username changed successfully\n");
                             }
                         }
                     }
@@ -595,28 +568,6 @@ namespace ChaOS
                     else if (input.Contains("gui") && !input.Contains("open"))
                     {
 			            InitGUI();
-                    }
-
-                    else if (input.Contains("lang") && !input.Contains("open") && !input.Contains("cd"))
-                    {
-                        var potato = input_beforelower;
-                        bool passed;
-                        try
-                        {
-                            potato = potato.Split("lang ")[1];
-                            lang = File.ReadAllLines(Path.Combine(langdir + "\\" + potato));
-                            langsetting = Path.Combine(langdir + potato);
-                            passed = true;
-                        }
-                        catch
-                        {
-                            clog("\n" + lang[10] + "\n", ConsoleColor.Gray);
-                            passed = false;
-                        }
-                        if (passed == true)
-                        {
-                            clog("\n" + lang[36] + "\n", ConsoleColor.Gray);
-                        }
                     }
 
                     else if (input.Contains("clear") && !input.Contains("open") || input.Contains("cls") && !input.Contains("open"))
