@@ -18,7 +18,7 @@ Supported betas
 
 | Version  | Supported              | Support ends |
 | -------- | ---------------------- | ------------ |
-| Beta 1.9.x   | :white_check_mark: | LTS (Ends on 1.0.0)
+| Beta 1.9.x   | :white_check_mark: | LTS (Ends on release 1.0)
 | Beta 1.8.x   | :x:                | Ended on beta 1.9.x
 | Beta 1.7     | :x:                | Ended on beta 1.8.x
 | Beta 1.6     | :x:                | Ended on beta 1.7
