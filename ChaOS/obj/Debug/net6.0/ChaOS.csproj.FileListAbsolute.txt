@@ -34,3 +34,15 @@ D:\Documentos\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.dll
 D:\Documentos\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\refint\ChaOS.dll
 D:\Documentos\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.pdb
 D:\Documentos\GitHub\ChaOS\ChaOS\obj\Debug\net6.0\ref\ChaOS.dll
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\bin\Debug\net6.0\ChaOS.deps.json
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\bin\Debug\net6.0\ChaOS.dll
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\bin\Debug\net6.0\ChaOS.pdb
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.csproj.AssemblyReference.cache
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.AssemblyInfoInputs.cache
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.AssemblyInfo.cs
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.csproj.CoreCompileInputs.cache
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.dll
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\obj\Debug\net6.0\refint\ChaOS.dll
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\obj\Debug\net6.0\ChaOS.pdb
+C:\Users\Eric\Source\Repos\ChaOS\ChaOS\obj\Debug\net6.0\ref\ChaOS.dll

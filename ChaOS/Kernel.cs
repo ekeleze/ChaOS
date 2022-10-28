@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.IO;
 using Cosmos.System.FileSystem;
 using Sys = Cosmos.System;
@@ -11,8 +10,7 @@ using Cosmos.System.Audio;
 using Cosmos.System.Graphics;
 using System.Drawing;
 using Cosmos.System.Graphics.Fonts;
-using System.Xml;
-using Cosmos.Core.IOGroup;
+using Cosmos.Core.Memory;
 
 namespace ChaOS
 {
@@ -38,7 +36,6 @@ namespace ChaOS
         bool disk;
         string input;
         string input_beforelower;
-        string[] lang;
         protected override void BeforeRun()
         {
             //Early initialization
@@ -97,7 +94,7 @@ namespace ChaOS
             log("\n" + ver + "\nCopyright 2022 (c) Kastle Grounds\nType \"help\" to get started!");
             if (!disk)
             {
-                log(lang[3]);
+                log("No internal hard drive detected, ChaOS will continue in ClassiChaOS mode!");
             }
             line();
         }
@@ -173,15 +170,17 @@ namespace ChaOS
         {
             if (gui)
             {
-                #region GUI
-
                 int s = 17; int x = 50; int y = 50;
 
                 //canvas.DrawPoint(new Pen(Color.Aqua), x, y);
 
-                canvas.DrawFilledRectangle(black, 0, 465, 640, 15);
-                canvas.DrawSquare(p, x, y, 50);
-                // Ain't finished!: canvas.DrawString("Exit", f, new Pen(Color.White), new Sys.Graphics.Point(2, 466));
+                canvas.DrawFilledRectangle(black, 0, 465, 640, 15); //ChaBar
+                canvas.DrawRectangle(p, 2, 465, 50, 15);
+                canvas.DrawString("Close", f, new Pen(Color.White), new Sys.Graphics.Point(2, 466));
+                if (Sys.MouseManager.X < 52 && Sys.MouseManager.Y < 16 && Sys.MouseManager.MouseState == Sys.MouseState.Left)
+                { 
+                    canvas.Disable();
+                }
                 canvas.DrawString("ChaBar (Alpha)", f, white, new Sys.Graphics.Point(52, 466));
 
                 Window(x, y, 200, 160);
@@ -190,12 +189,11 @@ namespace ChaOS
                 canvas.DrawString("that ChaOS currently has!", f, p, new Sys.Graphics.Point(x + 1, y + s * 2));
 
                 Pen pen = new Pen(Color.Black);
-                canvas.DrawFilledRectangle(pen, (int)Cosmos.System.MouseManager.X, (int)Cosmos.System.MouseManager.Y, 2, 2);
+                canvas.DrawFilledRectangle(pen, (int)Sys.MouseManager.X, (int)Sys.MouseManager.Y, 2, 2);
 
                 canvas.Display();
                 canvas.Clear(Color.DimGray);
-
-                #endregion
+                Heap.Collect();
             }
             else
             {
@@ -248,12 +246,10 @@ namespace ChaOS
 
                     else if (input.Contains("username") && !input.Contains(".sys"))
                     {
-                        if (!input.Contains("open"))
-                        {
-                            cwrite("\n" + lang[5], ConsoleColor.Gray);
-                            cwrite(File.ReadAllText(userfile), ConsoleColor.Gray);
-                            write("\n\n");
-                        }
+                        cwrite("\nCurrent username:", ConsoleColor.Gray);
+                        cwrite(File.ReadAllText(userfile), ConsoleColor.Gray);
+                        write("\n\n");
+
                         if (input.Contains("change"))
                         {
                             var text = input;
@@ -314,31 +310,31 @@ namespace ChaOS
                             Console.BackgroundColor = ConsoleColor.Black; Console.ForegroundColor = ConsoleColor.DarkBlue;
                             log(" dark blue - Dark blue with black background");
                             Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            log(lang[65]);
+                            log(" dark green - Dark green with black background");
                             Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            log(lang[66]);
+                            log(" dark cyan - Dark cyan with black background");
                             Console.ForegroundColor = ConsoleColor.DarkGray;
-                            log(lang[67]);
+                            log(" dark gray - Dark gray with black background");
                             Console.ForegroundColor = ConsoleColor.Blue;
                             log(" blue - Normal blue with black background");
                             Console.ForegroundColor = ConsoleColor.Green;
-                            log(lang[69]);
+                            log(" green - Green with black background");
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            log(lang[70]);
+                            log(" cyan - Cyan with black background");
                             Console.ForegroundColor = ConsoleColor.DarkRed;
-                            log(lang[71]);
+                            log(" dark red - Dark red with black background");
                             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                            log(lang[72]);
+                            log(" dark magenta - Dark magenta with black background");
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            log(lang[73]);
+                            log(" dark yellow - Dark yellow/orange with black background");
                             Console.ForegroundColor = ConsoleColor.Gray;
-                            log(lang[74]);
+                            log(" gray - Gray with black background");
                             Console.ForegroundColor = ConsoleColor.Red;
-                            log(lang[75]);
+                            log(" red - Red with black background"); ;
                             Console.ForegroundColor = ConsoleColor.Magenta;
-                            log(lang[76]);
+                            log(" magenta - Magenta with black background");
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            log(lang[77]);
+                            log(" yellow - Light yellow with black background");
                             Console.ForegroundColor = ConsoleColor.White;
                             log(" white - Pure white with black background");
                             Console.ForegroundColor = OldColor;
@@ -526,74 +522,30 @@ namespace ChaOS
                             log("\n" + ver);
                             log("Copyright 2022 (c) Kastle Grounds\n");
                         }
-
-                        if (input.Contains("test"))
-                        {
-                            var OldColor = Console.ForegroundColor;
-                            log("");
-
-                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                            log("1");
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            log("2");
-                            Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            log("3");
-                            Console.ForegroundColor = ConsoleColor.DarkGray;
-                            log("4");
-                            Console.ForegroundColor = ConsoleColor.Blue;
-                            log("5");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            log("6");
-                            Console.ForegroundColor = ConsoleColor.Cyan;
-                            log("7");
-                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                            log("8");
-                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                            log("9");
-                            Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            log("10");
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            log("11");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            log("12");
-                            Console.ForegroundColor = ConsoleColor.Magenta;
-                            log("13");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            log("14");
-
-                            Console.ForegroundColor = OldColor;
-                            log("\ndone\n");
-                        }
                     }
 
                     #endregion
 
                     else if (input.Contains("gui") && !input.Contains("open"))
-                    {
-			            InitGUI();
-                    }
+                        InitGUI();
 
                     else if (input.Contains("clear") && !input.Contains("open") || input.Contains("cls") && !input.Contains("open"))
-                    {
                         clear();
-                    }
 
                     else if (input == "time" && !input.Contains("open") || input == "t" && !input.Contains("open"))
-                    {
-                        clog("\nThe time is " + Convert.ToString(Cosmos.HAL.RTC.Hour) + ":" + Convert.ToString(Cosmos.HAL.RTC.Minute) + ":" + Convert.ToString(Cosmos.HAL.RTC.Second) + "\n", ConsoleColor.Yellow);
-                    }
+                        clog("\nCurrent time is " + Convert.ToString(Cos.HAL.RTC.Hour) + ":" + Convert.ToString(Cos.HAL.RTC.Minute) + ":" + Convert.ToString(Cosmos.HAL.RTC.Second) + "\n", ConsoleColor.Yellow);
 
                     //Power stuff
 
                     else if (input.Contains("shutdown") && !input.Contains("open") || input.Contains("sd") && !input.Contains("open"))
                     {
-                        clog("\n" + lang[8], ConsoleColor.Gray);
+                        clog("\nShutting down...", ConsoleColor.Gray);
                         Sys.Power.Shutdown();
                     }
 
                     else if (input.Contains("reboot") && !input.Contains("open") || input.Contains("rb") && !input.Contains("open"))
                     {
-                        clog("\n" + lang[9], ConsoleColor.Gray);
+                        clog("\nRestarting...", ConsoleColor.Gray);
                         Sys.Power.Reboot();
                     }
 
@@ -615,11 +567,11 @@ namespace ChaOS
 
                         if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy" || potato.Contains("."))
                         {
-                            ilog("Name is reserved.");
+                            ilog("Name is reserved or contains file extension.");
                         }
                         else if (!Directory.Exists(potato))
                         {
-                            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory() + "\\" + potato));
+                            Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\" + potato);
                         }
                         else if (Directory.Exists(potato))
                         {
@@ -643,15 +595,15 @@ namespace ChaOS
 
                         if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy" || potato.Contains(".sys") || potato.Contains(".hid") || !potato.Contains("."))
                         {
-                            ilog("\nName is reserved.\n");
+                            ilog("Name is reserved or doesn't contain file extension.");
                         }
                         else if (!File.Exists(potato))
                         {
-                            File.Create(Path.Combine(Directory.GetCurrentDirectory() + "\\" + potato));
+                            File.Create(Directory.GetCurrentDirectory() + "\\" + potato);
                         }
                         else if (File.Exists(potato))
                         {
-                            ilog("\nFile already exists\n");
+                            ilog("File already exists");
                         }
                     }
 
@@ -670,11 +622,14 @@ namespace ChaOS
 
                         if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy")
                         {
-                            ilog("Name is reserved.");
+                            ilog("Name is reserved");
                         }
                         else if (Directory.Exists(potato))
                         {
-                            Directory.Delete(Path.Combine(Directory.GetCurrentDirectory() + "\\" + potato), true);
+                            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+                                Directory.Delete(Directory.GetCurrentDirectory() + "\\" + potato, true);
+                            if (Console.ReadKey(true).Key == ConsoleKey.N)
+                                ilog("Operation canceled");
                         }
                         else if (!Directory.Exists(potato))
                         {
@@ -702,7 +657,10 @@ namespace ChaOS
                         }
                         else if (File.Exists(potato))
                         {
-                            File.Delete(Path.Combine(Directory.GetCurrentDirectory() + "\\" + potato));
+                            if (Console.ReadKey(true).Key == ConsoleKey.Y)
+                                File.Delete(Directory.GetCurrentDirectory() + "\\" + potato);
+                            if (Console.ReadKey(true).Key == ConsoleKey.N)
+                                ilog("Operation canceled");
                         }
                         else if (!File.Exists(potato))
                         {
