@@ -5,4 +5,4 @@
 
 ***
 
-**Please refer to https://github.com/ekeleze/ChaOS/wiki/Setting-up-ChaOS for help installing ChaOS in a VM**
+**Please refer to https://github.com/ekeleze/ChaOS/wiki/Setting-up-ChaOS for help installing ChaOS in a virtual machine**
