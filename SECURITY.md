@@ -14,7 +14,7 @@ Here's a list of all the supported and unsupported releases of ChaOS:
 | 1.0 Prerelease 2 | :x:                | Ended on Prerelease 3
 | 1.0 Prerelease 1 | :x:                | Ended on Prerelease 2
 
-###Supported betas
+Supported betas
 
 | Version  | Supported              | Support ends |
 | -------- | ---------------------- | ------------ |
