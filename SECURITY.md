@@ -27,7 +27,7 @@ Supported betas
 | Beta 1.3     | :x:                | Ended on beta 1.4
 | Beta 1.2     | :x:                | Ended on beta 1.3
 | Beta 1.1     | :x:                | Ended on beta 1.2
-| Beta 1.0     | :x:                | Ended on beta 1.1
+| Beta 1.0     | :white_check_mark: | LTS (Never because fuck it why not)
 
 ## Reporting a Vulnerability
 
