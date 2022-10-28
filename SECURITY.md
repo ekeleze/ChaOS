@@ -6,13 +6,13 @@ Here's a list of all the supported and unsupported versions of ChaOS:
 
 | Version  | Supported              | Support ends |
 | -------- | ---------------------- | ------------ |
-| 1.0.0 Prerelease 7 | :white_check_mark: | Ends on Prerelease 8
-| 1.0.0 Prerelease 6 | :x:                | Ended on Prerelease 7
-| 1.0.0 Prerelease 5 | :x:                | Ended on Prerelease 6
-| 1.0.0 Prerelease 4 | :x:                | Ended on Prerelease 5
-| 1.0.0 Prerelease 3 | :x:                | Ended on Prerelease 4
-| 1.0.0 Prerelease 2 | :x:                | Ended on Prerelease 3
-| 1.0.0 Prerelease 1 | :x:                | Ended on Prerelease 2
+| 1.0 Prerelease 7 | :white_check_mark: | Ends on Prerelease 8
+| 1.0 Prerelease 6 | :x:                | Ended on Prerelease 7
+| 1.0 Prerelease 5 | :x:                | Ended on Prerelease 6
+| 1.0 Prerelease 4 | :x:                | Ended on Prerelease 5
+| 1.0 Prerelease 3 | :x:                | Ended on Prerelease 4
+| 1.0 Prerelease 2 | :x:                | Ended on Prerelease 3
+| 1.0 Prerelease 1 | :x:                | Ended on Prerelease 2
 | Beta 1.9.x   | :white_check_mark: | LTS (Ends on 1.0.0)
 | Beta 1.8.x   | :x:                | Ended on beta 1.9.x
 | Beta 1.7     | :x:                | Ended on beta 1.8.x
