@@ -1,8 +1,8 @@
 # Security Policy
 
-## Supported Versions
+## Supported releases
 
-Here's a list of all the supported and unsupported versions of ChaOS:
+Here's a list of all the supported and unsupported releases of ChaOS:
 
 | Version  | Supported              | Support ends |
 | -------- | ---------------------- | ------------ |
@@ -13,6 +13,11 @@ Here's a list of all the supported and unsupported versions of ChaOS:
 | 1.0 Prerelease 3 | :x:                | Ended on Prerelease 4
 | 1.0 Prerelease 2 | :x:                | Ended on Prerelease 3
 | 1.0 Prerelease 1 | :x:                | Ended on Prerelease 2
+
+##Supported betas
+
+| Version  | Supported              | Support ends |
+| -------- | ---------------------- | ------------ |
 | Beta 1.9.x   | :white_check_mark: | LTS (Ends on 1.0.0)
 | Beta 1.8.x   | :x:                | Ended on beta 1.9.x
 | Beta 1.7     | :x:                | Ended on beta 1.8.x
