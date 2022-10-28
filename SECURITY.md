@@ -1,6 +1,6 @@
 # Security Policy
 
-## Supported releases
+## Supported versions
 
 Here's a list of all the supported and unsupported releases of ChaOS:
 
