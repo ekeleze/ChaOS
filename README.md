@@ -1,17 +1,6 @@
 # ChaOS
-A simple command-line OS
+**A simple command-line OS made with Cosmos**
 
-How to run OS in VMware:
-  1. Install visual studio 2022
-  2. Install the cosmos dev-kit (must be dev-kit)
-  3. Download the project
-  4. Open it in Visual Studio 2022 (must be 2022 else it won't work)
-  5. Turn off debugging in the project properties
-  6. Compile/build/run
-  7. Grab the finished .iso file from project-foler\ChaOS\bin\Debug\net6.0
-  8. Run it in VMware
+![ChaOS](https://user-images.githubusercontent.com/109512837/198657014-0e28b2dc-91a0-4d4c-a024-e80e4cc2c522.png)
 
-OR:
-  1. Grab a random vm
-  2. Put the iso in
-  3. Run it, why not?
+**Please go to https://github.com/ekeleze/ChaOS/wiki/Setting-up-ChaOS for help installing ChaOS in a VM**
