@@ -6,7 +6,7 @@ Here's a list of all the supported and unsupported releases of ChaOS:
 
 | Version  | Supported              | Support ends | Download availability |
 | -------- | ---------------------- | ------------ | --------------------- |
-| 1.0 Prerelease 7 | :white_check_mark: | Ends on Prerelease 8 | :white_check_mark: |
+| 1.0 Prerelease 7 | :white_check_mark: | Ends on Prerelease 9/release 1.0 | :white_check_mark: |
 | 1.0 Prerelease 6 | :x:                | Ended on Prerelease 7 | :x:                |
 | 1.0 Prerelease 5 | :x:                | Ended on Prerelease 6 | :x:                |
 | 1.0 Prerelease 4 | :x:                | Ended on Prerelease 5 | :x:                |
