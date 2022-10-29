@@ -27,7 +27,7 @@ Supported betas
 | Beta 1.3     | :x:                | Ended on beta 1.4 | :x:                |
 | Beta 1.2     | :x:                | Ended on beta 1.3 | :x:                |
 | Beta 1.1     | :x:                | Ended on beta 1.2 | :x:                |
-| Beta 1.0     | :white_check_mark: | LTS (Never because fuck it why not) | :white_check_mark: |
+| Beta 1.0     | :white_check_mark: | LTS (Ends on the first day of 2023) | :white_check_mark: |
 
 ## Reporting a vulnerability or problem
 
