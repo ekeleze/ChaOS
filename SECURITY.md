@@ -29,6 +29,6 @@ Supported betas
 | Beta 1.1     | :x:                | Ended on beta 1.2 | :x:                |
 | Beta 1.0     | :white_check_mark: | LTS (Never because fuck it why not) | :white_check_mark: |
 
-## Reporting a Vulnerability
+## Reporting a vulnerability or problem
 
-For reporting a vulnerability direct message ``ekeleze#7676`` or ``MrDumbrava#9459`` on discord, otherwise report it at the issues tab
+For reporting a vulnerability or problem DM ``ekeleze#7676`` or ``MrDumbrava#9459`` on discord, otherwise report it at the issues tab
