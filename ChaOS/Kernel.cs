@@ -20,7 +20,6 @@ namespace ChaOS
         readonly string ver = "1.0.0 Prerelease 8";
         readonly string systempath = @"0:\SYSTEM";
         readonly string userfile = @"0:\SYSTEM\userfile.sys";
-        readonly string diskfile = @"0:\disk.hid";
         readonly static string root = @"0:";
 
         //Not readonly
@@ -30,13 +29,13 @@ namespace ChaOS
         bool disk;
         string input;
         string input_beforelower;
+        CosmosVFS fs = new CosmosVFS();
         protected override void BeforeRun()
         {
             //Early initialization
 
             log(Cosmos.Core.CPU.GetAmountOfRAM() + "MB System RAM OK");
 
-            CosmosVFS fs = new CosmosVFS();
             VFSManager.RegisterVFS(fs);
 
             try
@@ -68,11 +67,6 @@ namespace ChaOS
                     {
                         File.Create(userfile);
                         File.WriteAllText(userfile, usr);
-                    }
-                    if (!File.Exists(diskfile))
-                    {
-                        File.Create(diskfile);
-                        File.WriteAllText(diskfile, "Default");
                     }
                 }
             }
@@ -211,16 +205,18 @@ namespace ChaOS
 
                     else if (input.Contains("username") && !input.Contains(".sys"))
                     {
-                        cwrite("\nCurrent username:", ConsoleColor.Gray);
+                        cwrite("\nCurrent username: ", ConsoleColor.Gray);
                         cwrite(File.ReadAllText(userfile), ConsoleColor.Gray);
                         write("\n\n");
 
                         if (input.Contains("change"))
                         {
-                            var text = input;
-                            var start = text.IndexOf(" ") + 1; //Add one to not include quote
-                            var nur = text.Substring(start);
-                            usr = nur;
+                            var potato = input_beforelower;
+                            try
+                            {
+                                potato = potato.Split("username change ")[1];
+                            } catch { ilog("No arguments"); }
+                            usr = potato;
 
                             if (disk && File.Exists(userfile))
                             {
@@ -669,18 +665,16 @@ namespace ChaOS
                         var files = 0;
                         foreach (var directoryEntry in directoryList)
                         {
-                            if (!directoryEntry.mName.Contains(".hid") || !directoryEntry.mName.Contains(".HID"))
+                            if (Directory.Exists(dir + "\\" + directoryEntry.mName))
                             {
-                                if (Directory.Exists(dir + "\\" + directoryEntry.mName))
-                                {
-                                    clog("<Dir> " + directoryEntry.mName, ConsoleColor.Gray);
-                                }
-                                if (File.Exists(dir + "\\" + directoryEntry.mName))
-                                {
-                                    clog("<File> " + directoryEntry.mName, ConsoleColor.Gray);
-                                }
-                                files += 1;
+                                clog("<Dir> " + directoryEntry.mName, ConsoleColor.Gray);
                             }
+                            if (File.Exists(dir + "\\" + directoryEntry.mName) && !directoryEntry.mName.Contains(".hid") || File.Exists(dir + "\\" + directoryEntry.mName) && !directoryEntry.mName.Contains(".HID"))
+                            {
+                                clog("<File> " + directoryEntry.mName, ConsoleColor.Gray);
+                            }
+                            
+                            files += 1;
                         }
                         if (files == 0) { clog("\nFound nothing :(\n", ConsoleColor.Gray); }
                         else { clog("\nFound " + files + " elements\n", ConsoleColor.Yellow); }
@@ -747,11 +741,11 @@ namespace ChaOS
                         try
                         {
                             potato = potato.Split("lb ")[1];
-                            File.WriteAllText(diskfile, potato);
+                            fs.SetFileSystemLabel(root, potato);
                         }
                         catch
                         {
-                            ilog("Couldn't relablel disk, name argument?");
+                            ilog("Couldn't relablel disk, any arguments?");
                         }
                     }
 
@@ -760,7 +754,7 @@ namespace ChaOS
                         long availableSpace = VFSManager.GetAvailableFreeSpace(@"0:\");
                         long diskSpace = VFSManager.GetTotalSize(@"0:\");
                         string fsType = VFSManager.GetFileSystemType("0:\\");
-                        clog("\nDisk info for " + File.ReadAllText(diskfile), ConsoleColor.Yellow);
+                        clog("\nDisk info for " + fs.GetFileSystemLabel(root), ConsoleColor.Yellow);
                         if (diskSpace < 1000000) //Less than 1mb
                         {
                             clog("\nDisk space: " + availableSpace / 1000 + "KB free out of" + diskSpace / 1000 + "KB total", ConsoleColor.Yellow);
