@@ -7,12 +7,12 @@ Here's a list of the supported releases of ChaOS:
 | Version  | Supported              | Support ends | Download availability |
 | -------- | ---------------------- | ------------ | --------------------- |
 | Release 1.0.0 | :white_check_mark: | On next release | :white_check_mark: |
-| 1.0.0 Prerelease 6 | :x:                | Ended on release 1.0.0 | :x:                |
-| 1.0.0 Prerelease 5 | :x:                | Ended on prerelease 6 | :x:                |
-| 1.0.0 Prerelease 4 | :x:                | Ended on prerelease 5 | :x:                |
-| 1.0.0 Prerelease 3 | :x:                | Ended on prerelease 4 | :x:                |
-| 1.0.0 Prerelease 2 | :x:                | Ended on prerelease 3 | :x:                |
-| 1.0.0 Prerelease 1 | :x:                | Ended on prerelease 2 | :x:                |
+| 1.0.0 prerelease 6 | :x:                | Ended on release 1.0.0 | :x:                |
+| 1.0.0 prerelease 5 | :x:                | Ended on prerelease 6 | :x:                |
+| 1.0.0 prerelease 4 | :x:                | Ended on prerelease 5 | :x:                |
+| 1.0.0 prerelease 3 | :x:                | Ended on prerelease 4 | :x:                |
+| 1.0.0 prerelease 2 | :x:                | Ended on prerelease 3 | :x:                |
+| 1.0.0 prerelease 1 | :x:                | Ended on prerelease 2 | :x:                |
 
 Here's a list of the supported betas of ChaOS:
 
