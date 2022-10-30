@@ -18,7 +18,7 @@ Here's a list of the supported betas of ChaOS:
 
 | Version  | Supported              | Support ends | Download availability |
 | -------- | ---------------------- | ------------ | --------------------- |
-| Beta 1.9.x   | :x:                | Ended on prerelease 1 | :white_check_mark: |
+| Beta 1.9.x   | :x:                | Ended on release 1.0.0 | :white_check_mark: |
 | Beta 1.8.x   | :x:                | Ended on beta 1.9.x | :x:                |
 | Beta 1.7     | :x:                | Ended on beta 1.8.x | :x:                |
 | Beta 1.6     | :x:                | Ended on beta 1.7.x | :white_check_mark: |
