@@ -143,9 +143,7 @@ namespace ChaOS
                 Pen pen = new Pen(Color.Black);
                 WM.canvas.DrawFilledRectangle(pen, (int)Sys.MouseManager.X, (int)Sys.MouseManager.Y, 2, 2);
 
-                WM.canvas.Display();
-                WM.ClearCanvas();
-                Heap.Collect();
+                WM.Update();
                 #endregion
             }
             else
