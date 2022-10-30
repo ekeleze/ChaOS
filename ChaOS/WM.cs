@@ -4,6 +4,7 @@ using Sys = Cosmos.System;
 using System.Drawing;
 using Cosmos.System.Graphics.Fonts;
 using IL2CPU.API.Attribs;
+using Cosmos.Core.Memory;
 
 namespace ChaOS
 {
@@ -60,6 +61,14 @@ namespace ChaOS
         {
             if (action == "Close")
                 Sys.Power.Reboot();
+        }
+        public static void Update()
+        {
+            Sys.MouseManager.ScreenWidth = (uint)canvas.Mode.Columns;
+            Sys.MouseManager.ScreenHeight = (uint)canvas.Mode.Rows;
+            canvas.Display();
+            ClearCanvas();
+            Heap.Collect();
         }
         public static void ClearCanvas() => canvas.DrawFilledRectangle(background, new Sys.Graphics.Point(0, 0), canvas.Mode.Columns, canvas.Mode.Rows);
         public static void Text(int x, int y, int line, string text) => canvas.DrawString(text, f, black, new Sys.Graphics.Point(x + 1, y + 17 * line));

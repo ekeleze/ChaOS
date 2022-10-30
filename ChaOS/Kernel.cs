@@ -72,9 +72,6 @@ namespace ChaOS
                 }
             }
 
-            Sys.MouseManager.ScreenWidth = 640;
-            Sys.MouseManager.ScreenHeight = 480;
-
             //Boot message
 
             clear();
