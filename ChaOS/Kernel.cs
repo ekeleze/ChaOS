@@ -17,9 +17,10 @@ namespace ChaOS
         //GUI variables
 
         //Readonly
-        readonly string ver = "1.0.0 Prerelease 8";
+        readonly string ver = "Release 1.0.0";
+        readonly int copyright = 2022;
         readonly string systempath = @"0:\SYSTEM";
-        readonly string userfile = @"0:\SYSTEM\userfile.sys";
+        readonly string userfile = @"0:\SYSTEM\USERFILE.SYS";
         readonly static string root = @"0:";
 
         //Not readonly
@@ -79,11 +80,9 @@ namespace ChaOS
             clear();
             log("Boot successful!");
             clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", ConsoleColor.DarkGreen);
-            log("\n" + ver + "\nCopyright 2022 (c) Kastle Grounds\nType \"help\" to get started!");
+            log("\n" + ver + "\nCopyright (c) " + copyright + " Kastle Grounds\nType \"help\" to get started!");
             if (!disk)
-            {
                 log("No internal hard drive detected, ChaOS will continue in ClassiChaOS mode!");
-            }
             line();
         }
 
@@ -176,7 +175,6 @@ namespace ChaOS
                             clog("\nFunctions (ClassiChaOS Mode):", ConsoleColor.DarkGreen);
                         log(" help - Shows all functions");
                         log(" username - Allows you to use usernames");
-                        log(" info  - Shows more detail about commands");
                         log(" credits - Shows all of the wonderful people that make ChaOS work");
                         log(" cls/clear - Clears the screen");
                         log(" color - Changes text color, do 'color list' to list all colors");
@@ -195,10 +193,10 @@ namespace ChaOS
                             log(" mkfile - Makes file, with filename argument");
                             log(" deldir - Deletes folder, with dirname argument");
                             log(" delfile - Deletes file, with filename argument");
-                            log(" open - Opens file. Supported formats: .txt .sys .wav");
                             log(" lb - Relabels disk");
-                            log(" notepad - Opens MIV notepad.\n");
+                            log(" notepad - Opens MIV notepad.");
                         }
+                        line();
                     }
 
                     //Username commands
@@ -212,19 +210,24 @@ namespace ChaOS
                         if (input.Contains("change"))
                         {
                             var potato = input_beforelower;
+                            bool cancontinue;
                             try
                             {
                                 potato = potato.Split("username change ")[1];
-                            } catch { ilog("No arguments"); }
+                                cancontinue = true;
+                            } catch { ilog("No arguments"); cancontinue = false; }
                             usr = potato;
 
-                            if (disk && File.Exists(userfile))
+                            if (cancontinue)
                             {
-                                try { File.WriteAllText(userfile, usr); ilog("Username changed successfully\n"); } catch { }
-                            }
-                            else
-                            {
-                                ilog("Username changed successfully\n");
+                                if (disk && File.Exists(userfile))
+                                {
+                                    try { File.WriteAllText(userfile, usr); ilog("Username changed successfully\n"); } catch { }
+                                }
+                                else
+                                {
+                                    ilog("Username changed successfully\n");
+                                }
                             }
                         }
                     }
@@ -248,6 +251,7 @@ namespace ChaOS
                         clog(" 0xRage - Portuguese language writer", ConsoleColor.Yellow);
                         clog(" Owen2k6 - Japanese language writer", ConsoleColor.Yellow);
                         clog(" mariobot128 - French language writer", ConsoleColor.Yellow);
+                        clog(" RaphMar2019 - GUI helper", ConsoleColor.Yellow);
                         line();
                     }
 
@@ -309,9 +313,8 @@ namespace ChaOS
                             Console.ForegroundColor = ConsoleColor.Black;
                             Console.BackgroundColor = ConsoleColor.White;
                             clear();
-                            log("ChaOS v" + ver);
-                            
-                            log("Copyright 2022 (c) Kastle Grounds\n");
+                            log("ChaOS " + ver);
+                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark blue")) //Dark blue
@@ -319,9 +322,8 @@ namespace ChaOS
                             Console.ForegroundColor = ConsoleColor.DarkBlue;
                             Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            log("ChaOS v" + ver);
-                            
-                            log("Copyright 2022 (c) Kastle Grounds\n");
+                            log("ChaOS " + ver);
+                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark green")) //Dark green
@@ -329,9 +331,8 @@ namespace ChaOS
                             Console.ForegroundColor = ConsoleColor.DarkGreen;
                             Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            log("ChaOS v" + ver);
-                            
-                            log("Copyright 2022 (c) Kastle Grounds\n");
+                            log("ChaOS " + ver);
+                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark cyan")) //Dark cyan
@@ -339,9 +340,8 @@ namespace ChaOS
                             Console.ForegroundColor = ConsoleColor.DarkCyan;
                             Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            log("ChaOS v" + ver);
-                            
-                            log("Copyright 2022 (c) Kastle Grounds\n");
+                            log("ChaOS " + ver);
+                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark gray")) //Dark gray
@@ -349,9 +349,8 @@ namespace ChaOS
                             Console.ForegroundColor = ConsoleColor.DarkGray;
                             Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            log("ChaOS v" + ver);
-                            
-                            log("Copyright 2022 (c) Kastle Grounds\n");
+                            log("ChaOS " + ver);
+                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
                         }
 
                         if (!input.Contains("dark"))
@@ -361,9 +360,8 @@ namespace ChaOS
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                log("ChaOS v" + ver);
-                                
-                                log("Copyright 2022 (c) Kastle Grounds\n");
+                                log("ChaOS " + ver);
+                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
                             }
                         }
 
@@ -374,9 +372,8 @@ namespace ChaOS
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                log("ChaOS v" + ver);
-                                
-                                log("Copyright 2022 (c) Kastle Grounds\n");
+                                log("ChaOS " + ver);
+                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
                             }
                         }
 
@@ -387,9 +384,8 @@ namespace ChaOS
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                log("ChaOS v" + ver);
-                                
-                                log("Copyright 2022 (c) Kastle Grounds\n");
+                                log("ChaOS " + ver);
+                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
                             }
                         }
 
@@ -398,9 +394,8 @@ namespace ChaOS
                             Console.ForegroundColor = ConsoleColor.DarkRed;
                             Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            log("ChaOS v" + ver);
-                            
-                            log("Copyright 2022 (c) Kastle Grounds\n");
+                            log("ChaOS " + ver);
+                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark magenta")) //Dark magenta
@@ -408,9 +403,8 @@ namespace ChaOS
                             Console.ForegroundColor = ConsoleColor.DarkMagenta;
                             Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            log("ChaOS v" + ver);
-                            
-                            log("Copyright 2022 (c) Kastle Grounds\n");
+                            log("ChaOS " + ver);
+                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
                         }
 
                         if (input.Contains("dark yellow")) //Dark yellow
@@ -418,9 +412,8 @@ namespace ChaOS
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
                             Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            log("ChaOS v" + ver);
-                            
-                            log("Copyright 2022 (c) Kastle Grounds\n");
+                            log("ChaOS " + ver);
+                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
                         }
 
                         if (!input.Contains("dark"))
@@ -430,9 +423,8 @@ namespace ChaOS
                                 Console.ForegroundColor = ConsoleColor.Gray;
                                 Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                log("ChaOS v" + ver);
-                                
-                                log("Copyright 2022 (c) Kastle Grounds\n");
+                                log("ChaOS " + ver);
+                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
                             }
                         }
 
@@ -443,9 +435,8 @@ namespace ChaOS
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                log("ChaOS v" + ver);
-                                
-                                log("Copyright 2022 (c) Kastle Grounds\n");
+                                log("ChaOS " + ver);
+                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
                             }
                         }
 
@@ -456,9 +447,8 @@ namespace ChaOS
                                 Console.ForegroundColor = ConsoleColor.Magenta;
                                 Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                log("ChaOS v" + ver);
-                                
-                                log("Copyright 2022 (c) Kastle Grounds\n");
+                                log("ChaOS " + ver);
+                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
                             }
                         }
 
@@ -469,9 +459,8 @@ namespace ChaOS
                                 Console.ForegroundColor = ConsoleColor.Yellow;
                                 Console.BackgroundColor = ConsoleColor.Black;
                                 clear();
-                                log("ChaOS v" + ver);
-                                
-                                log("Copyright 2022 (c) Kastle Grounds\n");
+                                log("ChaOS " + ver);
+                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
                             }
                         }
 
@@ -480,9 +469,8 @@ namespace ChaOS
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.BackgroundColor = ConsoleColor.Black;
                             clear();
-                            log("ChaOS v" + ver);
-                            
-                            log("Copyright 2022 (c) Kastle Grounds\n");
+                            log("ChaOS " + ver);
+                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
                         }
                     }
 
@@ -515,124 +503,146 @@ namespace ChaOS
 
                     else if (input.Contains("mkdir") && disk)
                     {
-                        var potato = input_beforelower;
+                        var potato = input;
+                        bool cancontinue;
                         if (potato.Contains("0:\\")) { potato.Replace("0:\\", ""); }
 
                         try
                         {
                             potato = potato.Split("mkdir ")[1];
                             potato = "\\" + potato;
+                            cancontinue = true;
                         }
                         catch
                         {
                             ilog("No arguments");
+                            cancontinue = false;
                         }
 
-                        if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy" || potato.Contains("."))
+                        if (cancontinue)
                         {
-                            ilog("Name is reserved or contains file extension.");
-                        }
-                        else if (!Directory.Exists(potato))
-                        {
-                            Directory.CreateDirectory(Directory.GetCurrentDirectory() + potato);
-                        }
-                        else if (Directory.Exists(potato))
-                        {
-                            ilog("Directory already exists");
+                            if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy" || potato.Contains("."))
+                            {
+                                ilog("Name is reserved or contains file extension.");
+                            }
+                            else if (!Directory.Exists(potato))
+                            {
+                                Directory.CreateDirectory(Directory.GetCurrentDirectory() + potato);
+                            }
+                            else if (Directory.Exists(potato))
+                            {
+                                ilog("Directory already exists");
+                            }
                         }
                     }
 
                     else if (input.Contains("mkfile") && disk)
                     {
-                        var potato = input_beforelower;
+                        var potato = input;
+                        bool cancontinue;
                         if (potato.Contains("0:\\")) { potato.Replace("0:\\", ""); }
                         try
                         {
                             potato = potato.Split("mkfile ")[1];
                             potato = "\\" + potato;
+                            cancontinue = true;
                         }
                         catch
                         {
-                            ilog("\nNo arguments\n");
+                            ilog("No arguments");
+                            cancontinue = false;
                         }
 
-
-                        if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy" || potato.Contains(".sys") || potato.Contains(".hid") || !potato.Contains("."))
+                        if (cancontinue)
                         {
-                            ilog("Name is reserved or doesn't contain file extension.");
-                        }
-                        else if (!File.Exists(potato))
-                        {
-                            File.Create(Directory.GetCurrentDirectory() + potato);
-                        }
-                        else if (File.Exists(potato))
-                        {
-                            ilog("File already exists");
+                            if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy" || potato.Contains(".sys") || potato.Contains(".hid") || !potato.Contains("."))
+                            {
+                                ilog("Name is reserved or doesn't contain file extension.");
+                            }
+                            else if (!File.Exists(potato))
+                            {
+                                File.Create(Directory.GetCurrentDirectory() + potato);
+                            }
+                            else if (File.Exists(potato))
+                            {
+                                ilog("File already exists");
+                            }
                         }
                     }
 
                     else if (input.Contains("deldir") && disk)
                     {
-                        var potato = input_beforelower;
+                        var potato = input;
+                        bool cancontinue;
                         if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
                         try
                         {
                             potato = potato.Split("deldir ")[1];
                             potato = "\\" + potato;
+                            cancontinue = true;
                         }
                         catch
                         {
                             ilog("No arguments");
+                            cancontinue = false;
                         }
 
-                        if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy")
+                        if (cancontinue)
                         {
-                            ilog("Name is reserved");
-                        }
-                        else if (Directory.Exists(potato))
-                        {
-                            ilog("Do you want to delete this folder? (Y/N):");
-                            if (Console.ReadKey(true).Key == ConsoleKey.Y)
-                                Directory.Delete(Directory.GetCurrentDirectory() + potato, true);
-                            if (Console.ReadKey(true).Key == ConsoleKey.N)
-                                ilog("Operation canceled");
-                        }
-                        else if (!Directory.Exists(potato))
-                        {
-                            ilog("Directory doesn't exist");
+                            if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy")
+                            {
+                                ilog("Name is reserved");
+                            }
+                            else if (Directory.Exists(potato))
+                            {
+                                ilog("Do you want to delete this folder? (Y/N):");
+                                if (Console.ReadKey(true).Key == ConsoleKey.Y)
+                                    Directory.Delete(Directory.GetCurrentDirectory() + potato, true);
+                                if (Console.ReadKey(true).Key == ConsoleKey.N)
+                                    ilog("Operation canceled");
+                            }
+                            else if (!Directory.Exists(potato))
+                            {
+                                ilog("Directory doesn't exist");
+                            }
                         }
                     }
 
                     else if (input.Contains("delfile") && disk)
                     {
-                        var potato = input_beforelower;
-                        var filename = input_beforelower;
+                        var potato = input;
+                        bool cancontinue;
                         if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
                         try
                         {
                             potato = potato.Split("delfile ")[1];
                             potato = "\\" + potato;
+                            cancontinue = true;
                         }
                         catch
                         {
                             ilog("No arguments");
+                            cancontinue = false;
                         }
 
-                        if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy")
+                        if (cancontinue)
                         {
-                            ilog("Name is reserved.");
-                        }
-                        else if (File.Exists(potato))
-                        {
-                            ilog("Do you want to delete this file? (Y/N):");
-                            if (Console.ReadKey(true).Key == ConsoleKey.Y)
-                                File.Delete(Directory.GetCurrentDirectory() + potato);
-                            if (Console.ReadKey(true).Key == ConsoleKey.N)
-                                ilog("Operation canceled");
-                        }
-                        else if (!File.Exists(potato))
-                        {
-                            ilog("File doesn't exist");
+                            if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy")
+                            {
+                                ilog("Name is reserved.");
+                            }
+                            else if (File.Exists(potato))
+                            {
+                                ilog("Do you want to delete this file? (Y/N):");
+                                if (Console.ReadKey(true).Key == ConsoleKey.Y)
+                                    File.Delete(Directory.GetCurrentDirectory() + potato);
+                                if (Console.ReadKey(true).Key == ConsoleKey.N)
+                                    ilog("Operation canceled");
+                            }
+                            else if (!File.Exists(potato))
+                            {
+                                ilog("File doesn't exist");
+                            }
                         }
                     }
 
@@ -640,12 +650,12 @@ namespace ChaOS
                     {
                         if (input == "cd..")
                         {
-                            Directory.SetCurrentDirectory(@"0:\");
+                            Directory.SetCurrentDirectory(@"0:");
                             dir = Directory.GetCurrentDirectory();
                         }
                         else
                         {
-                            var potato = input_beforelower;
+                            var potato = input;
                             potato = potato.Split("cd ")[1];
                             if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
                             if (!potato.Contains("\\") && potato != root) { potato = "\\" + potato; }
@@ -757,15 +767,15 @@ namespace ChaOS
                         clog("\nDisk info for " + fs.GetFileSystemLabel(root), ConsoleColor.Yellow);
                         if (diskSpace < 1000000) //Less than 1mb
                         {
-                            clog("\nDisk space: " + availableSpace / 1000 + "KB free out of" + diskSpace / 1000 + "KB total", ConsoleColor.Yellow);
+                            clog("\nDisk space: " + availableSpace / 1000 + " KB free out of " + diskSpace / 1000 + " KB total", ConsoleColor.Yellow);
                         }
                         else if (diskSpace > 1000000) //More than 1mb
                         {
-                            clog("\nDisk space: " + availableSpace / 1e+6 + "MB free out of" + diskSpace / 1e+6 + "MB total", ConsoleColor.Yellow);
+                            clog("\nDisk space: " + availableSpace / 1e+6 + " MB free out of " + diskSpace / 1e+6 + " MB total", ConsoleColor.Yellow);
                         }
                         else if (diskSpace > 1e+9) //More than 1gb
                         {
-                            clog("\nDisk space: " + availableSpace / 1e+9 + "GB free out of" + diskSpace / 1e+9 + "GB total", ConsoleColor.Yellow);
+                            clog("\nDisk space: " + availableSpace / 1e+9 + " GB free out of " + diskSpace / 1e+9 + " GB total", ConsoleColor.Yellow);
                         }
                         clog("\nFilesystem type: " + fsType, ConsoleColor.Yellow);
                         line();
