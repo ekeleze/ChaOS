@@ -1,19 +1,33 @@
 # Security Policy
 
-## Supported Versions
+## Supported releases
 
-Here's a list of all the supported and unsupported versions of ChaOS:
+Here's a list of the supported releases of ChaOS:
 
 | Version  | Supported              | Support ends |
 | -------- | ---------------------- | ------------ |
-| Prerelease 7 | :white_check_mark: | On next release
-| Prerelease 6 | :white_check_mark: | On next release
-| Prerelease 5 | :x:                | Ended on Prerelease 6
-| Prerelease 4 | :x:                | Ended on Prerelease 5
-| Prerelease 3 | :x:                | Ended on Prerelease 4
-| Prerelease 2 | :x:                | Ended on Prerelease 3
-| Prerelease 1 | :x:                | Ended on Prerelease 2
-| Beta 1.9.x   | :x:                | Ended on Prerelease 1
+| Release 1.0.0 | :white_check_mark: | On next release
+| Prerelease 6 | :x:                | Ended on release 1.0.0
+| Prerelease 5 | :x:                | Ended on prerelease 6
+| Prerelease 4 | :x:                | Ended on prerelease 5
+| Prerelease 3 | :x:                | Ended on prerelease 4
+| Prerelease 2 | :x:                | Ended on prerelease 3
+| Prerelease 1 | :x:                | Ended on prerelease 2
+| Beta 1.9.x   | :x:                | Ended on prerelease 1
+| Beta 1.8.x   | :x:                | Ended on beta 1.9.x
+| Beta 1.7     | :x:                | Ended on beta 1.8.x
+| Beta 1.6     | :x:                | Ended on beta 1.7
+| Beta 1.5     | :x:                | Ended on beta 1.6
+| Beta 1.4     | :x:                | Ended on beta 1.5
+| Beta 1.3     | :x:                | Ended on beta 1.4
+| Beta 1.2     | :x:                | Ended on beta 1.3
+| Beta 1.1     | :x:                | Ended on beta 1.2
+| Beta 1.0     | :x:                | Ended on beta 1.1
+
+Here's a list of the supported betas of ChaOS:
+
+| Version  | Supported              | Support ends |
+| -------- | ---------------------- | ------------ |
 | Beta 1.8.x   | :x:                | Ended on beta 1.9.x
 | Beta 1.7     | :x:                | Ended on beta 1.8.x
 | Beta 1.6     | :x:                | Ended on beta 1.7
