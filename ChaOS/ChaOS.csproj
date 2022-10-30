@@ -29,6 +29,11 @@
 
     <ItemGroup>
       <None Remove="main.map" />
+      <None Remove="Resources\red_button.bmp" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\red_button.bmp" />
     </ItemGroup>
 
     <ItemGroup>
