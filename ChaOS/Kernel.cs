@@ -9,6 +9,7 @@ using Cosmos.System.Audio;
 using Cosmos.System.Graphics;
 using System.Drawing;
 using Cosmos.Core.Memory;
+using System.Reflection.Metadata;
 
 namespace ChaOS
 {
@@ -17,7 +18,7 @@ namespace ChaOS
         //GUI variables
 
         //Readonly
-        readonly string ver = "Release 1.0.0";
+        readonly string ver = "Release 1.0.1";
         readonly int copyright = 2022;
         readonly string systempath = @"0:\SYSTEM";
         readonly string userfile = @"0:\SYSTEM\USERFILE.SYS";
@@ -134,14 +135,16 @@ namespace ChaOS
 
                 WM.ChaBar();
 
-                WM.Window(x, y, 200, 160, "Test Window - ChaOS");
-                WM.Text(x, y, 1, "This is the current stage");
-                WM.Text(x, y, 2, "of ChaOS's GUI!");
-                WM.Text(x, y, 3, "Note: it's very, very");
-                WM.Text(x, y, 4, "glitchy!");
+                if (WM.WM_shown)
+                {
+                    WM.Window(x, y, 200, 160, "Test Window - ChaOS");
+                    WM.Text(x, y, 1, "This is the current stage");
+                    WM.Text(x, y, 2, "of ChaOS's GUI!");
+                    WM.Text(x, y, 4, "Note: It's in an alpha");
+                    WM.Text(x, y, 5, "stage, it isn't finished!");
+                }
 
-                Pen pen = new Pen(Color.Black);
-                WM.canvas.DrawFilledRectangle(pen, (int)Sys.MouseManager.X, (int)Sys.MouseManager.Y, 2, 2);
+                WM.canvas.DrawFilledRectangle(new Pen(Color.Black), (int)Sys.MouseManager.X, (int)Sys.MouseManager.Y, 2, 2);
 
                 WM.Update();
                 #endregion
@@ -190,13 +193,14 @@ namespace ChaOS
                             log(" delfile - Deletes file, with filename argument");
                             log(" lb - Relabels disk");
                             log(" notepad - Opens MIV notepad.");
+                            //log(" run - ChaLang (Alpha)");
                         }
                         line();
                     }
 
                     //Username commands
 
-                    else if (input.Contains("username") && !input.Contains(".sys"))
+                    else if (input.StartsWith("username"))
                     {
                         cwrite("\nCurrent username: ", ConsoleColor.Gray);
                         cwrite(File.ReadAllText(userfile), ConsoleColor.Gray);
@@ -471,10 +475,10 @@ namespace ChaOS
 
                     #endregion
 
-                    else if (input.Contains("gui"))
+                    else if (input.Equals("gui"))
                         WM.InitGUI();
 
-                    else if (input.Contains("clear") || input.Contains("cls"))
+                    else if (input.Equals("clear") || input.Equals("cls"))
                         clear();
 
                     else if (input == "time" || input == "t")
@@ -482,21 +486,30 @@ namespace ChaOS
 
                     //Power stuff
 
-                    else if (input.Contains("shutdown") || input.Contains("sd"))
+                    else if (input.Equals("shutdown") || input.Equals("sd"))
                     {
                         clog("\nShutting down...", ConsoleColor.Gray);
                         Sys.Power.Shutdown();
                     }
 
-                    else if (input.Contains("reboot") || input.Contains("rb"))
+                    else if (input.Equals("reboot") || input.Equals("rb"))
                     {
                         clog("\nRestarting...", ConsoleColor.Gray);
                         Sys.Power.Reboot();
                     }
 
+                    else if (input.StartsWith("echo"))
+                    {
+                        var thingtosay = input_beforelower;
+                        thingtosay = thingtosay.Split("echo ")[1];
+                        clog(thingtosay, ConsoleColor.Gray);
+                    }
+
                     //Disk and filesystem stuff
 
-                    else if (input.Contains("mkdir") && disk)
+                    #region The shit
+
+                    else if (input.StartsWith("mkdir") && disk)
                     {
                         var potato = input;
                         bool cancontinue;
@@ -531,7 +544,7 @@ namespace ChaOS
                         }
                     }
 
-                    else if (input.Contains("mkfile") && disk)
+                    else if (input.StartsWith("mkfile") && disk)
                     {
                         var potato = input;
                         bool cancontinue;
@@ -565,7 +578,7 @@ namespace ChaOS
                         }
                     }
 
-                    else if (input.Contains("deldir") && disk)
+                    else if (input.StartsWith("deldir") && disk)
                     {
                         var potato = input;
                         bool cancontinue;
@@ -603,7 +616,7 @@ namespace ChaOS
                         }
                     }
 
-                    else if (input.Contains("delfile") && disk)
+                    else if (input.StartsWith("delfile") && disk)
                     {
                         var potato = input;
                         bool cancontinue;
@@ -641,29 +654,27 @@ namespace ChaOS
                         }
                     }
 
-                    else if (input.Contains("cd") && disk)
+                    else if (input.StartsWith("cd") && disk)
                     {
-                        if (input == "cd..")
-                        {
-                            Directory.SetCurrentDirectory(@"0:");
-                            dir = Directory.GetCurrentDirectory();
-                        }
-                        else
-                        {
-                            var potato = input;
-                            potato = potato.Split("cd ")[1];
-                            if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
-                            if (!potato.Contains("\\") && potato != root) { potato = "\\" + potato; }
+                        var potato = input;
+                        potato = potato.Split("cd ")[1];
+                        if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
+                        if (!potato.Contains("\\") && potato != root) { potato = "\\" + potato; }
 
-                            if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory() + potato)))
-                            {
-                                dir = Directory.GetCurrentDirectory() + potato;
-                                Directory.SetCurrentDirectory(dir);
-                            }
+                        if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory() + potato)))
+                        {
+                            dir = Directory.GetCurrentDirectory() + potato;
+                            Directory.SetCurrentDirectory(dir);
                         }
                     }
 
-                    else if (input.Contains("dir") && disk)
+                    else if (input == "cd..")
+                    {
+                        Directory.SetCurrentDirectory(@"0:");
+                        dir = Directory.GetCurrentDirectory();
+                    }
+
+                    else if (input.Equals("dir") && disk)
                     {
                         clog("\nDirectory listing at " + Directory.GetCurrentDirectory(), ConsoleColor.Yellow);
                         var directoryList = VFSManager.GetDirectoryListing(dir);
@@ -685,7 +696,7 @@ namespace ChaOS
                         else { clog("\nFound " + files + " elements\n", ConsoleColor.Yellow); }
                     }
 
-                    else if (input.Contains("copy") && disk)
+                    else if (input.StartsWith("copy") && disk)
                     {
                         var potato = input_beforelower;
                         var potato1 = input_beforelower;
@@ -739,7 +750,7 @@ namespace ChaOS
                         }
                     }
 
-                    else if (input.Contains("lb") && disk)
+                    else if (input.StartsWith("lb") && disk)
                     {
                         var potato = input_beforelower;
                         if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
@@ -754,7 +765,7 @@ namespace ChaOS
                         }
                     }
 
-                    else if (input.Contains("disk") && disk)
+                    else if (input.Equals("disk") && disk)
                     {
                         long availableSpace = VFSManager.GetAvailableFreeSpace(@"0:\");
                         long diskSpace = VFSManager.GetTotalSize(@"0:\");
@@ -776,19 +787,50 @@ namespace ChaOS
                         line();
                     }
 
-                    else if (input.Contains("echo"))
-                    {
-                        var thingtosay = input_beforelower;
-                        thingtosay = thingtosay.Split("echo ")[1];
-                        clog(thingtosay, ConsoleColor.Gray);
-                    }
+                    #endregion
+
+                    //Applications
 
                     else if (input == "notepad" && disk)
                     {
                         MIVNotepad.StartMIV();
                     }
 
-                    #region Unknown command handling
+                    //ChaLang
+
+                    else if (input.StartsWith("run") && disk)
+                    {
+                        var potato = input;
+                        bool cancontinue = true;
+
+                        try
+                        {
+                            potato = potato.Split("run ")[1];
+                            potato.Replace("0:\\", "");
+                        } catch { cancontinue = false; ilog("No arguments"); }
+
+                        if (cancontinue)
+                        {
+                            string[] contents = File.ReadAllLines(Directory.GetCurrentDirectory() + potato);
+                            int count = -1;
+
+                            foreach (string line in contents)
+                            {
+                                count++;
+                                if (line.Equals("")) { }
+                                if (line.StartsWith("")) { }
+                                if (line.StartsWith("print"))
+                                {
+                                    string result = line;
+                                    result = result.Replace("print ", "");
+                                    result = result.Replace("\"", "");
+                                    clog(result, ConsoleColor.Gray);
+                                }
+                            }
+                        }
+                    }
+
+                    #region Other
 
                     else
                     {
@@ -846,18 +888,15 @@ namespace ChaOS
                             clog("\n! Unknown command.\n", ConsoleColor.Red);
                         }
                     }
-
-                    #endregion
                 }
-
-                #region Exception catching
 
                 catch (Exception e)
                 {
                     clog("\nAn exception occurred." + e + "\n", ConsoleColor.Red);
                     Console.Beep(880, 5);
+
+                    #endregion
                 }
-                #endregion
             }
         }
     }
