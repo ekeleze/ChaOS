@@ -4,13 +4,13 @@
   "success": true,
   "projectFilePath": "D:\\Documentos\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.build\\0.1.0-localbuild20221030055922\\cosmos.build.0.1.0-localbuild20221030055922.nupkg.sha512",
-    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.common\\0.1.0-localbuild20221030055931\\cosmos.common.0.1.0-localbuild20221030055931.nupkg.sha512",
-    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.core\\0.1.0-localbuild20221030055931\\cosmos.core.0.1.0-localbuild20221030055931.nupkg.sha512",
-    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.debug.kernel\\0.1.0-localbuild20221030055931\\cosmos.debug.kernel.0.1.0-localbuild20221030055931.nupkg.sha512",
-    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.hal2\\0.1.0-localbuild20221030055931\\cosmos.hal2.0.1.0-localbuild20221030055931.nupkg.sha512",
-    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.system2\\0.1.0-localbuild20221030055931\\cosmos.system2.0.1.0-localbuild20221030055931.nupkg.sha512",
-    "C:\\Users\\Eric\\.nuget\\packages\\il2cpu.api\\0.1.0-localbuild20221030055931\\il2cpu.api.0.1.0-localbuild20221030055931.nupkg.sha512"
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.build\\0.1.0-localbuild20221009032033\\cosmos.build.0.1.0-localbuild20221009032033.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.common\\0.1.0-localbuild20221009032051\\cosmos.common.0.1.0-localbuild20221009032051.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.core\\0.1.0-localbuild20221009032051\\cosmos.core.0.1.0-localbuild20221009032051.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.debug.kernel\\0.1.0-localbuild20221009032051\\cosmos.debug.kernel.0.1.0-localbuild20221009032051.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.hal2\\0.1.0-localbuild20221009032051\\cosmos.hal2.0.1.0-localbuild20221009032051.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.system2\\0.1.0-localbuild20221009032051\\cosmos.system2.0.1.0-localbuild20221009032051.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\il2cpu.api\\0.1.0-localbuild20221009032051\\il2cpu.api.0.1.0-localbuild20221009032051.nupkg.sha512"
   ],
   "logs": []
 }

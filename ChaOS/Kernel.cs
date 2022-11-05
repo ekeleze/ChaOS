@@ -8,8 +8,6 @@ using Cosmos.System.Audio.IO;
 using Cosmos.System.Audio;
 using Cosmos.System.Graphics;
 using System.Drawing;
-using Cosmos.Core.Memory;
-using System.Reflection.Metadata;
 
 namespace ChaOS
 {
@@ -654,11 +652,18 @@ namespace ChaOS
                         }
                     }
 
+                    else if (input == "cd..")
+                    {
+                        Directory.SetCurrentDirectory(@"0:");
+                        dir = Directory.GetCurrentDirectory();
+                    }
+
                     else if (input.StartsWith("cd") && disk)
                     {
-                        var potato = input;
+                        var potato = input.ToUpper();
                         potato = potato.Split("cd ")[1];
                         if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
+                        if (potato.Equals(" ")) { ilog("Invalid path name");  return; }
                         if (!potato.Contains("\\") && potato != root) { potato = "\\" + potato; }
 
                         if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory() + potato)))
@@ -666,34 +671,39 @@ namespace ChaOS
                             dir = Directory.GetCurrentDirectory() + potato;
                             Directory.SetCurrentDirectory(dir);
                         }
-                    }
-
-                    else if (input == "cd..")
-                    {
-                        Directory.SetCurrentDirectory(@"0:");
-                        dir = Directory.GetCurrentDirectory();
+                        else
+                        {
+                            ilog("Directory doesn't exist");
+                        }
                     }
 
                     else if (input.Equals("dir") && disk)
                     {
-                        clog("\nDirectory listing at " + Directory.GetCurrentDirectory(), ConsoleColor.Yellow);
-                        var directoryList = VFSManager.GetDirectoryListing(dir);
-                        var files = 0;
-                        foreach (var directoryEntry in directoryList)
+                        try
                         {
-                            if (Directory.Exists(dir + "\\" + directoryEntry.mName))
+                            clog("\nDirectory listing at " + dir, ConsoleColor.Yellow);
+                            var directoryList = VFSManager.GetDirectoryListing(dir);
+                            var files = 0;
+                            foreach (var directoryEntry in directoryList)
                             {
-                                clog("<Dir> " + directoryEntry.mName, ConsoleColor.Gray);
+                                if (Directory.Exists(dir + "\\" + directoryEntry.mName))
+                                {
+                                    clog("<Dir> " + directoryEntry.mName, ConsoleColor.Gray);
+                                }
+                                if (File.Exists(dir + "\\" + directoryEntry.mName) && !directoryEntry.mName.Contains(".hid") || File.Exists(dir + "\\" + directoryEntry.mName) && !directoryEntry.mName.Contains(".HID"))
+                                {
+                                    clog("<File> " + directoryEntry.mName, ConsoleColor.Gray);
+                                }
+
+                                files += 1;
                             }
-                            if (File.Exists(dir + "\\" + directoryEntry.mName) && !directoryEntry.mName.Contains(".hid") || File.Exists(dir + "\\" + directoryEntry.mName) && !directoryEntry.mName.Contains(".HID"))
-                            {
-                                clog("<File> " + directoryEntry.mName, ConsoleColor.Gray);
-                            }
-                            
-                            files += 1;
+                            if (files == 0) { clog("\nFound nothing :(\n", ConsoleColor.Gray); }
+                            else { clog("\nFound " + files + " elements\n", ConsoleColor.Yellow); }
                         }
-                        if (files == 0) { clog("\nFound nothing :(\n", ConsoleColor.Gray); }
-                        else { clog("\nFound " + files + " elements\n", ConsoleColor.Yellow); }
+                        catch
+                        {
+                            clog("Coudln't get directory listing :(", ConsoleColor.Red);
+                        }
                     }
 
                     else if (input.StartsWith("copy") && disk)
