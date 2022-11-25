@@ -1,70 +1,60 @@
-﻿using System;
-using System.IO;
-using Cosmos.System.FileSystem;
-using Sys = Cosmos.System;
+﻿using Cosmos.System.FileSystem;
 using Cosmos.System.FileSystem.VFS;
-using Cosmos.HAL.Drivers.PCI.Audio;
-using Cosmos.System.Audio.IO;
-using Cosmos.System.Audio;
-using Cosmos.System.Graphics;
-using System.Drawing;
+using System;
+using System.IO;
+using Sys = Cosmos.System;
+using ChaOS.Misc;
+using static ChaOS.Core;
+using static System.ConsoleColor;
 
 namespace ChaOS
 {
     public class Kernel : Sys.Kernel
     {
-        //GUI variables
+        //Variables
+        readonly string[] contributors = {
+            "ekeleze - Creator",
+            "MrDumbrava - Contributor & spanish language writer",
+            "Retronics - German language writer",
+            "0xRage - Portuguese language writer",
+            "Owen2k6 - Japanese language writer",
+            "mariobot128 - French language writer",
+            "RaphMar2019 - GUI helper",
+            "BiltzWolf007 - GUI helper"
+        };
 
-        //Readonly
-        readonly string ver = "Release 1.0.1";
-        readonly int copyright = 2022;
-        readonly string systempath = @"0:\SYSTEM";
-        readonly string userfile = @"0:\SYSTEM\USERFILE.SYS";
-        readonly static string root = @"0:";
-
-        //Not readonly
+        const string ver = "Release 1.1";
+        const int copyright = 2022;
+        const string systempath = @"0:\SYSTEM";
+        const string userfile = @"0:\SYSTEM\USERFILE.SYS";
+        const string root = @"0:\";
         string usr = "usr";
-        public static string dir = root;
-        public static bool gui = false;
-        bool disk;
+        public static bool disk;
         string input;
-        string input_beforelower;
+        string inputBeforeLower;
+        string inputCapitalized;
         CosmosVFS fs = new CosmosVFS();
-        protected override void BeforeRun()
-        {
-            //Early initialization
-
-            log(Cosmos.Core.CPU.GetAmountOfRAM() + "MB System RAM OK");
+        protected override void BeforeRun() {
+            //Initialization
 
             VFSManager.RegisterVFS(fs);
 
-            try
-            {
+            try {
                 var temp = fs.GetTotalSize(root);
-                Directory.SetCurrentDirectory(dir);
+                Directory.SetCurrentDirectory(root);
                 disk = true;
             }
-            catch
-            {
-                disk = false;
-            }
+            catch { disk = false; }
 
-            //Initialization
-
-            if (disk)
-            {
-                if (!Directory.Exists(systempath))
-                {
+            if (disk) {
+                if (!Directory.Exists(systempath)) {
                     Directory.CreateDirectory(systempath);
                 }
-                else
-                {
-                    if (File.Exists(userfile))
-                    {
+                else {
+                    if (File.Exists(userfile)) {
                         usr = File.ReadAllText(userfile);
                     }
-                    else if (!File.Exists(userfile))
-                    {
+                    else if (!File.Exists(userfile)) {
                         File.Create(userfile);
                         File.WriteAllText(userfile, usr);
                     }
@@ -73,841 +63,301 @@ namespace ChaOS
 
             //Boot message
 
-            clear();
+            Clear();
             log("Boot successful!");
-            clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", ConsoleColor.DarkGreen);
+            clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen);
             log("\n" + ver + "\nCopyright (c) " + copyright + " Kastle Grounds\nType \"help\" to get started!");
             if (!disk)
                 log("No internal hard drive detected, ChaOS will continue in ClassiChaOS mode!");
-            line();
+            log();
         }
 
-        #region ChaOS Core
-        protected void log(string text) //Log commmand for writing line
-        {
-            Console.WriteLine(text);
-        }
-        protected void clog(string text, ConsoleColor color) //Color log for writing color line
-        {
-            var OldColor = Console.ForegroundColor;
-            var OldColorBack = Console.BackgroundColor;
-            Console.ForegroundColor = color;
-            Console.WriteLine(text);
-            Console.ForegroundColor = OldColor;
-            Console.BackgroundColor = OldColorBack;
-        }
-        protected void ilog(string text) //ilog
-        {
-            clog("! " + text, ConsoleColor.Gray);
-        }
-        protected void write(string text) //Log commmand for writing line
-        {
-            Console.Write(text);
-        }
-        protected void cwrite(string text, ConsoleColor color) //Log command for only writing
-        {
-            var OldColor = Console.ForegroundColor;
-            var OldColorBack = Console.BackgroundColor;
-            Console.ForegroundColor = color;
-            write(text);
-            Console.ForegroundColor = OldColor;
-            Console.BackgroundColor = OldColorBack;
-        }
-
-        protected void clear()
-        {
-            Console.Clear();
-        }
-        protected void line()
-        {
-            Console.WriteLine("");
-        }
-        #endregion
-
-        protected override void Run()
-        {
-            if (gui)
-            {
-                #region GUI
-                int x = 50; int y = 50;
-
-                WM.ChaBar();
-
-                if (WM.WM_shown)
-                {
-                    WM.Window(x, y, 200, 160, "Test Window - ChaOS");
-                    WM.Text(x, y, 1, "This is the current stage");
-                    WM.Text(x, y, 2, "of ChaOS's GUI!");
-                    WM.Text(x, y, 4, "Note: It's in an alpha");
-                    WM.Text(x, y, 5, "stage, it isn't finished!");
+        protected override void Run() {
+            try {
+                if (disk) {
+                    write(usr + " (" + Directory.GetCurrentDirectory() + ")");
+                    write(": "); }
+                else if (!disk) {
+                    write(usr + " > ");
                 }
 
-                WM.canvas.DrawFilledRectangle(new Pen(Color.Black), (int)Sys.MouseManager.X, (int)Sys.MouseManager.Y, 2, 2);
+                inputBeforeLower = Console.ReadLine(); // Input
+                inputCapitalized = inputBeforeLower.ToUpper(); // Input converted to uppercase
+                input = inputBeforeLower.ToLower(); // Input converted to lowercase
 
-                WM.Update();
-                #endregion
-            }
-            else
-            {
-                try
-                {
+                if (input.Equals("help")) {
                     if (disk)
-                    {
-                        write(usr + " (" + Directory.GetCurrentDirectory() + "\\" + ")");
-                        write(": ");
-                    }
-                    else if (!disk)
-                    {
-                        write(usr + " > ");
-                    }
-                    input_beforelower = Console.ReadLine();
-                    input = input_beforelower.ToLower();
-
-                    if (input.Equals("help"))
-                    {
-                        if (disk)
-                            clog("\nFunctions:", ConsoleColor.DarkGreen);
-                        else
-                            clog("\nFunctions (ClassiChaOS Mode):", ConsoleColor.DarkGreen);
-                        log(" help - Shows all functions");
-                        log(" username - Allows you to use usernames");
-                        log(" credits - Shows all of the wonderful people that make ChaOS work");
-                        log(" cls/clear - Clears the screen");
-                        log(" color - Changes text color, do 'color list' to list all colors");
-                        log(" gui - See a test!");
-                        log(" t/time - Tells you the time");
-                        log(" echo - Echoes what you say");
-                        log(" sd/shutdown - Shuts down ChaOS");
-                        log(" rb/reboot - Reboots the system");
-                        if (disk)
-                        {
-                            log(" disk - Gives info about the disk");
-                            log(" cd - Browses to folder, works as in MS-DOS");
-                            log(" cd.. - Returns to root");
-                            log(" dir - Lists files in the current folder");
-                            log(" mkdir - Makes folder, with dirname argument");
-                            log(" mkfile - Makes file, with filename argument");
-                            log(" deldir - Deletes folder, with dirname argument");
-                            log(" delfile - Deletes file, with filename argument");
-                            log(" lb - Relabels disk");
-                            log(" notepad - Opens MIV notepad.");
-                            //log(" run - ChaLang (Alpha)");
-                        }
-                        line();
-                    }
-
-                    //Username commands
-
-                    else if (input.StartsWith("username"))
-                    {
-                        cwrite("\nCurrent username: ", ConsoleColor.Gray);
-                        cwrite(File.ReadAllText(userfile), ConsoleColor.Gray);
-                        write("\n\n");
-
-                        if (input.Contains("change"))
-                        {
-                            var potato = input_beforelower;
-                            bool cancontinue;
-                            try
-                            {
-                                potato = potato.Split("username change ")[1];
-                                cancontinue = true;
-                            } catch { ilog("No arguments"); cancontinue = false; }
-                            usr = potato;
-
-                            if (cancontinue)
-                            {
-                                if (disk && File.Exists(userfile))
-                                {
-                                    try { File.WriteAllText(userfile, usr); ilog("Username changed successfully\n"); } catch { }
-                                }
-                                else
-                                {
-                                    ilog("Username changed successfully\n");
-                                }
-                            }
-                        }
-                    }
-
-                    //CrEdItS!
-
-                    else if (input.Equals("credits"))
-                    {
-                        line();
-                        cwrite("C", ConsoleColor.Blue);
-                        cwrite("r", ConsoleColor.Green);
-                        cwrite("e", ConsoleColor.DarkYellow);
-                        cwrite("d", ConsoleColor.Red);
-                        cwrite("i", ConsoleColor.DarkMagenta);
-                        cwrite("t", ConsoleColor.Cyan);
-                        cwrite("s", ConsoleColor.DarkRed);
-                        cwrite(":\n", ConsoleColor.Blue);
-                        clog(" ekeleze - Creator of ChaOS", ConsoleColor.Yellow);
-                        clog(" MrDumbrava - Contributor & spanish language writer", ConsoleColor.Yellow);
-                        clog(" Retronics - German language writer", ConsoleColor.Yellow);
-                        clog(" 0xRage - Portuguese language writer", ConsoleColor.Yellow);
-                        clog(" Owen2k6 - Japanese language writer", ConsoleColor.Yellow);
-                        clog(" mariobot128 - French language writer", ConsoleColor.Yellow);
-                        clog(" RaphMar2019 - GUI helper", ConsoleColor.Yellow);
-                        line();
-                    }
-
-                    //Misc
-
-                    #region Color functions
-                    else if (input.Contains("color") && !input.Contains("."))
-                    {
-                        if (input == "color")
-                        {
-                            ilog("Please write \"color list\" to list colors");
-                        }
-                        if (input.Contains("list"))
-                        {
-                            var OldColor = Console.ForegroundColor;
-                            var OldColorBack = Console.BackgroundColor;
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            clog("\nPlease write \"color list\" to list colors", ConsoleColor.Green);
-
-                            write(" ");
-                            Console.ForegroundColor = ConsoleColor.Black; Console.BackgroundColor = ConsoleColor.White; write("\nblack - Black with white background");
-                            Console.BackgroundColor = ConsoleColor.Black; Console.ForegroundColor = ConsoleColor.DarkBlue;
-                            log(" dark blue - Dark blue with black background");
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            log(" dark green - Dark green with black background");
-                            Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            log(" dark cyan - Dark cyan with black background");
-                            Console.ForegroundColor = ConsoleColor.DarkGray;
-                            log(" dark gray - Dark gray with black background");
-                            Console.ForegroundColor = ConsoleColor.Blue;
-                            log(" blue - Normal blue with black background");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            log(" green - Green with black background");
-                            Console.ForegroundColor = ConsoleColor.Cyan;
-                            log(" cyan - Cyan with black background");
-                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                            log(" dark red - Dark red with black background");
-                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                            log(" dark magenta - Dark magenta with black background");
-                            Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            log(" dark yellow - Dark yellow/orange with black background");
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            log(" gray - Gray with black background");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            log(" red - Red with black background"); ;
-                            Console.ForegroundColor = ConsoleColor.Magenta;
-                            log(" magenta - Magenta with black background");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            log(" yellow - Light yellow with black background");
-                            Console.ForegroundColor = ConsoleColor.White;
-                            log(" white - Pure white with black background");
-                            Console.ForegroundColor = OldColor;
-                            Console.BackgroundColor = OldColorBack;
-                            line();
-                        }
-
-                        if (input.Contains("black")) //Black
-                        {
-                            Console.ForegroundColor = ConsoleColor.Black;
-                            Console.BackgroundColor = ConsoleColor.White;
-                            clear();
-                            log("ChaOS " + ver);
-                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                        }
-
-                        if (input.Contains("dark blue")) //Dark blue
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            clear();
-                            log("ChaOS " + ver);
-                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                        }
-
-                        if (input.Contains("dark green")) //Dark green
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            clear();
-                            log("ChaOS " + ver);
-                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                        }
-
-                        if (input.Contains("dark cyan")) //Dark cyan
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            clear();
-                            log("ChaOS " + ver);
-                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                        }
-
-                        if (input.Contains("dark gray")) //Dark gray
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkGray;
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            clear();
-                            log("ChaOS " + ver);
-                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                        }
-
-                        if (!input.Contains("dark"))
-                        {
-                            if (input.Contains("blue")) //Blue
-                            {
-                                Console.ForegroundColor = ConsoleColor.Blue;
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                clear();
-                                log("ChaOS " + ver);
-                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                            }
-                        }
-
-                        if (!input.Contains("dark"))
-                        {
-                            if (input.Contains("green")) //Green
-                            {
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                clear();
-                                log("ChaOS " + ver);
-                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                            }
-                        }
-
-                        if (!input.Contains("dark"))
-                        {
-                            if (input.Contains("cyan")) //Cyan
-                            {
-                                Console.ForegroundColor = ConsoleColor.Cyan;
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                clear();
-                                log("ChaOS " + ver);
-                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                            }
-                        }
-
-                        if (input.Contains("dark red")) //Dark red
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            clear();
-                            log("ChaOS " + ver);
-                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                        }
-
-                        if (input.Contains("dark magenta")) //Dark magenta
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            clear();
-                            log("ChaOS " + ver);
-                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                        }
-
-                        if (input.Contains("dark yellow")) //Dark yellow
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            clear();
-                            log("ChaOS " + ver);
-                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                        }
-
-                        if (!input.Contains("dark"))
-                        {
-                            if (input.Contains("gray")) //Gray
-                            {
-                                Console.ForegroundColor = ConsoleColor.Gray;
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                clear();
-                                log("ChaOS " + ver);
-                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                            }
-                        }
-
-                        if (!input.Contains("dark"))
-                        {
-                            if (input.Contains("red")) //Red
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                clear();
-                                log("ChaOS " + ver);
-                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                            }
-                        }
-
-                        if (!input.Contains("dark"))
-                        {
-                            if (input.Contains("magenta")) //Magenta
-                            {
-                                Console.ForegroundColor = ConsoleColor.Magenta;
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                clear();
-                                log("ChaOS " + ver);
-                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                            }
-                        }
-
-                        if (!input.Contains("dark"))
-                        {
-                            if (input.Contains("yellow")) //Yellow
-                            {
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                clear();
-                                log("ChaOS " + ver);
-                                log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                            }
-                        }
-
-                        if (input.Contains("white")) //White
-                        {
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            clear();
-                            log("ChaOS " + ver);
-                            log("Copyright (c) " + copyright + " Kastle Grounds\n");
-                        }
-                    }
-
-                    #endregion
-
-                    else if (input.Equals("gui"))
-                        WM.InitGUI();
-
-                    else if (input.Equals("clear") || input.Equals("cls"))
-                        clear();
-
-                    else if (input == "time" || input == "t")
-                        clog("\nCurrent time is " + Convert.ToString(Cosmos.HAL.RTC.Hour) + ":" + Convert.ToString(Cosmos.HAL.RTC.Minute) + ":" + Convert.ToString(Cosmos.HAL.RTC.Second) + "\n", ConsoleColor.Yellow);
-
-                    //Power stuff
-
-                    else if (input.Equals("shutdown") || input.Equals("sd"))
-                    {
-                        clog("\nShutting down...", ConsoleColor.Gray);
-                        Sys.Power.Shutdown();
-                    }
-
-                    else if (input.Equals("reboot") || input.Equals("rb"))
-                    {
-                        clog("\nRestarting...", ConsoleColor.Gray);
-                        Sys.Power.Reboot();
-                    }
-
-                    else if (input.StartsWith("echo"))
-                    {
-                        var thingtosay = input_beforelower;
-                        thingtosay = thingtosay.Split("echo ")[1];
-                        clog(thingtosay, ConsoleColor.Gray);
-                    }
-
-                    //Disk and filesystem stuff
-
-                    #region The shit
-
-                    else if (input.StartsWith("mkdir") && disk)
-                    {
-                        var potato = input;
-                        bool cancontinue;
-                        if (potato.Contains("0:\\")) { potato.Replace("0:\\", ""); }
-
-                        try
-                        {
-                            potato = potato.Split("mkdir ")[1];
-                            potato = "\\" + potato;
-                            cancontinue = true;
-                        }
-                        catch
-                        {
-                            ilog("No arguments");
-                            cancontinue = false;
-                        }
-
-                        if (cancontinue)
-                        {
-                            if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy" || potato.Contains("."))
-                            {
-                                ilog("Name is reserved or contains file extension.");
-                            }
-                            else if (!Directory.Exists(potato))
-                            {
-                                Directory.CreateDirectory(Directory.GetCurrentDirectory() + potato);
-                            }
-                            else if (Directory.Exists(potato))
-                            {
-                                ilog("Directory already exists");
-                            }
-                        }
-                    }
-
-                    else if (input.StartsWith("mkfile") && disk)
-                    {
-                        var potato = input;
-                        bool cancontinue;
-                        if (potato.Contains("0:\\")) { potato.Replace("0:\\", ""); }
-                        try
-                        {
-                            potato = potato.Split("mkfile ")[1];
-                            potato = "\\" + potato;
-                            cancontinue = true;
-                        }
-                        catch
-                        {
-                            ilog("No arguments");
-                            cancontinue = false;
-                        }
-
-                        if (cancontinue)
-                        {
-                            if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy" || potato.Contains(".sys") || potato.Contains(".hid") || !potato.Contains("."))
-                            {
-                                ilog("Name is reserved or doesn't contain file extension.");
-                            }
-                            else if (!File.Exists(potato))
-                            {
-                                File.Create(Directory.GetCurrentDirectory() + potato);
-                            }
-                            else if (File.Exists(potato))
-                            {
-                                ilog("File already exists");
-                            }
-                        }
-                    }
-
-                    else if (input.StartsWith("deldir") && disk)
-                    {
-                        var potato = input;
-                        bool cancontinue;
-                        if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
-                        try
-                        {
-                            potato = potato.Split("deldir ")[1];
-                            potato = "\\" + potato;
-                            cancontinue = true;
-                        }
-                        catch
-                        {
-                            ilog("No arguments");
-                            cancontinue = false;
-                        }
-
-                        if (cancontinue)
-                        {
-                            if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy")
-                            {
-                                ilog("Name is reserved");
-                            }
-                            else if (Directory.Exists(potato))
-                            {
-                                ilog("Do you want to delete this folder? (Y/N):");
-                                if (Console.ReadKey(true).Key == ConsoleKey.Y)
-                                    Directory.Delete(Directory.GetCurrentDirectory() + potato, true);
-                                if (Console.ReadKey(true).Key == ConsoleKey.N)
-                                    ilog("Operation canceled");
-                            }
-                            else if (!Directory.Exists(potato))
-                            {
-                                ilog("Directory doesn't exist");
-                            }
-                        }
-                    }
-
-                    else if (input.StartsWith("delfile") && disk)
-                    {
-                        var potato = input;
-                        bool cancontinue;
-                        if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
-                        try
-                        {
-                            potato = potato.Split("delfile ")[1];
-                            potato = "\\" + potato;
-                            cancontinue = true;
-                        }
-                        catch
-                        {
-                            ilog("No arguments");
-                            cancontinue = false;
-                        }
-
-                        if (cancontinue)
-                        {
-                            if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy")
-                            {
-                                ilog("Name is reserved.");
-                            }
-                            else if (File.Exists(potato))
-                            {
-                                ilog("Do you want to delete this file? (Y/N):");
-                                if (Console.ReadKey(true).Key == ConsoleKey.Y)
-                                    File.Delete(Directory.GetCurrentDirectory() + potato);
-                                if (Console.ReadKey(true).Key == ConsoleKey.N)
-                                    ilog("Operation canceled");
-                            }
-                            else if (!File.Exists(potato))
-                            {
-                                ilog("File doesn't exist");
-                            }
-                        }
-                    }
-
-                    else if (input == "cd..")
-                    {
-                        Directory.SetCurrentDirectory(@"0:");
-                        dir = Directory.GetCurrentDirectory();
-                    }
-
-                    else if (input.StartsWith("cd") && disk)
-                    {
-                        var potato = input.ToUpper();
-                        potato = potato.Split("cd ")[1];
-                        if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
-                        if (potato.Equals(" ")) { ilog("Invalid path name");  return; }
-                        if (!potato.Contains("\\") && potato != root) { potato = "\\" + potato; }
-
-                        if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory() + potato)))
-                        {
-                            dir = Directory.GetCurrentDirectory() + potato;
-                            Directory.SetCurrentDirectory(dir);
-                        }
-                        else
-                        {
-                            ilog("Directory doesn't exist");
-                        }
-                    }
-
-                    else if (input.Equals("dir") && disk)
-                    {
-                        try
-                        {
-                            clog("\nDirectory listing at " + dir, ConsoleColor.Yellow);
-                            var directoryList = VFSManager.GetDirectoryListing(dir);
-                            var files = 0;
-                            foreach (var directoryEntry in directoryList)
-                            {
-                                if (Directory.Exists(dir + "\\" + directoryEntry.mName))
-                                {
-                                    clog("<Dir> " + directoryEntry.mName, ConsoleColor.Gray);
-                                }
-                                if (File.Exists(dir + "\\" + directoryEntry.mName) && !directoryEntry.mName.Contains(".hid") || File.Exists(dir + "\\" + directoryEntry.mName) && !directoryEntry.mName.Contains(".HID"))
-                                {
-                                    clog("<File> " + directoryEntry.mName, ConsoleColor.Gray);
-                                }
-
-                                files += 1;
-                            }
-                            if (files == 0) { clog("\nFound nothing :(\n", ConsoleColor.Gray); }
-                            else { clog("\nFound " + files + " elements\n", ConsoleColor.Yellow); }
-                        }
-                        catch
-                        {
-                            clog("Coudln't get directory listing :(", ConsoleColor.Red);
-                        }
-                    }
-
-                    else if (input.StartsWith("copy") && disk)
-                    {
-                        var potato = input_beforelower;
-                        var potato1 = input_beforelower;
-                        bool fileOK = false;
-
-                        if (!potato.Contains(@"0:\") && !potato1.Contains(@"0:\"))
-                        {
-                            ilog("Path not specified");
-                        }
-                        else
-                        {
-                            fileOK = true;
-                        }
-
-                        if (fileOK)
-                        {
-                            try
-                            {
-                                potato = potato.Split(" ")[1];
-                                potato1 = potato1.Split(" ")[2];
-                            }
-                            catch
-                            {
-                                ilog("No arguments");
-                            }
-
-
-                            if (potato == "mkfile" || potato == "mkdir" || potato == "delfile" || potato == "deldir" || potato == "copy")
-                            {
-                                clog("\nName is reserved\n", ConsoleColor.Gray);
-                            }
-                            else if (potato1 == "mkfile" || potato1 == "mkdir" || potato1 == "delfile" || potato1 == "deldir" || potato1 == "copy")
-                            {
-                                clog("\nName is reserved.\n", ConsoleColor.Gray);
-                            }
-                            else if (File.Exists(potato))
-                            {
-                                var Contents = File.ReadAllText(potato);
-                                try
-                                {
-                                    File.Create(potato1);
-                                    File.WriteAllText(potato1, Contents);
-                                    ilog("Action successful");
-                                }
-                                catch { }
-                            }
-                            else if (!File.Exists(potato))
-                            {
-                                ilog("File doesn't exist");
-                            }
-                        }
-                    }
-
-                    else if (input.StartsWith("lb") && disk)
-                    {
-                        var potato = input_beforelower;
-                        if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
-                        try
-                        {
-                            potato = potato.Split("lb ")[1];
-                            fs.SetFileSystemLabel(root, potato);
-                        }
-                        catch
-                        {
-                            ilog("Couldn't relablel disk, any arguments?");
-                        }
-                    }
-
-                    else if (input.Equals("disk") && disk)
-                    {
-                        long availableSpace = VFSManager.GetAvailableFreeSpace(@"0:\");
-                        long diskSpace = VFSManager.GetTotalSize(@"0:\");
-                        string fsType = VFSManager.GetFileSystemType("0:\\");
-                        clog("\nDisk info for " + fs.GetFileSystemLabel(root), ConsoleColor.Yellow);
-                        if (diskSpace < 1000000) //Less than 1mb
-                        {
-                            clog("\nDisk space: " + availableSpace / 1000 + " KB free out of " + diskSpace / 1000 + " KB total", ConsoleColor.Yellow);
-                        }
-                        else if (diskSpace > 1000000) //More than 1mb
-                        {
-                            clog("\nDisk space: " + availableSpace / 1e+6 + " MB free out of " + diskSpace / 1e+6 + " MB total", ConsoleColor.Yellow);
-                        }
-                        else if (diskSpace > 1e+9) //More than 1gb
-                        {
-                            clog("\nDisk space: " + availableSpace / 1e+9 + " GB free out of " + diskSpace / 1e+9 + " GB total", ConsoleColor.Yellow);
-                        }
-                        clog("\nFilesystem type: " + fsType, ConsoleColor.Yellow);
-                        line();
-                    }
-
-                    #endregion
-
-                    //Applications
-
-                    else if (input == "notepad" && disk)
-                    {
-                        MIVNotepad.StartMIV();
-                    }
-
-                    //ChaLang
-
-                    else if (input.StartsWith("run") && disk)
-                    {
-                        var potato = input;
-                        bool cancontinue = true;
-
-                        try
-                        {
-                            potato = potato.Split("run ")[1];
-                            potato.Replace("0:\\", "");
-                        } catch { cancontinue = false; ilog("No arguments"); }
-
-                        if (cancontinue)
-                        {
-                            string[] contents = File.ReadAllLines(Directory.GetCurrentDirectory() + potato);
-                            int count = -1;
-
-                            foreach (string line in contents)
-                            {
-                                count++;
-                                if (line.Equals("")) { }
-                                if (line.StartsWith("")) { }
-                                if (line.StartsWith("print"))
-                                {
-                                    string result = line;
-                                    result = result.Replace("print ", "");
-                                    result = result.Replace("\"", "");
-                                    clog(result, ConsoleColor.Gray);
-                                }
-                            }
-                        }
-                    }
-
-                    #region Other
-
+                        clog("\nFunctions:", DarkGreen);
                     else
-                    {
-                        if (disk)
-                        {
-                            var potato = input_beforelower;
-                            try
-                            {
-                                potato = potato.Split(": ")[1];
-                            }
-                            catch
-                            {
-                                Console.Beep(880, 5);
-                                clog("\n! Unknown command.\n", ConsoleColor.Red);
-                            }
+                        clog("\nFunctions (ClassiChaOS Mode):", DarkGreen);
+                    log(" help - Shows all functions");
+                    log(" usrname - Allows you to use usernames");
+                    log(" about - Shows all of the wonderful people that make ChaOS work");
+                    log(" cls/clear - Clears the screen");
+                    log(" color - Changes text color, do 'color list' to list all colors");
+                    log(" t/time - Tells you the time");
+                    log(" echo - Echoes what you say");
+                    log(" sd/shutdown - Shuts down ChaOS");
+                    log(" rb/reboot - Reboots the system");
+                    if (disk) {
+                        log(" disk - Gives info about the disk");
+                        log(" cd - Browses to folder, works as in MS-DOS");
+                        log(" cd.. - Returns to root");
+                        log(" dir - Lists files in the current folder");
+                        log(" mkdir - Creates folder");
+                        log(" touch - Creates file");
+                        log(" rd - Removes folder");
+                        log(" del - Removes file");
+                        log(" lb - Relabels disk");
+                        log(" notepad - Opens MIV notepad.");
+                    } log();
+                }
 
-                            if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), potato)))
-                            {
-                                if (input.Contains(".wav"))
-                                {
-                                    FileInfo fi = new FileInfo(potato);
-                                    ilog("Open contents for " + potato + " (" + fi.Length + " bytes)...");
+                //Miscellaneous
 
-                                    var mixer = new AudioMixer();
-                                    byte[] bytes = File.ReadAllBytes(potato);
-                                    var wavAudioStream = MemoryAudioStream.FromWave(bytes);
-                                    var driver = AC97.Initialize(bufferSize: 4096);
-                                    mixer.Streams.Add(wavAudioStream);
-
-                                    var audioManager = new AudioManager()
-                                    {
-                                        Stream = mixer,
-                                        Output = driver
-                                    };
-                                    audioManager.Enable();
-                                }
-                                else if (input.Contains(".sys") || input.Contains(".txt") || input.Contains(".hid") || input.Contains(".lang"))
-                                {
-                                    FileInfo fi = new FileInfo(potato);
-                                    ilog("Opening contents for " + potato + " (" + fi.Length + "bytes)...");
-
-                                    var contents = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), potato));
-                                    clog("Contents for " + Path.Combine(Directory.GetCurrentDirectory(), potato) + " are " + contents + "\n", ConsoleColor.Gray);
-                                }
-                                else
-                                {
-                                    FileInfo fi = new FileInfo(potato);
-                                    ilog("File format isn't supported, sorry!");
-                                }
-                            }
+                else if (input.StartsWith("username")) {
+                    if (input.Contains("set")) {
+                        usr = inputBeforeLower.Split("username set ")[1];
+                        if (disk && File.Exists(userfile)) {
+                            clog("\nWriting changes to disk...", Blue);
+                            File.WriteAllText(userfile, usr);
                         }
-                        else
-                        {
-                            Console.Beep(880, 5);
-                            clog("\n! Unknown command.\n", ConsoleColor.Red);
-                        }
+                        clog("Done!\n", Blue);
+                    }
+                    else clog("\nCurrent username: " + File.ReadAllLines(userfile)[0] + "\n", Yellow);
+                }
+
+                else if (input.Equals("about")) {
+                    log();
+                    cwrite("C", Blue); cwrite("r", Green); cwrite("e", DarkYellow); cwrite("d", Red); cwrite("i", DarkMagenta); cwrite("t", Cyan); cwrite("s:\n", DarkRed);
+                    foreach (string contributor in contributors) clog(" " + contributor, Yellow);
+                    log();
+                }
+
+                #region Color functions
+
+                else if (input.StartsWith("color"))  {
+                    string ClearScreen = "ChaOS " + ver + "\nCopyright (c) " + copyright + " Kastle Grounds\n";
+
+                    if (input.Contains("list")) {
+                        clog("\nColor list:", Green);
+                        write(" "); Draw.ScreenColor(White, Black, false); write("black - Pure light mode, will make you blind"); Draw.ScreenColor(Black, White, false);
+                        clog("\n dark blue - Dark blue with black background", DarkBlue);
+                        clog(" dark green - Dark green with black background", DarkGreen);
+                        clog(" dark cyan - Dark cyan with black background", DarkCyan);
+                        clog(" dark gray - Dark gray with black background", DarkGray);
+                        clog(" blue - Normal blue with black background", Blue);
+                        clog(" green - Green with black background", Green);
+                        clog(" cyan - Cyan with black background", Cyan);
+                        clog(" dark red - Dark red with black background", DarkRed);
+                        clog(" dark magenta - Dark magenta with black background", DarkMagenta);
+                        clog(" dark yellow - Dark yellow/orange with black background", DarkYellow);
+                        clog(" gray - Gray with black background", Gray);
+                        clog(" red - Red with black background", Red);
+                        clog(" magenta - Magenta with black background", Magenta);
+                        clog(" yellow - Light yellow with black background", Yellow);
+                        clog(" white - Dark mode B)\n", White);
+                    }
+
+                    else if (input.EndsWith("black")) Draw.ScreenColor(White, Black); //Black
+
+                    else if (input.EndsWith("dark blue")) { //Dark blue
+                        Draw.ScreenColor(Black, DarkBlue);
+                        log(ClearScreen);
+                    }
+                    else if (input.EndsWith("dark green")) { //Dark green
+                        Draw.ScreenColor(Black, DarkGreen);
+                        log(ClearScreen);
+                    }
+                    else if (input.EndsWith("dark cyan")) { //Dark cyan
+                        Draw.ScreenColor(Black, DarkCyan);
+                        log(ClearScreen);
+                    }
+                    else if (input.EndsWith("dark gray")) { //Dark gray
+                        Draw.ScreenColor(Black, DarkGray);
+                        log(ClearScreen); }
+                    else if (!input.Contains("dark") && input.Contains("blue")) { //Blue
+                        Draw.ScreenColor(Black, Blue);
+                        log(ClearScreen);
+                    }
+                    else if (!input.Contains("dark") && input.Contains("green")) { //Green
+                        Draw.ScreenColor(Black, Green);
+                        log(ClearScreen);
+                    }
+                    else if (!input.Contains("dark") && input.Contains("cyan")) { //Cyan
+                        Draw.ScreenColor(Black, Cyan);
+                        log(ClearScreen);
+                    }
+                    else if (input.EndsWith("dark red")) { //Dark red
+                        Draw.ScreenColor(Black, DarkRed);
+                        log(ClearScreen);
+                    }
+                    else if (input.EndsWith("dark magenta")) { //Dark magenta
+                        Draw.ScreenColor(Black, DarkMagenta);
+                        log(ClearScreen);
+                    }
+                    else if (input.EndsWith("dark yellow")) { //Dark yellow
+                        Draw.ScreenColor(Black, DarkYellow);
+                        log(ClearScreen);
+                    }
+                    else if (!input.Contains("dark") && input.Contains("gray")) { //Gray
+                        Draw.ScreenColor(Black, Gray);
+                        log(ClearScreen);
+                    }
+                    else if (!input.Contains("dark") && input.Contains("red")) { //Red
+                        Draw.ScreenColor(Black, Red);
+                        log(ClearScreen);
+                    }
+                    else if (!input.Contains("dark") && input.Contains("magenta")) { //Magenta
+                        Draw.ScreenColor(Black, Magenta);
+                        log(ClearScreen);
+                    }
+                    else if (!input.Contains("dark") && input.Contains("yellow")) { //Yellow
+                        Draw.ScreenColor(Black, Yellow);
+                        log(ClearScreen);
+                    }
+                    else if (input.EndsWith("white")) { //White
+                        Draw.ScreenColor(Black, White);
+                        log(ClearScreen);
+                    }
+                    else log("\nPlease list colors by doing \"color list\" or set a color by doing \"color yellow\" (for example)\n");
+                }
+
+                #endregion
+
+                else if (input.Equals("clear") || input.Equals("cls"))
+                    Clear();
+
+                else if (input == "time" || input == "t")
+                    log("\nCurrent time is " + GetTime() + "\n");
+
+                else if (input.StartsWith("notepad") && disk)
+                    MIV.StartMIV();
+
+                else if (input.Equals("shutdown") || input.Equals("sd")) {
+                    log("\nShutting down...");
+                    Sys.Power.Shutdown();
+                }
+
+                else if (input.Equals("reboot") || input.Equals("rb")) {
+                    log("\nRestarting...");
+                    Sys.Power.Reboot();
+                }
+
+                else if (input.StartsWith("echo"))
+                    log("\n" + inputBeforeLower.Split("echo ")[1] + "\n");
+
+                #region File management
+
+                else if (input.StartsWith("mkdir")) {
+                    string potato = input;
+                    if (potato.Contains("0:\\")) { potato.Replace("0:\\", ""); }
+                    potato = potato.Split("mkdir ")[1];
+                    if (!Directory.Exists(potato))
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\" + potato);
+                }
+
+                else if (input.StartsWith("touch")) {
+                    string potato = input;
+                    if (potato.Contains("0:\\")) { potato.Replace("0:\\", ""); }
+                    potato = potato.Split("touch ")[1];
+                    if (!File.Exists(potato))
+                        File.Create(Directory.GetCurrentDirectory() + @"\" + potato);
+                }
+
+                else if (input.StartsWith("rd")) {
+                    string potato = input;
+                    if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
+                    potato = potato.Split("rd ")[1];
+                    potato = "\\" + potato;
+                    if (Directory.Exists(Directory.GetCurrentDirectory() + @"\" + potato))
+                        Directory.Delete(Directory.GetCurrentDirectory() + @"\" + potato, true);
+                    else if (!Directory.Exists(potato))
+                        throw new DirectoryNotFoundException();
+                }
+
+                else if (input.StartsWith("del")) {
+                    string potato = input;
+                    if (potato.Contains("0:\\")) { potato.Replace(@"0:\", ""); }
+                    potato = potato.Split("del ")[1];
+                    if (File.Exists(Directory.GetCurrentDirectory() + @"\" + potato))
+                        File.Delete(Directory.GetCurrentDirectory() + @"\" + potato);
+                    else if (!File.Exists(potato))
+                        throw new FileNotFoundException();
+                }
+
+                else if (input.Contains("cd") && disk) {
+                    if (input == "cd..")
+                        Directory.SetCurrentDirectory(root);
+                    else {
+                        if (inputCapitalized.Contains(@"0:\")) { inputCapitalized.Replace(@"0:\", ""); }
+                        if (!inputCapitalized.Contains("\\") && inputCapitalized != root) { inputCapitalized = "\\" + inputCapitalized; }
+                        inputCapitalized = inputCapitalized.Split("CD ")[1];
+                        if (Directory.Exists(Directory.GetCurrentDirectory() + inputCapitalized))
+                            Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + inputCapitalized);
+                        else throw new DirectoryNotFoundException();
                     }
                 }
 
-                catch (Exception e)
-                {
-                    clog("\nAn exception occurred." + e + "\n", ConsoleColor.Red);
-                    Console.Beep(880, 5);
-
-                    #endregion
+                else if (input.Equals("dir") && disk) {
+                    clog("\nDirectory listing at " + Directory.GetCurrentDirectory(), Yellow);
+                    var directoryList = VFSManager.GetDirectoryListing(Directory.GetCurrentDirectory());
+                    var files = 0;
+                    foreach (var directoryEntry in directoryList) {
+                        if (Directory.Exists(Directory.GetCurrentDirectory() + "\\" + directoryEntry.mName))
+                            clog("<Dir> " + directoryEntry.mName, Gray);
+                        if (File.Exists(Directory.GetCurrentDirectory() + "\\" + directoryEntry.mName))
+                            clog("<File> " + directoryEntry.mName, Gray);
+                        files += 1;
+                    }
+                    clog("\nFound " + files + " elements\n", Yellow);
                 }
+
+                else if (input.StartsWith("copy")) {
+                    var potato = inputBeforeLower.Split(" ")[1];
+                    var potato1 = inputBeforeLower.Split(" ")[2];
+                    var Contents = File.ReadAllText(potato);
+                    File.Create(potato1);
+                    File.WriteAllText(potato1, Contents);
+                    clog("\nAction successful\n", Blue);
+                }
+
+                else if (input.StartsWith("lb") && disk)
+                    fs.SetFileSystemLabel(root, inputBeforeLower.Split("lb ")[1]);
+
+                else if (input.Equals("disk") && disk) {
+                    long availableSpace = VFSManager.GetAvailableFreeSpace(@"0:\");
+                    long diskSpace = VFSManager.GetTotalSize(@"0:\");
+                    string fsType = VFSManager.GetFileSystemType("0:\\");
+                    clog("\nDisk info for " + fs.GetFileSystemLabel(root), Yellow);
+                    if (diskSpace < 1000000) //Less than 1mb
+                        clog("\nDisk space: " + availableSpace / 1000 + " KB free out of " + diskSpace / 1000 + " KB total", Yellow);
+                    else if (diskSpace > 1000000) //More than 1mb
+                        clog("\nDisk space: " + availableSpace / 1e+6 + " MB free out of " + diskSpace / 1e+6 + " MB total", Yellow);
+                    else if (diskSpace > 1e+9) //More than 1gb
+                        clog("\nDisk space: " + availableSpace / 1e+9 + " GB free out of " + diskSpace / 1e+9 + " GB total", Yellow);
+                    clog("\nFilesystem type: " + fsType, Yellow);
+                    log();
+                }
+
+                #endregion
+
+                else clog("\nUnknown command.\n", Red);
             }
+
+            #region Error handling
+
+            catch (ArgumentNullException) { clog("\nArgument(s) cannot be null!\n", Red); }
+            catch (IndexOutOfRangeException) { clog("\nIndex is out of range! Check if arguments are null.\n", Red); }
+
+            catch (UnauthorizedAccessException) { clog("\nUnauthorized access.\n", Red); }
+            catch (DirectoryNotFoundException) { clog("\nDirectory not found or not existing\n", Red); }
+            catch (FileNotFoundException) { clog("\nFile not found or not existing.\n", Red); }
+
+            catch (Exception ex) {
+                Core.Stop(ex); }
+
+            #endregion
         }
     }
 }
