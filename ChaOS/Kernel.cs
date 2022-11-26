@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using Sys = Cosmos.System;
 using ChaOS.Misc;
+using ChaOS.System;
 using static ChaOS.Core;
 using static System.ConsoleColor;
 
@@ -26,50 +27,56 @@ namespace ChaOS
         const string ver = "Release 1.1";
         const int copyright = 2022;
         const string systempath = @"0:\SYSTEM";
-        const string userfile = @"0:\SYSTEM\USERFILE.SYS";
+        public const string userfile = @"0:\SYSTEM\USERFILE.SYS";
         const string root = @"0:\";
-        string usr = "usr";
+        public static string usr = "usr";
         public static bool disk;
         string input;
         string inputBeforeLower;
         string inputCapitalized;
         CosmosVFS fs = new CosmosVFS();
         protected override void BeforeRun() {
-            //Initialization
-
-            VFSManager.RegisterVFS(fs);
-
             try {
-                var temp = fs.GetTotalSize(root);
-                Directory.SetCurrentDirectory(root);
-                disk = true;
-            }
-            catch { disk = false; }
+                // Initialization
 
-            if (disk) {
-                if (!Directory.Exists(systempath)) {
-                    Directory.CreateDirectory(systempath);
+                VFSManager.RegisterVFS(fs);
+
+                try {
+                    var temp = fs.GetTotalSize(root);
+                    Directory.SetCurrentDirectory(root);
+                    disk = true;
                 }
-                else {
-                    if (File.Exists(userfile)) {
-                        usr = File.ReadAllText(userfile);
-                    }
-                    else if (!File.Exists(userfile)) {
-                        File.Create(userfile);
-                        File.WriteAllText(userfile, usr);
+                catch { disk = false; }
+
+                if (disk) {
+                    if (!Directory.Exists(systempath))
+                        Directory.CreateDirectory(systempath);
+                    else {
+                        if (File.Exists(userfile))
+                            usr = File.ReadAllText(userfile);
+                        else if (!File.Exists(userfile)) {
+                            File.Create(userfile);
+                            File.WriteAllText(userfile, usr);
+                        }
                     }
                 }
+
+                // Login system
+
+                Clear();
+                log("Boot successful!");
+                Security.Login();
+
+                // Boot message
+
+                clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen);
+                log("\n" + ver + "\nCopyright (c) " + copyright + " Kastle Grounds\nType \"help\" to get started!");
+                if (!disk) {
+                    log("No internal hard drive detected, ChaOS will continue in ClassiChaOS mode!");
+                }
+                log();
             }
-
-            //Boot message
-
-            Clear();
-            log("Boot successful!");
-            clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen);
-            log("\n" + ver + "\nCopyright (c) " + copyright + " Kastle Grounds\nType \"help\" to get started!");
-            if (!disk)
-                log("No internal hard drive detected, ChaOS will continue in ClassiChaOS mode!");
-            log();
+            catch (Exception exc) { Core.Stop(exc); }
         }
 
         protected override void Run() {
@@ -91,7 +98,7 @@ namespace ChaOS
                     else
                         clog("\nFunctions (ClassiChaOS Mode):", DarkGreen);
                     log(" help - Shows all functions");
-                    log(" usrname - Allows you to use usernames");
+                    log(" user - User functions (username, password...)");
                     log(" about - Shows all of the wonderful people that make ChaOS work");
                     log(" cls/clear - Clears the screen");
                     log(" color - Changes text color, do 'color list' to list all colors");
@@ -115,17 +122,8 @@ namespace ChaOS
 
                 //Miscellaneous
 
-                else if (input.StartsWith("username")) {
-                    if (input.Contains("set")) {
-                        usr = inputBeforeLower.Split("username set ")[1];
-                        if (disk && File.Exists(userfile)) {
-                            clog("\nWriting changes to disk...", Blue);
-                            File.WriteAllText(userfile, usr);
-                        }
-                        clog("Done!\n", Blue);
-                    }
-                    else clog("\nCurrent username: " + File.ReadAllLines(userfile)[0] + "\n", Yellow);
-                }
+                else if (input.Equals("user"))
+                    MIV.StartMIV(userfile);
 
                 else if (input.Equals("about")) {
                     log();
