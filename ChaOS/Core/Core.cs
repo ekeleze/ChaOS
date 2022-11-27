@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using Cosmos.System.FileSystem;
+using Cosmos.System.FileSystem.VFS;
 using static System.ConsoleColor;
 
 namespace ChaOS {
@@ -13,7 +16,35 @@ namespace ChaOS {
             Console.ForegroundColor = OldColor;
             Console.BackgroundColor = OldColorBack;
         }
-        public static void ilog(string text) => clog(text, ConsoleColor.Gray);
+        public static void warn(string text, short warnLevel = 0)
+        {
+            log(); ConsoleColor OldFore = Console.ForegroundColor; ConsoleColor OldBack = Console.BackgroundColor;
+            if (warnLevel.Equals(0))
+            {
+                clog(text, Gray);
+            }
+            else if (warnLevel.Equals(1))
+            {
+                clog(text, DarkBlue);
+            }
+            else if (warnLevel.Equals(2))
+            {
+                clog(text, DarkYellow);
+            }
+            else if (warnLevel.Equals(3))
+            {
+                clog(text, DarkRed);
+            }
+            else if (warnLevel.Equals(4))
+            {
+                log(text);
+            }
+            else if (warnLevel > 5)
+            {
+                Stop(new Exception(text), warnLevel);
+            }
+            Draw.ScreenColor(OldBack, OldFore, false); log();
+        }
         public static void write(string text) => Console.Write(text);
         public static void cwrite(string text, ConsoleColor color) {
             var OldColor = Console.ForegroundColor;
@@ -24,16 +55,20 @@ namespace ChaOS {
             Console.BackgroundColor = OldColorBack;
         }
         public static void Clear() => Console.Clear();
-        public static void Stop(Exception exc) {
+        public static void Stop(Exception exc, int code = 0) {
+            ConsoleColor OldFore = Console.ForegroundColor; ConsoleColor OldBack = Console.BackgroundColor;
+
             Draw.ScreenColor(DarkBlue, White);
             Console.CursorVisible = false;
 
             log("Your copy of ChaOS has crashed!\n");
-            log("STOP: 0x" + exc.GetHashCode());
-            log(exc.ToString());
-            log("\nYou can restart");
+            log("*** STOP: 0x" + code + " ***");
+            log("\nPress any key to continue");
 
-            while (true) Console.ReadKey(true);
+            Console.ReadKey(true);
+
+            Draw.ScreenColor(OldBack, OldFore);
+            Console.CursorVisible = true;
         }
         public static string GetTime() { 
             return Convert.ToString(DateTime.Now.Hour) + ":" + Convert.ToString(DateTime.Now.Minute); }
