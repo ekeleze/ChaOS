@@ -25,7 +25,6 @@
         <RemoveBootDebugOutput>True</RemoveBootDebugOutput>
         <CompileVBEMultiboot>False</CompileVBEMultiboot>
         <EnableBochsDebug>False</EnableBochsDebug>
-        <ApplicationIcon>ChaOS.ico</ApplicationIcon>
         <PlatformTarget>AnyCPU</PlatformTarget>
         <Nullable>disable</Nullable>
         <SignAssembly>True</SignAssembly>
@@ -42,10 +41,6 @@
 
     <ItemGroup>
       <None Remove="main.map" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="ChaOS.ico" />
     </ItemGroup>
 
     <ItemGroup>

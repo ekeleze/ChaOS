@@ -290,7 +290,7 @@ namespace ChaOS.Misc
             }
             catch (Exception ex)
             {
-                Stop(ex);
+                ExHandler.Crash(ex);
             }
 
             string text = string.Empty;

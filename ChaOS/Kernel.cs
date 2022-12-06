@@ -1,13 +1,12 @@
-﻿using ChaOS.Misc;
+﻿using System;
+using System.IO;
+using ChaOS.Misc;
+using Sys = Cosmos.System;
 using Cosmos.System.FileSystem;
 using Cosmos.System.FileSystem.VFS;
-using System;
-using Sys = Cosmos.System;
-using System.IO;
 using static ChaOS.Core;
 using static ChaOS.DiskManager;
 using static System.ConsoleColor;
-using System.Net.Security;
 
 namespace ChaOS
 {
@@ -16,7 +15,8 @@ namespace ChaOS
         const string ver = "Release 1.1";
         const int copyright = 2022;
 
-        readonly string[] contributors = {
+        readonly string[] contributors = 
+        {
             "ekeleze - Creator",
             "MrDumbrava - Contributor & spanish language writer",
             "Retronics - German language writer",
@@ -27,11 +27,11 @@ namespace ChaOS
             "BiltzWolf007 - GUI helper"
         };
 
-        public static string CurrentUser = "usr";
+        public static string username = "usr";
 
-        string input;
-        string inputBeforeLower;
-        string inputCapitalized;
+        public static string input;
+        public static string inputBeforeLower;
+        public static string inputCapitalized;
 
         public static CosmosVFS fs = new CosmosVFS();
 
@@ -39,45 +39,38 @@ namespace ChaOS
         {
             try
             {
-                Initialize();
-            }
-            catch (Exception exc) { Core.Stop(exc); }
+                log("Starting up ChaOS...");
+                StartDisk(fs);
 
-            Clear();
-            log("Boot successful!\n");
-            clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen);
-            log("\n" + ver + "\nCopyright (c) " + copyright + " Kastle Grounds\nType \"help\" to get started!");
-            if (!disk)
-            {
-                log("No internal hard drive detected, ChaOS will continue in ClassiChaOS mode!");
+                Clear();
+                log("Boot successful!\n");
+                clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen);
+                log("\n" + ver + "\nCopyright (c) " + copyright + " Kastle Grounds\nType \"help\" to get started!");
+                if (!disk)
+                    log("No hard drive detected, ChaOS will continue without disk support");
+                log();
             }
-            log();
+            catch (Exception ex) { ExHandler.FatalCrash(ex); }
         }
 
         protected override void Run()
         {
             try
             {
-                if (disk)
-                {
-                    write(CurrentUser + " (" + Directory.GetCurrentDirectory() + ")");
-                    write(": ");
-                }
-                else if (!disk)
-                {
-                    write(CurrentUser + " > ");
-                }
+                if (disk) write(username + " (" + Directory.GetCurrentDirectory() + "): ");
+                else write(username + " > ");
 
-                inputBeforeLower = Console.ReadLine(); // Input
+                inputBeforeLower = Console.ReadLine();         // Input before conversion
                 inputCapitalized = inputBeforeLower.ToUpper(); // Input converted to uppercase
-                input = inputBeforeLower.ToLower(); // Input converted to lowercase
+                input = inputBeforeLower.ToLower();            // Input converted to lowercase
 
                 if (input.Equals("help"))
                 {
-                    if (disk)
-                        clog("\nFunctions:", DarkGreen);
-                    else
-                        clog("\nFunctions (ClassiChaOS Mode):", DarkGreen);
+                    var us = string.Empty;
+                    var color = White;
+                    if (!disk) { us = " (unavailable)"; color = Gray; }
+
+                    clog("\nFunctions:", DarkGreen);
                     log(" help - Shows all functions");
                     log(" username - Allows you to use usernames");
                     log(" credits - Shows all of the wonderful people that make ChaOS work");
@@ -87,20 +80,17 @@ namespace ChaOS
                     log(" echo - Echoes what you say");
                     log(" sd/shutdown - Shuts down ChaOS");
                     log(" rb/reboot - Reboots the system");
-                    if (disk)
-                    {
-                        log(" disk - Gives info about the disk");
-                        log(" cd - Browses to folder, works as in MS-DOS");
-                        log(" cd.. - Returns to root");
-                        log(" dir - Lists files in the current folder");
-                        log(" mkdir - Creates folder");
-                        log(" touch - Creates file");
-                        log(" rd - Removes folder");
-                        log(" del - Removes file");
-                        log(" lb - Relabels disk");
-                        log(" notepad - Opens MIV notepad.");
-                    }
-                    log();
+                    clog(" diskinfo - Gives info about the disk" + us, color);
+                    clog(" cd - Browses to folder, works as in MS-DOS" + us, color);
+                    clog(" cd.. - Returns to root" + us, color);
+                    clog(" dir - Lists files in the current folder" + us, color);
+                    clog(" mkdir - Creates folder" + us, color);
+                    clog(" touch - Creates file" + us, color);
+                    clog(" rd - Removes folder" + us, color);
+                    clog(" del - Removes file" + us, color);
+                    clog(" lb - Relabels disk" + us, color);
+                    clog(" notepad - Opens MIV notepad." + us, color);
+                    clog(" format - Formats the disk.\n" + us, color);
                 }
 
                 //Miscellaneous
@@ -109,14 +99,14 @@ namespace ChaOS
                 {
                     if (input.Contains("set"))
                     {
-                        try { CurrentUser = input.Split("touch ")[1]; }
-                        catch { warn("No arguments", 2); }
-                        if (disk) File.WriteAllText(userfile, CurrentUser);
-                        warn("Done! (" + CurrentUser + ")", 4);
+                        try { username = input.Split("username set ")[1]; }
+                        catch { clog("No arguments", Red); }
+                        if (disk) File.WriteAllText(userfile, username);
+                        clog("Done! (" + username + ")", Gray);
                     }
                     else
                     {
-                        warn("Current username: " + CurrentUser);
+                        clog("Current username: " + username, Gray);
                     }
                 }
 
@@ -137,7 +127,7 @@ namespace ChaOS
                     if (input.Contains("list"))
                     {
                         clog("\nColor list:", Green);
-                        write(" "); Draw.ScreenColor(White, Black, false); write("black - Pure light mode, will make you blind"); Draw.ScreenColor(Black, White, false);
+                        write(" "); SetScreenColor(White, Black, false); write("black - Pure light mode, will make you blind"); SetScreenColor(Black, White, false);
                         clog("\n dark blue - Dark blue with black background", DarkBlue);
                         clog(" dark green - Dark green with black background", DarkGreen);
                         clog(" dark cyan - Dark cyan with black background", DarkCyan);
@@ -155,84 +145,84 @@ namespace ChaOS
                         clog(" white - Dark mode B)\n", White);
                     }
 
-                    else if (input.EndsWith("black")) Draw.ScreenColor(White, Black); //Black
+                    else if (input.EndsWith("black")) SetScreenColor(White, Black); //Black
 
                     else if (input.EndsWith("dark blue"))
                     { //Dark blue
-                        Draw.ScreenColor(Black, DarkBlue);
+                        SetScreenColor(Black, DarkBlue);
                         log(ClearScreen);
                     }
                     else if (input.EndsWith("dark green"))
                     { //Dark green
-                        Draw.ScreenColor(Black, DarkGreen);
+                        SetScreenColor(Black, DarkGreen);
                         log(ClearScreen);
                     }
                     else if (input.EndsWith("dark cyan"))
                     { //Dark cyan
-                        Draw.ScreenColor(Black, DarkCyan);
+                        SetScreenColor(Black, DarkCyan);
                         log(ClearScreen);
                     }
                     else if (input.EndsWith("dark gray"))
                     { //Dark gray
-                        Draw.ScreenColor(Black, DarkGray);
+                        SetScreenColor(Black, DarkGray);
                         log(ClearScreen);
                     }
                     else if (!input.Contains("dark") && input.Contains("blue"))
                     { //Blue
-                        Draw.ScreenColor(Black, Blue);
+                        SetScreenColor(Black, Blue);
                         log(ClearScreen);
                     }
                     else if (!input.Contains("dark") && input.Contains("green"))
                     { //Green
-                        Draw.ScreenColor(Black, Green);
+                        SetScreenColor(Black, Green);
                         log(ClearScreen);
                     }
                     else if (!input.Contains("dark") && input.Contains("cyan"))
                     { //Cyan
-                        Draw.ScreenColor(Black, Cyan);
+                        SetScreenColor(Black, Cyan);
                         log(ClearScreen);
                     }
                     else if (input.EndsWith("dark red"))
                     { //Dark red
-                        Draw.ScreenColor(Black, DarkRed);
+                        SetScreenColor(Black, DarkRed);
                         log(ClearScreen);
                     }
                     else if (input.EndsWith("dark magenta"))
                     { //Dark magenta
-                        Draw.ScreenColor(Black, DarkMagenta);
+                        SetScreenColor(Black, DarkMagenta);
                         log(ClearScreen);
                     }
                     else if (input.EndsWith("dark yellow"))
                     { //Dark yellow
-                        Draw.ScreenColor(Black, DarkYellow);
+                        SetScreenColor(Black, DarkYellow);
                         log(ClearScreen);
                     }
                     else if (!input.Contains("dark") && input.Contains("gray"))
                     { //Gray
-                        Draw.ScreenColor(Black, Gray);
+                        SetScreenColor(Black, Gray);
                         log(ClearScreen);
                     }
                     else if (!input.Contains("dark") && input.Contains("red"))
                     { //Red
-                        Draw.ScreenColor(Black, Red);
+                        SetScreenColor(Black, Red);
                         log(ClearScreen);
                     }
                     else if (!input.Contains("dark") && input.Contains("magenta"))
                     { //Magenta
-                        Draw.ScreenColor(Black, Magenta);
+                        SetScreenColor(Black, Magenta);
                         log(ClearScreen);
                     }
                     else if (!input.Contains("dark") && input.Contains("yellow"))
                     { //Yellow
-                        Draw.ScreenColor(Black, Yellow);
+                        SetScreenColor(Black, Yellow);
                         log(ClearScreen);
                     }
                     else if (input.EndsWith("white"))
                     { //White
-                        Draw.ScreenColor(Black, White);
+                        SetScreenColor(Black, White);
                         log(ClearScreen);
                     }
-                    else log("\nPlease list colors by doing \"color list\" or set a color by doing \"color yellow\" (for example)\n");
+                    else clog("\nPlease list colors by doing \"color list\" or set a color by doing \"color yellow\" (for example)\n", Gray);
                 }
 
                 #endregion
@@ -241,20 +231,20 @@ namespace ChaOS
                     Clear();
 
                 else if (input == "time" || input == "t")
-                    warn("Current time is " + GetTime(), 1);
+                    log("Current time is " + GetTime());
 
-                else if (input.StartsWith("notepad") && disk)
+                else if (input == "notepad" && disk)
                     MIV.StartMIV();
 
                 else if (input.Equals("shutdown") || input.Equals("sd"))
                 {
-                    warn("Shutting down...");
+                    clog("Shutting down...", Gray);
                     Sys.Power.Shutdown();
                 }
 
                 else if (input.Equals("reboot") || input.Equals("rb"))
                 {
-                    warn("Restarting...");
+                    clog("Restarting...", Gray);
                     Sys.Power.Reboot();
                 }
 
@@ -267,58 +257,58 @@ namespace ChaOS
                 {
                     if (input.Contains("0:\\")) { input.Replace("0:\\", ""); }
                     try { input = input.Split("mkdir ")[1]; }
-                    catch { warn("No arguments", 2); }
+                    catch { clog("No arguments", Red); }
                     if (!Directory.Exists(input))
                         Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\" + input);
                     else
-                        warn("Directory already existing", 1);
+                        clog("Directory already existing", Red);
                 }
 
                 else if (input.StartsWith("touch"))
                 {
                     if (input.Contains("0:\\")) { input.Replace("0:\\", ""); }
-                    try { input = input.Split("touch ")[1]; } 
-                    catch { warn("No arguments", 2); }
+                    try { input = input.Split("touch ")[1]; }
+                    catch { clog("No arguments", Red); }
                     if (!File.Exists(input))
                         File.Create(Directory.GetCurrentDirectory() + @"\" + input);
                     else
-                        warn("File already existing!", 1);
+                        clog("File already existing!", Red);
                 }
 
                 else if (input.StartsWith("rd"))
                 {
                     if (input.Contains("0:\\")) { input.Replace(@"0:\", ""); }
                     try { input = input.Split("rd ")[1]; }
-                    catch { warn("No arguments", 2); }
+                    catch { clog("No arguments", Red); }
                     if (Directory.Exists(Directory.GetCurrentDirectory() + @"\" + input))
                         Directory.Delete(Directory.GetCurrentDirectory() + @"\" + input, true);
                     else if (!Directory.Exists(input))
-                        warn("Directory not found!", 1);
+                        clog("Directory not found!", Red);
                 }
 
                 else if (input.StartsWith("del"))
                 {
                     if (input.Contains("0:\\")) { input.Replace(@"0:\", ""); }
                     try { input = input.Split("del ")[1]; }
-                    catch { warn("No arguments", 2); }
+                    catch { clog("No arguments", Red); }
                     if (File.Exists(Directory.GetCurrentDirectory() + @"\" + input))
                         File.Delete(Directory.GetCurrentDirectory() + @"\" + input);
                     else if (!File.Exists(input))
-                        warn("File not found!", 1);
+                        clog("File not found!", Red);
                 }
 
                 else if (input.Contains("cd") && disk)
                 {
-                    if (input == "cd..")
-                        Directory.SetCurrentDirectory(root);
+                    if (input == "cd..") Directory.SetCurrentDirectory(root);
+
                     else
                     {
-                        if (inputCapitalized.Contains(@"0:\")) { inputCapitalized.Replace(@"0:\", ""); }
                         inputCapitalized = inputCapitalized.Split("CD ")[1];
-                        if (Directory.Exists(Directory.GetCurrentDirectory() + inputCapitalized))
-                            Directory.SetCurrentDirectory(@"\" + inputCapitalized);
-                        else
-                            warn("Directory not found!", 1);
+                        if (inputCapitalized.Contains(@"0:\")) { inputCapitalized.Replace(@"0:\", ""); }
+                        if (Directory.GetCurrentDirectory() != root) { inputCapitalized = @"\" + inputCapitalized; }
+                        if (Directory.Exists(Directory.GetCurrentDirectory() + @"\" + inputCapitalized))
+                            Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + inputCapitalized);
+                        else clog("Directory not found!", Red);
                     }
                 }
 
@@ -332,7 +322,7 @@ namespace ChaOS
                         if (Directory.Exists(Directory.GetCurrentDirectory() + "\\" + directoryEntry.mName))
                             clog("<Dir> " + directoryEntry.mName, Gray);
                         if (File.Exists(Directory.GetCurrentDirectory() + "\\" + directoryEntry.mName))
-                            clog("<File> " + directoryEntry.mName, Gray);
+                            clog("<Fil> " + directoryEntry.mName, Gray);
                         files += 1;
                     }
                     clog("\nFound " + files + " elements\n", Yellow);
@@ -351,7 +341,7 @@ namespace ChaOS
                 else if (input.StartsWith("lb") && disk)
                     fs.SetFileSystemLabel(root, inputBeforeLower.Split("lb ")[1]);
 
-                else if (input.Equals("disk") && disk)
+                else if (input.Equals("diskinfo") && disk)
                 {
                     long availableSpace = VFSManager.GetAvailableFreeSpace(@"0:\");
                     long diskSpace = VFSManager.GetTotalSize(@"0:\");
@@ -367,28 +357,15 @@ namespace ChaOS
                     log();
                 }
 
+                else if (input.Equals("format") && disk)
+                    Directory.Delete(@"0:\", true);
+
                 #endregion
 
-                else warn("\nUnknown command.\n", 3);
+                else clog("\nUnknown command.\n", Red);
             }
 
-            #region Error handling
-
-            catch (ArgumentNullException) { clog("\nArgument(s) cannot be null!\n", Red); }
-            catch (IndexOutOfRangeException) { clog("\nArgument(s) cannot be null!\n", Red); }
-
-            catch (UnauthorizedAccessException) { clog("\nUnauthorized access.\n", Red); }
-
-            catch (DirectoryNotFoundException) { clog("\nDirectory not found or not existing\n", Red); }
-            catch (FileNotFoundException) { clog("\nFile not found or not existing.\n", Red); }
-            catch (IOException ex) { Core.Stop(ex, 1); }
-
-            catch (Exception ex)
-            {
-                Core.Stop(ex);
-            }
-
-            #endregion
+            catch (Exception ex) { ExHandler.Crash(ex); }
         }
     }
 }

@@ -1,24 +1,20 @@
-﻿using System.IO;
-using Cosmos.System.FileSystem.VFS;
+﻿using Cosmos.System.FileSystem.VFS;
+using System.IO;
 
 namespace ChaOS
 {
-    public class DiskManager 
+    public class DiskManager
     {
         public const string systempath = @"0:\SYSTEM";
         public const string userfile = @"0:\SYSTEM\USERFILE.SYS";
         public const string root = @"0:\";
-        public static bool disk;
+        public static bool disk = true;
 
-        public static void Initialize()
+        public static void StartDisk(Cosmos.System.FileSystem.CosmosVFS fs)
         {
-            VFSManager.RegisterVFS(Kernel.fs);
+            VFSManager.RegisterVFS(fs);
 
-            try
-            {
-                Directory.SetCurrentDirectory(root);
-                disk = true;
-            }
+            try { Directory.SetCurrentDirectory(root); }
             catch { disk = false; }
 
             if (disk)
@@ -28,11 +24,11 @@ namespace ChaOS
                 else
                 {
                     if (File.Exists(userfile))
-                        Kernel.CurrentUser = File.ReadAllText(userfile);
+                        Kernel.username = File.ReadAllText(userfile);
                     else if (!File.Exists(userfile))
                     {
                         File.Create(userfile);
-                        File.WriteAllText(userfile, Kernel.CurrentUser);
+                        File.WriteAllText(userfile, Kernel.username);
                     }
                 }
             }
