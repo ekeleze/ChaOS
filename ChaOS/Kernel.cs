@@ -10,8 +10,8 @@ using Sys = Cosmos.System;
 
 namespace ChaOS {
     public class Kernel : Sys.Kernel {
-        const string ver = "Release 1.1";
-        const int copyright = 2022;
+        public const string ver = "Release 1.1_01";
+        public const int copyright = 2022;
 
         readonly string[] contributors = {
             "ekeleze - Creator",
@@ -34,22 +34,22 @@ namespace ChaOS {
 
         protected override void BeforeRun() {
             try {
-                log("Starting up ChaOS...");
-                StartDisk(fs);
+                log("Starting up ChaOS...\n");
+                InitFS(fs);
 
-                Clear();
-                log("Boot successful!\n");
-                clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen);
+                Console.Clear();
+                log("Welcome back, " + username + ", to...\n");
+                clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", ConsoleColor.DarkGreen);
                 log("\n" + ver + "\nCopyright (c) " + copyright + " Kastle Grounds\nType \"help\" to get started!");
                 if (!disk)
-                    log("No hard drive detected, ChaOS will continue without disk support");
+                    log("No hard drive detected, ChaOS will continue without disk support.");
                 log();
             }
             catch (Exception ex) { ExHandler.FatalCrash(ex); }
         }
 
         protected override void Run() {
-            var CanContinue = false;
+            var CanContinue = true; // Set to false to break disk functions
 
             try {
                 if (disk) write(username + " (" + Directory.GetCurrentDirectory() + "): ");
@@ -57,7 +57,7 @@ namespace ChaOS {
 
                 inputBeforeLower = Console.ReadLine();         // Input before conversion
                 inputCapitalized = inputBeforeLower.ToUpper(); // Input converted to uppercase
-                input = inputBeforeLower.ToLower().Trim();            // Input converted to lowercase
+                input = inputBeforeLower.ToLower().Trim();     // Input converted to lowercase
 
                 log();
 
@@ -200,10 +200,16 @@ namespace ChaOS {
                 #endregion
 
                 else if (input.Equals("clear") || input.Equals("cls"))
-                    Clear();
+                    Console.Clear();
 
-                else if (input == "time" || input == "t")
-                    clog("Current time is " + GetTime() + "\n", Yellow);
+                else if (input == "time" || input == "t") {
+                    /* Now shows up properly:
+                       Ex: 17:6 -> 17:06 */
+
+                    string Hour = DateTime.Now.Hour.ToString(); string Minute = DateTime.Now.Minute.ToString();
+                    if (Hour.Length < 2) Hour = "0" + Hour; if (Minute.Length < 2) Minute = "0" + Minute;
+                    clog("Current time is " + Hour + ":" + Minute + "\n", Yellow);
+                }
 
                 else if (input == "notepad" && disk)
                     MIV.StartMIV();
@@ -284,7 +290,7 @@ namespace ChaOS {
 
                             if (CanContinue) {
                                 if (inputCapitalized.Contains(@"0:\")) { inputCapitalized.Replace(@"0:\", ""); }
-                                if (Directory.GetCurrentDirectory() != root) { inputCapitalized = @"\" + inputCapitalized; }
+                                if (Directory.GetCurrentDirectory() != rootdir) { inputCapitalized = @"\" + inputCapitalized; }
 
                                 if (Directory.Exists(Directory.GetCurrentDirectory() + inputCapitalized))
                                     Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + inputCapitalized);
@@ -292,7 +298,8 @@ namespace ChaOS {
                                     clog("Directory not found!\n", Red);
                             }
                         }
-                    } catch {} // Error correction lol
+                    }
+                    catch { } // Error correction lol
                 }
 
                 else if (input.Equals("dir") && disk) {
@@ -324,13 +331,13 @@ namespace ChaOS {
                 }
 
                 else if (input.StartsWith("lb") && disk)
-                    fs.SetFileSystemLabel(root, inputBeforeLower.Split("lb ")[1]);
+                    fs.SetFileSystemLabel(rootdir, inputBeforeLower.Split("lb ")[1]);
 
                 else if (input.Equals("diskinfo") && disk) {
                     long availableSpace = VFSManager.GetAvailableFreeSpace(@"0:\");
                     long diskSpace = VFSManager.GetTotalSize(@"0:\");
                     string fsType = VFSManager.GetFileSystemType("0:\\");
-                    clog("Disk info for " + fs.GetFileSystemLabel(root), Yellow);
+                    clog("Disk info for " + fs.GetFileSystemLabel(rootdir), Yellow);
                     if (diskSpace < 1000000) //Less than 1mb
                         clog("\nDisk space: " + availableSpace / 1000 + " KB free out of " + diskSpace / 1000 + " KB total", Yellow);
                     else if (diskSpace > 1000000) //More than 1mb

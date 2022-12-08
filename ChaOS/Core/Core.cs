@@ -17,15 +17,10 @@ namespace ChaOS {
             write(TEXT);
             Console.ForegroundColor = OldColor;
         }
-        public static void Clear() => Console.Clear();
-
-        public static string GetTime() { return Convert.ToString(DateTime.Now.Hour) + ":" + Convert.ToString(DateTime.Now.Minute); }
-
-        public static void Sleep(int TIME) => System.Threading.Thread.Sleep(TIME);
 
         public static void SetScreenColor(ConsoleColor BackColor, ConsoleColor ForeColor, bool ClearScreen = true) {
             Console.BackgroundColor = BackColor; Console.ForegroundColor = ForeColor;
-            if (ClearScreen) Clear();
+            if (ClearScreen) Console.Clear();
         }
     }
 }
