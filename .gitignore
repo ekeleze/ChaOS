@@ -400,3 +400,4 @@ FodyWeavers.xsd
 # Other (made by MrDumbrava)
 *.html
 *.asm
+ChaOS/bin/Debug/net6.0/ISO/boot/grub/i386-pc/modinfo.sh
