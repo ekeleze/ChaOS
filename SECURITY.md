@@ -27,4 +27,4 @@ Here's a list of the supported versions of ChaOS
 
 ## Reporting a Vulnerability
 
-For reporting a vulnerability direct message ``ekeleze#7676`` or ``MrDumbrava#9459`` on discord, otherwise report it at the issues tab
+For reporting a vulnerability direct message ``ekeleze#7676`` or ``xrc2#9459`` on discord, otherwise report it at the issues tab
