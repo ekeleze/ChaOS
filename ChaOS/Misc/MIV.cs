@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ChaOS.Misc {
+namespace ChaOS {
     class MIV {
         public static void printMIVStartScreen() {
             Console.Clear();
