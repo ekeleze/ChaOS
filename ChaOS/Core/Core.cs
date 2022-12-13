@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Threading;
 
 namespace ChaOS {
     public class Core {
         // ChaOS Core
-        public static void log(string TEXT = null) => Console.WriteLine(TEXT);
-        public static void clog(string TEXT, ConsoleColor ForeColor) {
+        public static void log(string text = null) => Console.WriteLine(text);
+        public static void clog(string text, ConsoleColor ForeColor) {
             var OldFore = Console.ForegroundColor;
             Console.ForegroundColor = ForeColor;
-            Console.WriteLine(TEXT);
+            Console.WriteLine(text);
             Console.ForegroundColor = OldFore;
         }
-        public static void write(string TEXT) => Console.Write(TEXT);
-        public static void cwrite(string TEXT, ConsoleColor COLOR) {
+        public static void write(string text) => Console.Write(text);
+        public static void cwrite(string text, ConsoleColor Color) {
             var OldColor = Console.ForegroundColor;
-            Console.ForegroundColor = COLOR;
-            write(TEXT);
+            Console.ForegroundColor = Color;
+            write(text);
             Console.ForegroundColor = OldColor;
         }
 

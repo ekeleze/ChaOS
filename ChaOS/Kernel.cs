@@ -7,11 +7,10 @@ using static ChaOS.Core;
 using static ChaOS.DiskManager;
 using static System.ConsoleColor;
 
-
 namespace ChaOS {
     public class Kernel : Sys.Kernel {
-        public const string ver = "Release 1.1_02";
-        public const int copyright = 2022;
+        public const string ver = "Release 1.1_03";
+        public const string copyright = "Copyright (c) 2022 Goplex Studios";
 
         readonly string[] contributors = {
             "ekeleze - Creator",
@@ -40,7 +39,7 @@ namespace ChaOS {
                 Console.Clear();
                 log("Welcome back, " + username + ", to...\n");
                 clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen); // ChaOS logo! but its all one line xD
-                log("\n" + ver + "\nCopyright (c) " + copyright + " Kastle Grounds\nType \"help\" to get started!");
+                log("\n" + ver + "\n" + copyright + "\nType \"help\" to get started!");
                 if (!disk)
                     log("No hard drive detected, ChaOS will continue without disk support.");
                 log();
@@ -64,9 +63,11 @@ namespace ChaOS {
                 log(); // Do not remove!
 
                 if (input == "help") {
+                    #region Unavailable string & color
                     var us = string.Empty;
                     var color = Console.ForegroundColor;
                     if (!disk) { us = " (unavailable)"; color = Gray; }
+                    #endregion
 
                     clog("Functions:", DarkGreen);
                     log(" help - Shows all functions");
@@ -88,37 +89,34 @@ namespace ChaOS {
                     clog(" delfile - Removes file" + us, color);
                     clog(" lb - Relabels disk" + us, color);
                     clog(" miv - Opens MIV (Minimalistic Vi)." + us, color);
-                    clog(" format - Formats the disk.\n" + us, color);
+                    clog(" format - Formats the disk." + us + "\n", color);
                 }
 
                 // Miscellaneous
 
                 else if (input.Contains("username")) {
                     if (input.Contains("set")) {
-                        try { username = input.Split("set ")[1].Trim(); }
-                        catch { clog("No arguments\n", Red); }
+                        try { username = input.Split("set ")[1].Trim(); } catch { clog("No arguments\n", Red); }
                         clog("Done! (" + username + ")\n", Yellow);
                     }
 
-                    else if (input.EndsWith("current")) clog("\nCurrent username: " + username + "\n", Yellow);
+                    else if (input.EndsWith("current")) clog("Current username: " + username + "\n", Yellow);
 
                     else {
                         clog("Username subfunctions:", DarkGreen);
-                        log(" username set (username) - Changes the username\n" +
-                            " username current - Displays current username\n");
+                        log(" username set (username) - Changes the username");
+                        log(" username current - Displays current username\n");
                     }
                 }
 
                 else if (input == "credits") {
-                    log(); cwrite("C", Blue); cwrite("r", Green); cwrite("e", DarkYellow); cwrite("d", Red); cwrite("i", DarkMagenta); cwrite("t", Cyan); cwrite("s:\n", DarkRed);
+                    cwrite("C", Blue); cwrite("r", Green); cwrite("e", DarkYellow); cwrite("d", Red); cwrite("i", DarkMagenta); cwrite("t", Cyan); cwrite("s:\n", DarkRed);
                     foreach (string contributor in contributors) clog(" " + contributor, Yellow); log();
                 }
 
                 #region Color functions
 
                 else if (input.StartsWith("color")) {
-                    string ClearScreen = "ChaOS " + ver + "\nCopyright (c) " + copyright + " Kastle Grounds\n";
-
                     if (input.Contains("list")) {
                         var OldBack = Console.BackgroundColor; var OldFore = Console.ForegroundColor;
                         clog("Color list:", Green);
@@ -138,71 +136,24 @@ namespace ChaOS {
                         clog(" magenta - Magenta with black background", Magenta);
                         clog(" yellow - Light yellow with black background", Yellow);
                         clog(" white - Pure white with black background\n", White);
-                    }
-
-                    else if (input.EndsWith("black")) SetScreenColor(White, Black); //Black
-
-                    else if (input.EndsWith("dark blue")) { //Dark blue
-                        SetScreenColor(Black, DarkBlue);
-                        log(ClearScreen);
-                    }
-                    else if (input.EndsWith("dark green")) { //Dark green
-                        SetScreenColor(Black, DarkGreen);
-                        log(ClearScreen);
-                    }
-                    else if (input.EndsWith("dark cyan")) { //Dark cyan
-                        SetScreenColor(Black, DarkCyan);
-                        log(ClearScreen);
-                    }
-                    else if (input.EndsWith("dark gray")) { //Dark gray
-                        SetScreenColor(Black, DarkGray);
-                        log(ClearScreen);
-                    }
-                    else if (!input.Contains("dark") && input.Contains("blue")) { //Blue
-                        SetScreenColor(Black, Blue);
-                        log(ClearScreen);
-                    }
-                    else if (!input.Contains("dark") && input.Contains("green")) { //Green
-                        SetScreenColor(Black, Green);
-                        log(ClearScreen);
-                    }
-                    else if (!input.Contains("dark") && input.Contains("cyan")) { //Cyan
-                        SetScreenColor(Black, Cyan);
-                        log(ClearScreen);
-                    }
-                    else if (input.EndsWith("dark red")) { //Dark red
-                        SetScreenColor(Black, DarkRed);
-                        log(ClearScreen);
-                    }
-                    else if (input.EndsWith("dark magenta")) { //Dark magenta
-                        SetScreenColor(Black, DarkMagenta);
-                        log(ClearScreen);
-                    }
-                    else if (input.EndsWith("dark yellow")) { //Dark yellow
-                        SetScreenColor(Black, DarkYellow);
-                        log(ClearScreen);
-                    }
-                    else if (!input.Contains("dark") && input.Contains("gray")) { //Gray
-                        SetScreenColor(Black, Gray);
-                        log(ClearScreen);
-                    }
-                    else if (!input.Contains("dark") && input.Contains("red")) { //Red
-                        SetScreenColor(Black, Red);
-                        log(ClearScreen);
-                    }
-                    else if (!input.Contains("dark") && input.Contains("magenta")) { //Magenta
-                        SetScreenColor(Black, Magenta);
-                        log(ClearScreen);
-                    }
-                    else if (!input.Contains("dark") && input.Contains("yellow")) { //Yellow
-                        SetScreenColor(Black, Yellow);
-                        log(ClearScreen);
-                    }
-                    else if (input.EndsWith("white")) { //White
-                        SetScreenColor(Black, White);
-                        log(ClearScreen);
-                    }
-                    else clog("\nPlease list colors by doing \"color list\" or set a color by doing \"color yellow\" (for example)\n", Gray);
+                    } // "Cosmos is built on else if blocks"
+                    else if (input.EndsWith("black")) SetScreenColor(White, Black);
+                    else if (input.EndsWith("dark blue")) SetScreenColor(Black, DarkBlue);
+                    else if (input.EndsWith("dark green")) SetScreenColor(Black, DarkGreen);
+                    else if (input.EndsWith("dark cyan")) SetScreenColor(Black, DarkCyan);
+                    else if (input.EndsWith("dark gray")) SetScreenColor(Black, DarkGray);
+                    else if (!input.Contains("dark") && input.Contains("blue")) SetScreenColor(Black, Blue);
+                    else if (!input.Contains("dark") && input.Contains("green")) SetScreenColor(Black, Green);
+                    else if (!input.Contains("dark") && input.Contains("cyan")) SetScreenColor(Black, Cyan);
+                    else if (input.EndsWith("dark red")) SetScreenColor(Black, DarkRed);
+                    else if (input.EndsWith("dark magenta")) SetScreenColor(Black, DarkMagenta);
+                    else if (input.EndsWith("dark yellow")) SetScreenColor(Black, DarkYellow);
+                    else if (!input.Contains("dark") && input.Contains("gray")) SetScreenColor(Black, Gray);
+                    else if (!input.Contains("dark") && input.Contains("red")) SetScreenColor(Black, Red);
+                    else if (!input.Contains("dark") && input.Contains("magenta")) SetScreenColor(Black, Magenta);
+                    else if (!input.Contains("dark") && input.Contains("yellow")) SetScreenColor(Black, Yellow);
+                    else if (input.EndsWith("white")) SetScreenColor(Black, White);
+                    else clog("Please list colors by doing \"color list\" or set a color by doing \"color yellow\" (for example)\n", Gray);
                 }
 
                 #endregion
@@ -237,11 +188,10 @@ namespace ChaOS {
                 else if (input.StartsWith("echo"))
                     clog(inputBeforeLower.Split("echo ")[1] + "\n", Gray);
 
-                #region File management
+                #region Disk commands
 
                 else if (input.StartsWith("mkdir")) {
-                    try { inputCapitalized = inputCapitalized.Split("MKDIR ")[1]; }
-                    catch { clog("No arguments\n", Red); CanContinue = false; }
+                    try { inputCapitalized = inputCapitalized.Split("MKDIR ")[1]; } catch { clog("No arguments\n", Red); CanContinue = false; }
                     if (inputCapitalized.Contains("0:\\")) { inputCapitalized.Replace("0:\\", ""); }
                     if (inputCapitalized.Contains(" ")) { clog("Directory name cannot contain spaces!\n", Red); CanContinue = false; }
                     if (CanContinue) {
@@ -253,8 +203,7 @@ namespace ChaOS {
                 }
 
                 else if (input.StartsWith("mkfile")) {
-                    try { inputCapitalized = inputCapitalized.Split("MKFILE ")[1]; }
-                    catch { clog("No arguments\n", Red); CanContinue = false; }
+                    try { inputCapitalized = inputCapitalized.Split("MKFILE ")[1]; } catch { clog("No arguments\n", Red); CanContinue = false; }
                     if (inputCapitalized.Contains("0:\\")) { input.Replace("0:\\", ""); }
                     if (inputCapitalized.Contains(" ")) { clog("Filename cannot contain spaces!\n", Red); CanContinue = false; }
                     if (CanContinue) {
@@ -266,25 +215,25 @@ namespace ChaOS {
                 }
 
                 else if (input.StartsWith("deldir")) {
-                    if (inputCapitalized.Contains("0:\\")) { input.Replace(@"0:\", ""); }
-                    try { inputCapitalized = inputCapitalized.Split("DELDIR ")[1]; }
-                    catch { clog("No arguments\n", Red); CanContinue = false; }
+                    try { inputCapitalized = inputCapitalized.Split("DELDIR ")[1]; } catch { clog("No arguments\n", Red); CanContinue = false; }
+                    if (inputCapitalized.Contains("0:\\")) { input.Replace("0:\\", ""); }
+                    if (inputCapitalized.Contains(" ")) { clog("Filename cannot contain spaces!\n", Red); CanContinue = false; }
                     if (CanContinue) {
-                        if (Directory.Exists(Directory.GetCurrentDirectory() + @"\" + inputCapitalized))
+                        if (Directory.Exists(inputCapitalized))
                             Directory.Delete(Directory.GetCurrentDirectory() + @"\" + inputCapitalized, true);
-                        else if (!Directory.Exists(inputCapitalized))
+                        else
                             clog("Directory not found!\n", Red);
                     }
                 }
 
                 else if (input.StartsWith("delfile")) {
-                    if (inputCapitalized.Contains("0:\\")) { inputCapitalized.Replace(@"0:\", ""); }
-                    try { inputCapitalized = inputCapitalized.Split("DELFILE ")[1]; }
-                    catch { clog("No arguments\n", Red); CanContinue = false; }
+                    try { inputCapitalized = inputCapitalized.Split("DELFILE ")[1]; } catch { clog("No arguments\n", Red); CanContinue = false; }
+                    if (inputCapitalized.Contains("0:\\")) { input.Replace("0:\\", ""); }
+                    if (inputCapitalized.Contains(" ")) { clog("Filename cannot contain spaces!\n", Red); CanContinue = false; }
                     if (CanContinue) {
-                        if (File.Exists(Directory.GetCurrentDirectory() + @"\" + inputCapitalized))
+                        if (File.Exists(inputCapitalized))
                             File.Delete(Directory.GetCurrentDirectory() + @"\" + inputCapitalized);
-                        else if (!File.Exists(inputCapitalized))
+                        else
                             clog("File not found!\n", Red);
                     }
                 }
@@ -294,30 +243,25 @@ namespace ChaOS {
                         try {
                             Directory.SetCurrentDirectory(Directory.GetCurrentDirectory().TrimEnd('\\').Remove(Directory.GetCurrentDirectory().LastIndexOf('\\') + 1));
                             Directory.SetCurrentDirectory(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 1));
-                        }
-                        catch { } // Error correction
+                        } catch { } // Error correction
                     }
 
                     else if (input.StartsWith("cd ")) {
-                        try { inputCapitalized = inputCapitalized.Split("CD ")[1]; }
-                        catch { clog("No arguments\n", Red); CanContinue = false; }
+                        try { inputCapitalized = inputCapitalized.Split("CD ")[1]; } catch { clog("No arguments\n", Red); CanContinue = false; }
                         if (inputCapitalized.Trim() != string.Empty) CanContinue = true;
-
                         if (CanContinue) {
                             if (inputCapitalized.Contains(@"0:\")) { inputCapitalized.Replace(@"0:\", ""); }
                             if (Directory.GetCurrentDirectory() != rootdir) { inputCapitalized = @"\" + inputCapitalized; }
-
                             if (Directory.Exists(Directory.GetCurrentDirectory() + inputCapitalized))
                                 Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + inputCapitalized);
-                            else
-                                clog("Directory not found!\n", Red);
+                            else clog("Directory not found!\n", Red);
                         }
                     }
 
                     else {
                         clog("Cd subfunctions:", DarkGreen);
-                        log(" cd (path) - Browses to directory\n" +
-                            " cd.. - Browses to last directory\n");
+                        log(" cd (path) - Browses to directory");
+                        log(" cd.. - Browses to last directory\n");
                     }
                 }
 
@@ -337,16 +281,13 @@ namespace ChaOS {
                 }
 
                 else if (input.StartsWith("copy")) {
-                    var potato = string.Empty;
-                    var potato1 = string.Empty;
-                    try { potato = inputBeforeLower.Split(" ")[1]; potato1 = inputBeforeLower.Split(" ")[2]; }
-                    catch { clog("No arguments\n", Red); CanContinue = false; }
-
+                    var potato = string.Empty; var potato1 = string.Empty;
+                    try { potato = inputBeforeLower.Split(" ")[1]; potato1 = inputBeforeLower.Split(" ")[2]; } catch { clog("No arguments\n", Red); CanContinue = false; }
                     if (CanContinue) {
                         var Contents = File.ReadAllText(potato);
                         File.Create(potato1);
                         File.WriteAllText(potato1, Contents);
-                        clog("Copy process was successful!\n", Gray);
+                        clog("Copy process finished successfully!\n", Gray);
                     }
                 }
 
@@ -372,13 +313,11 @@ namespace ChaOS {
 
                 #endregion
 
-                else if (input == "i like goos")
-                    clog("Fuck you, ChaOS is 10 times better.\n", Red);
-
-                else clog("Unknown command.\n", Red);
-            }
-
-            catch (Exception ex) { ExHandler.Crash(ex); }
+                else {
+                    Console.Beep();
+                    clog("Unknown command.\n", Red);
+                }
+            } catch (Exception ex) { ExHandler.Crash(ex); }
         }
     }
 }
