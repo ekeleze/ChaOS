@@ -33,12 +33,12 @@ namespace ChaOS {
 
         protected override void BeforeRun() {
             try {
-                log("Starting up ChaOS...\n");
+                write("Starting up ChaOS");
                 InitFS(fs);
 
                 Console.Clear();
                 log("Welcome back, " + username + ", to...\n");
-                clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen); // ChaOS logo! but its all one line xD
+                clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen); // C h a O S !
                 log("\n" + ver + "\n" + copyright + "\nType \"help\" to get started!");
                 if (!disk)
                     log("No hard drive detected, ChaOS will continue without disk support.");
@@ -63,23 +63,21 @@ namespace ChaOS {
                 log(); // Do not remove!
 
                 if (input == "help") {
-                    #region Unavailable string & color
+                    #region wefhu
                     var us = string.Empty;
                     var color = Console.ForegroundColor;
                     if (!disk) { us = " (unavailable)"; color = Gray; }
                     #endregion
-
                     clog("Functions:", DarkGreen);
                     log(" help - Shows all functions");
-                    log(" username - Allows you to use usernames");
+                    log(" opt - Allows you to change settings");
                     log(" credits - Shows all of the wonderful people that make ChaOS work");
                     log(" cls/clear - Clears the screen");
-                    log(" color - Changes text color, do 'color list' to list all colors");
                     log(" t/time - Tells you the time");
                     log(" echo - Echoes what you say");
                     log(" sd/shutdown - Shuts down ChaOS");
                     log(" rb/reboot - Reboots the system");
-                    clog(" diskinfo - Gives info about the disk" + us, color);
+                    log(" info - Gives you info about system stuff");
                     clog(" cd - Browses to directory" + us, color);
                     clog(" cd.. - Browses to last directory" + us, color);
                     clog(" dir - Lists files in the current directory" + us, color);
@@ -92,20 +90,68 @@ namespace ChaOS {
                     clog(" format - Formats the disk." + us + "\n", color);
                 }
 
-                // Miscellaneous
-
-                else if (input.Contains("username")) {
-                    if (input.Contains("set")) {
-                        try { username = input.Split("set ")[1].Trim(); } catch { clog("No arguments\n", Red); }
-                        clog("Done! (" + username + ")\n", Yellow);
+                else if (input.StartsWith("opt")) {
+                    #region Username functions
+                    if (input.Contains("username")) {
+                        if (input.Contains("set")) {
+                            try { username = input.Split("set ")[1].Trim(); } catch { clog("No arguments\n", Red); }
+                            clog("Done! (" + username + ")\n", Yellow);
+                        }
+                        else if (input.EndsWith("current")) clog("Current username: " + username + "\n", Yellow);
+                        else {
+                            clog("Username subfunctions:", DarkGreen);
+                            log(" username set (username) - Changes the username");
+                            log(" username current - Displays current username\n");
+                        }
                     }
+                    #endregion
 
-                    else if (input.EndsWith("current")) clog("Current username: " + username + "\n", Yellow);
+                    #region Color functions
+                    else if (input.Contains("color")) {
+                        if (input.EndsWith("list")) {
+                            var OldBack = Console.BackgroundColor; var OldFore = Console.ForegroundColor;
+                            clog("Color list:", Green);
+                            write(" "); SetScreenColor(White, Black, false); write("black - Pure light mode, will make you blind"); SetScreenColor(OldBack, OldFore, false);
+                            clog("\n dark blue - Dark blue with black background", DarkBlue);
+                            clog(" dark green - Dark green with black background", DarkGreen);
+                            clog(" dark cyan - Dark cyan with black background", DarkCyan);
+                            clog(" dark gray - Dark gray with black background", DarkGray);
+                            clog(" blue - Normal blue with black background", Blue);
+                            clog(" green - Green with black background", Green);
+                            clog(" cyan - Cyan with black background", Cyan);
+                            clog(" dark red - Dark red with black background", DarkRed);
+                            clog(" dark magenta - Dark magenta with black background", DarkMagenta);
+                            clog(" dark yellow - Dark yellow/orange with black background", DarkYellow);
+                            clog(" gray - Gray with black background", Gray);
+                            clog(" red - Red with black background", Red);
+                            clog(" magenta - Magenta with black background", Magenta);
+                            clog(" yellow - Light yellow with black background", Yellow);
+                            clog(" white - Pure white with black background\n", White);
+                        } // "Cosmos is built on else if blocks"
+                        else if (input.EndsWith("black")) SetScreenColor(White, Black);
+                        else if (input.EndsWith("dark blue")) SetScreenColor(Black, DarkBlue);
+                        else if (input.EndsWith("dark green")) SetScreenColor(Black, DarkGreen);
+                        else if (input.EndsWith("dark cyan")) SetScreenColor(Black, DarkCyan);
+                        else if (input.EndsWith("dark gray")) SetScreenColor(Black, DarkGray);
+                        else if (!input.Contains("dark") && input.EndsWith("blue")) SetScreenColor(Black, Blue);
+                        else if (!input.Contains("dark") && input.EndsWith("green")) SetScreenColor(Black, Green);
+                        else if (!input.Contains("dark") && input.EndsWith("cyan")) SetScreenColor(Black, Cyan);
+                        else if (input.EndsWith("dark red")) SetScreenColor(Black, DarkRed);
+                        else if (input.EndsWith("dark magenta")) SetScreenColor(Black, DarkMagenta);
+                        else if (input.EndsWith("dark yellow")) SetScreenColor(Black, DarkYellow);
+                        else if (!input.Contains("dark") && input.EndsWith("gray")) SetScreenColor(Black, Gray);
+                        else if (!input.Contains("dark") && input.EndsWith("red")) SetScreenColor(Black, Red);
+                        else if (!input.Contains("dark") && input.EndsWith("magenta")) SetScreenColor(Black, Magenta);
+                        else if (!input.Contains("dark") && input.EndsWith("yellow")) SetScreenColor(Black, Yellow);
+                        else if (input.EndsWith("white")) SetScreenColor(Black, White);
+                        else clog("Please list colors by doing \"opt color list\" or set a color by doing \"opt color (color)\"\n", Gray);
+                    }
+                    #endregion
 
                     else {
-                        clog("Username subfunctions:", DarkGreen);
-                        log(" username set (username) - Changes the username");
-                        log(" username current - Displays current username\n");
+                        clog("Opt subfunctions:", DarkGreen);
+                        log(" opt username - Allows you to use usernames");
+                        log(" opt color - Allows you to change text color\n");
                     }
                 }
 
@@ -114,59 +160,12 @@ namespace ChaOS {
                     foreach (string contributor in contributors) clog(" " + contributor, Yellow); log();
                 }
 
-                #region Color functions
-
-                else if (input.StartsWith("color")) {
-                    if (input.Contains("list")) {
-                        var OldBack = Console.BackgroundColor; var OldFore = Console.ForegroundColor;
-                        clog("Color list:", Green);
-                        write(" "); SetScreenColor(White, Black, false); write("black - Pure light mode, will make you blind"); SetScreenColor(OldBack, OldFore, false);
-                        clog("\n dark blue - Dark blue with black background", DarkBlue);
-                        clog(" dark green - Dark green with black background", DarkGreen);
-                        clog(" dark cyan - Dark cyan with black background", DarkCyan);
-                        clog(" dark gray - Dark gray with black background", DarkGray);
-                        clog(" blue - Normal blue with black background", Blue);
-                        clog(" green - Green with black background", Green);
-                        clog(" cyan - Cyan with black background", Cyan);
-                        clog(" dark red - Dark red with black background", DarkRed);
-                        clog(" dark magenta - Dark magenta with black background", DarkMagenta);
-                        clog(" dark yellow - Dark yellow/orange with black background", DarkYellow);
-                        clog(" gray - Gray with black background", Gray);
-                        clog(" red - Red with black background", Red);
-                        clog(" magenta - Magenta with black background", Magenta);
-                        clog(" yellow - Light yellow with black background", Yellow);
-                        clog(" white - Pure white with black background\n", White);
-                    } // "Cosmos is built on else if blocks"
-                    else if (input.EndsWith("black")) SetScreenColor(White, Black);
-                    else if (input.EndsWith("dark blue")) SetScreenColor(Black, DarkBlue);
-                    else if (input.EndsWith("dark green")) SetScreenColor(Black, DarkGreen);
-                    else if (input.EndsWith("dark cyan")) SetScreenColor(Black, DarkCyan);
-                    else if (input.EndsWith("dark gray")) SetScreenColor(Black, DarkGray);
-                    else if (!input.Contains("dark") && input.Contains("blue")) SetScreenColor(Black, Blue);
-                    else if (!input.Contains("dark") && input.Contains("green")) SetScreenColor(Black, Green);
-                    else if (!input.Contains("dark") && input.Contains("cyan")) SetScreenColor(Black, Cyan);
-                    else if (input.EndsWith("dark red")) SetScreenColor(Black, DarkRed);
-                    else if (input.EndsWith("dark magenta")) SetScreenColor(Black, DarkMagenta);
-                    else if (input.EndsWith("dark yellow")) SetScreenColor(Black, DarkYellow);
-                    else if (!input.Contains("dark") && input.Contains("gray")) SetScreenColor(Black, Gray);
-                    else if (!input.Contains("dark") && input.Contains("red")) SetScreenColor(Black, Red);
-                    else if (!input.Contains("dark") && input.Contains("magenta")) SetScreenColor(Black, Magenta);
-                    else if (!input.Contains("dark") && input.Contains("yellow")) SetScreenColor(Black, Yellow);
-                    else if (input.EndsWith("white")) SetScreenColor(Black, White);
-                    else clog("Please list colors by doing \"color list\" or set a color by doing \"color yellow\" (for example)\n", Gray);
-                }
-
-                #endregion
-
                 else if (input == "clear" || input == "cls")
                     Console.Clear();
 
                 else if (input == "time" || input == "t") {
-                    /* Now shows up properly:
-                       Ex: 7:6 -> 07:06 */
-
                     string Hour = DateTime.Now.Hour.ToString(); string Minute = DateTime.Now.Minute.ToString();
-                    if (Hour.Length < 2) Hour = "0" + Hour; if (Minute.Length < 2) Minute = "0" + Minute;
+                    if (Minute.Length < 2) Minute = "0" + Minute;
                     clog("Current time is " + Hour + ":" + Minute + "\n", Yellow);
                 }
 
@@ -187,6 +186,33 @@ namespace ChaOS {
 
                 else if (input.StartsWith("echo"))
                     clog(inputBeforeLower.Split("echo ")[1] + "\n", Gray);
+
+                else if (input.EndsWith("info")) { // Pretty weird system but it works ig
+                    if (input.StartsWith("disk")) {
+                        long availableSpace = VFSManager.GetAvailableFreeSpace(@"0:\");
+                        long diskSpace = VFSManager.GetTotalSize(@"0:\");
+                        string fsType = VFSManager.GetFileSystemType("0:\\");
+                        clog("Disk info for " + fs.GetFileSystemLabel(rootdir), Yellow);
+                        if (diskSpace < 1000000) //Less than 1mb
+                            clog("\nDisk space: " + availableSpace / 1000 + " KB free out of " + diskSpace / 1000 + " KB total", Yellow);
+                        else if (diskSpace > 1000000) //More than 1mb
+                            clog("\nDisk space: " + availableSpace / 1e+6 + " MB free out of " + diskSpace / 1e+6 + " MB total", Yellow);
+                        else if (diskSpace > 1e+9) //More than 1gb
+                            clog("\nDisk space: " + availableSpace / 1e+9 + " GB free out of " + diskSpace / 1e+9 + " GB total", Yellow);
+                        clog("\nFilesystem type: " + fsType + "\n", Yellow);
+                    }
+                    else if (input.EndsWith("sys")) {
+                        clog("System info for this PC:", DarkGreen);
+                        log(" CPU: " + Cosmos.Core.CPU.GetCPUBrandString());
+                        log(" CPU speed: " + Cosmos.Core.CPU.GetCPUCycleSpeed());
+                        log(" System RAM: " + Cosmos.Core.CPU.GetAmountOfRAM() + "\n");
+                    }
+                    else {
+                        clog("Info functions:", DarkGreen);
+                        log(" diskinfo - Gives info about the disk");
+                        log(" sysinfo - Gives info about the system\n");
+                    }
+                }
 
                 #region Disk commands
 
@@ -293,20 +319,6 @@ namespace ChaOS {
 
                 else if (input.StartsWith("lb") && disk)
                     fs.SetFileSystemLabel(rootdir, inputBeforeLower.Split("lb ")[1]);
-
-                else if (input == "diskinfo" && disk) {
-                    long availableSpace = VFSManager.GetAvailableFreeSpace(@"0:\");
-                    long diskSpace = VFSManager.GetTotalSize(@"0:\");
-                    string fsType = VFSManager.GetFileSystemType("0:\\");
-                    clog("Disk info for " + fs.GetFileSystemLabel(rootdir), Yellow);
-                    if (diskSpace < 1000000) //Less than 1mb
-                        clog("\nDisk space: " + availableSpace / 1000 + " KB free out of " + diskSpace / 1000 + " KB total", Yellow);
-                    else if (diskSpace > 1000000) //More than 1mb
-                        clog("\nDisk space: " + availableSpace / 1e+6 + " MB free out of " + diskSpace / 1e+6 + " MB total", Yellow);
-                    else if (diskSpace > 1e+9) //More than 1gb
-                        clog("\nDisk space: " + availableSpace / 1e+9 + " GB free out of " + diskSpace / 1e+9 + " GB total", Yellow);
-                    clog("\nFilesystem type: " + fsType + "\n", Yellow);
-                }
 
                 else if (input == "format" && disk)
                     Directory.Delete(@"0:\", true);
