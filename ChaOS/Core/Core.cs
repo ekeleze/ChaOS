@@ -3,7 +3,6 @@ using static System.ConsoleColor;
 
 namespace ChaOS {
     public class Core {
-        // Main
         public static void log(string text = null) => Console.WriteLine(text);
         public static void clog(string text, ConsoleColor ForeColor) {
             var OldFore = Console.ForegroundColor;
@@ -24,11 +23,21 @@ namespace ChaOS {
             if (ClearScreen) Console.Clear();
         }
 
-        // Filesystem
-        public static void ilog(string text, bool ok) {
-            if (ok) cwrite("[OK] ", Green);
-            else cwrite("[Fail] ", Red);
-            write(text + "\n");
+        public static void Crash(Exception exc, bool isFatal = false) {
+            ConsoleColor OldFore = Console.ForegroundColor; ConsoleColor OldBack = Console.BackgroundColor;
+            SetScreenColor(DarkBlue, White); Console.Beep();
+            Console.CursorTop = 10; log("              ChaOS has hit a brick wall and died in the wreckage!\n");
+            try { Console.CursorLeft = 39 - (exc.Message.Length / 2); } catch { Console.CursorLeft = 0; }
+            write(exc.ToString() + "\n\n");
+            
+            if (!isFatal) {
+                write("                          Press any key to continue... ");
+                Console.ReadKey(true); SetScreenColor(OldBack, OldFore);
+            }
+            else {
+                write("                                You can restart. ");
+                while (true) Console.ReadKey(true);
+            }
         }
     }
 }

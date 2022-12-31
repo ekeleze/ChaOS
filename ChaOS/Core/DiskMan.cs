@@ -17,17 +17,17 @@ namespace ChaOS {
         };
 
         public static void InitFS(CosmosVFS fs) {
-            VFSManager.RegisterVFS(fs); write(".");
+            VFSManager.RegisterVFS(fs);
             try { Directory.GetFiles(rootdir); }
-            catch { disk = false; } write(".");
-            if (disk) LoadSettings();
-            else Console.Beep();
+            catch { disk = false; }
         }
 
-        private static void LoadSettings() {
-            if (Directory.Exists(systempath)) {
-                if (File.Exists(Files.userfile)) Kernel.username = File.ReadAllText(Files.userfile); write(".");
-                if (File.Exists(Files.colorfile)) SetScreenColor((ConsoleColor)File.ReadAllBytes(Files.colorfile)[0], (ConsoleColor)File.ReadAllBytes(Files.colorfile)[1], false); write(".");
+        public static void LoadSettings() {
+            if (disk) {
+                if (Directory.Exists(systempath)) {
+                    if (File.Exists(Files.userfile)) Kernel.username = File.ReadAllText(Files.userfile);
+                    if (File.Exists(Files.colorfile)) SetScreenColor((ConsoleColor)File.ReadAllBytes(Files.colorfile)[0], (ConsoleColor)File.ReadAllBytes(Files.colorfile)[1], false);
+                }
             }
         }
 
