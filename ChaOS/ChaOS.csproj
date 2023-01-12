@@ -41,11 +41,6 @@
 
     <ItemGroup>
       <None Remove="main.map" />
-      <None Remove="Misc\Languages\EN_US.json" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Include="Misc\Languages\EN_US.json" />
     </ItemGroup>
 
     <ItemGroup>
