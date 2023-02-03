@@ -11,8 +11,8 @@ namespace ChaOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string ver = "Pre-release 1.2";
-        public const string copyright = "Copyright (c) 2022-2023 Goplex Studios";
+        public const string ver = "Release 1.2";
+        public const string copyright = "Copyright (c) 2022 Goplex Studios";
 
         public static string username = "usr";
 
@@ -26,12 +26,12 @@ namespace ChaOS
         {
             try
             {
-                log("Starting up ChaOS...");
+                //log("Starting up ChaOS...");
                 InitFS(fs);
                 LoadSettings();
 
                 Console.Clear();
-                log("Welcome back to...\n");
+                log("Welcome to...\n");
                 clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen);
                 log("\n" + ver + "\n" + copyright + "\nType \"help\" to get started!");
                 if (!disk) log("No hard drive detected, ChaOS will continue without disk support.");
@@ -64,20 +64,20 @@ namespace ChaOS
                     if (!disk) { us = " (unavailable)"; color = Gray; }
 
                     clog("Functions:", DarkGreen);
-                    log(" help - Shows all functions, do \"help (page)\" for more help");
-                    log(" about - Shows all of the wonderful people that make ChaOS work");
+                    log(" help - Shows all functions, do \"help (page)\" for more commands");
+                    log(" credits - Shows all of the wonderful people that make ChaOS work");
                     log(" cls/clear - Clears the screen");
                     log(" time - Tells you the time");
                     log(" echo - Echoes what you say");
                     log(" calc - Allows you to do simple math");
                     log(" sysinfo - Gives info about the system");
-                    log(" username - Allows you to use usernames");
+                    log(" username - Username related functions");
                     log(" color - Allows you to change the color scheme");
                     log(" sd/shutdown - Shuts down ChaOS");
                     log(" rb/reboot - Reboots the system");
                     clog(" diskinfo - Gives info about the disk" + us, color);
-                    clog(" cd - Browses to directory" + us, color);
-                    clog(" cd.. - Browses to last directory" + us, color);
+                    clog(" cd - Opens directory" + us, color);
+                    clog(" cd.. - Opens last directory" + us, color);
                     clog(" dir - Lists files in the current directory" + us, color);
                     clog(" mkdir - Creates a directory" + us, color);
                     clog(" mkfile - Creates a file" + us, color);
@@ -149,7 +149,7 @@ namespace ChaOS
                 }
                 #endregion
 
-                else if (input == "about")
+                else if (input == "credits")
                 {
                     Console.SetCursorPosition(0, 7);
                     cwrite("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen);
