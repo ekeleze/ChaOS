@@ -57,8 +57,4 @@
 		<PlugsReference Include="$(MSBuildProjectDirectory)\..\ChaOS.Plugs\bin\Debug\net6.0\ChaOS.Plugs.dll" />
 	</ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="UsrFunc\UserCSfiles\" />
-    </ItemGroup>
-
 </Project>
