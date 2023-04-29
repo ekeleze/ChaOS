@@ -53,8 +53,4 @@
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="UsrFunc\UserCSfiles\" />
-    </ItemGroup>
-
 </Project>
