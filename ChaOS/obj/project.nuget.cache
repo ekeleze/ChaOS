@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "LkNjI/S9Mxhjm4hC883IViiq081LJNljIKXgqqQ+h8XrQum9MT6iM+SBCt0sKRQ9fbqOa/cfXOJRFdvrr2hayQ==",
+  "dgSpecHash": "s6Rne1aWHROCSAL1IgQd1rmebArBBQ1pBtetWza3il3g8x9t9JkSiIbX7GEH9meNrU5t9xFv6naLky7kepnCfA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\Documents\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj",
+  "projectFilePath": "/home/ekeleze/Documents/GitHub/ChaOS/ChaOS/ChaOS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\User\\.nuget\\packages\\cosmos.build\\0.1.0-localbuild20221127015522\\cosmos.build.0.1.0-localbuild20221127015522.nupkg.sha512",
-    "C:\\Users\\User\\.nuget\\packages\\cosmos.common\\0.1.0-localbuild20221127015527\\cosmos.common.0.1.0-localbuild20221127015527.nupkg.sha512",
-    "C:\\Users\\User\\.nuget\\packages\\cosmos.core\\0.1.0-localbuild20221127015527\\cosmos.core.0.1.0-localbuild20221127015527.nupkg.sha512",
-    "C:\\Users\\User\\.nuget\\packages\\cosmos.debug.kernel\\0.1.0-localbuild20221127015527\\cosmos.debug.kernel.0.1.0-localbuild20221127015527.nupkg.sha512",
-    "C:\\Users\\User\\.nuget\\packages\\cosmos.hal2\\0.1.0-localbuild20221127015527\\cosmos.hal2.0.1.0-localbuild20221127015527.nupkg.sha512",
-    "C:\\Users\\User\\.nuget\\packages\\cosmos.system2\\0.1.0-localbuild20221127015527\\cosmos.system2.0.1.0-localbuild20221127015527.nupkg.sha512",
-    "C:\\Users\\User\\.nuget\\packages\\il2cpu.api\\0.1.0-localbuild20221127015527\\il2cpu.api.0.1.0-localbuild20221127015527.nupkg.sha512"
+    "/home/ekeleze/.nuget/packages/cosmos.build/0.1.0-localbuild/cosmos.build.0.1.0-localbuild.nupkg.sha512",
+    "/home/ekeleze/.nuget/packages/cosmos.common/0.1.0-localbuild/cosmos.common.0.1.0-localbuild.nupkg.sha512",
+    "/home/ekeleze/.nuget/packages/cosmos.core/0.1.0-localbuild/cosmos.core.0.1.0-localbuild.nupkg.sha512",
+    "/home/ekeleze/.nuget/packages/cosmos.debug.kernel/0.1.0-localbuild/cosmos.debug.kernel.0.1.0-localbuild.nupkg.sha512",
+    "/home/ekeleze/.nuget/packages/cosmos.hal2/0.1.0-localbuild/cosmos.hal2.0.1.0-localbuild.nupkg.sha512",
+    "/home/ekeleze/.nuget/packages/cosmos.system2/0.1.0-localbuild/cosmos.system2.0.1.0-localbuild.nupkg.sha512",
+    "/home/ekeleze/.nuget/packages/il2cpu.api/0.1.0-localbuild/il2cpu.api.0.1.0-localbuild.nupkg.sha512"
   ],
   "logs": []
 }
