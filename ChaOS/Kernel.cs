@@ -11,8 +11,8 @@ namespace ChaOS
 {
     public class Kernel : Sys.Kernel
     {
-        public const string ver = "Release 1.2";
-        public const string copyright = "Copyright (c) 2022 Goplex Studios";
+        public const string ver = "PT-2";
+        public const string copyright = "Copyright (c) 2023 Imperium Games. All Rights Reserved.";
 
         public static string username = "usr";
 
