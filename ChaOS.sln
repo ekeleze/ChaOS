@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChaOS", "ChaOS\ChaOS.csproj", "{86AE190C-1B0E-4B07-833A-236B8FC075C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaOS.Plugs", "ChaOS.Plugs\ChaOS.Plugs.csproj", "{6EED5A5C-D238-42FE-AD16-5DC16E047AC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{86AE190C-1B0E-4B07-833A-236B8FC075C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86AE190C-1B0E-4B07-833A-236B8FC075C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86AE190C-1B0E-4B07-833A-236B8FC075C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EED5A5C-D238-42FE-AD16-5DC16E047AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EED5A5C-D238-42FE-AD16-5DC16E047AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EED5A5C-D238-42FE-AD16-5DC16E047AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EED5A5C-D238-42FE-AD16-5DC16E047AC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

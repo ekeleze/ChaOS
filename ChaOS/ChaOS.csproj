@@ -52,5 +52,9 @@
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
     </ItemGroup>
+	
+	<ItemGroup>
+		<PlugsReference Include="$(MSBuildProjectDirectory)\..\ChaOS.Plugs\bin\Debug\net6.0\ChaOS.Plugs.dll" />
+	</ItemGroup>
 
 </Project>
