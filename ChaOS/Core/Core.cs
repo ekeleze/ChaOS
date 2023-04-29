@@ -24,7 +24,7 @@ namespace ChaOS
 
         public static void hadd(string text)
         {
-            Kernel.HelpEntries.Add(text);
+            //Kernel.HelpEntries.Add(text);
         }
 
         public static void SetScreenColor(ConsoleColor BackColor, ConsoleColor ForeColor, bool ClearScreen = true)
