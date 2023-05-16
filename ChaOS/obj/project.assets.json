@@ -102,7 +102,7 @@
   },
   "libraries": {
     "Cosmos.Build/0.1.0-localbuild": {
-      "sha512": "41p5egdvEaPxdq2lNrLX90oLsgMI7l7VODc/OO9s7RQlXqATCuswcwJeOEZYdWOSmG2QWrwiwMeAMTsaYAKKiQ==",
+      "sha512": "lwsVLhcUPxvKXEWsshkMFBwDWMfmwbc9xaGg93YzZXvF/rpq9JCB66M3/Kt4J7Z2qioIGP4O8if0gq84hnAR8g==",
       "type": "package",
       "path": "cosmos.build/0.1.0-localbuild",
       "hasTools": true,
@@ -465,7 +465,7 @@
       ]
     },
     "Cosmos.Common/0.1.0-localbuild": {
-      "sha512": "iRNcY/ehJ478bWgoq+T8n2D6lE+LMhW1l+rMZWL3bTh41ccDCPBVhml/huLZ4DsMNeAJVSwopaokZWJurAlU6Q==",
+      "sha512": "MbU8wsEfycnxauMiEVPUAOva1CY3QQzfDGOJTATjxGFImxB+gAQ3fy8VA+k67elIk5eQAD4kw3NVPAPc2ayzqw==",
       "type": "package",
       "path": "cosmos.common/0.1.0-localbuild",
       "files": [
@@ -477,7 +477,7 @@
       ]
     },
     "Cosmos.Core/0.1.0-localbuild": {
-      "sha512": "ZCpirlbz3yrZncqFfAsLnSYF5HEVgK+wa4GzDCxjwi+1Adi4DcsrKuORHYxACpNx+NcWV18y8y2clIuACDGMxg==",
+      "sha512": "v+SnA/VIkVaphHwa5lNplFTIvhz6MUvgHgjlcw3lfrkOndw6E1zd16eTRDE0d6gg9uvyiZXhdYUW4nOOBJGqKA==",
       "type": "package",
       "path": "cosmos.core/0.1.0-localbuild",
       "files": [
@@ -490,7 +490,7 @@
       ]
     },
     "Cosmos.Debug.Kernel/0.1.0-localbuild": {
-      "sha512": "S1IuZbuuh2X+8UVews8MuoT6sJilHBQ5Za34I55Qunrt3Ob33uW/8FnHoEfRmvUdvY07oUF7IuMq7vRLnGJr7w==",
+      "sha512": "wGIZRdEiaAgYlYzaRRQJ05Z6yK3QFee1XNiv0HjdVCOEJ/ea0CipxTBJrR8ivBcBuWVl3zKCKQqQPV18ZZtTlw==",
       "type": "package",
       "path": "cosmos.debug.kernel/0.1.0-localbuild",
       "files": [
@@ -503,7 +503,7 @@
       ]
     },
     "Cosmos.HAL2/0.1.0-localbuild": {
-      "sha512": "xhU05BUP72cP6s28dpNSsdOE3rRF6CPaUa+JzuixIstUlvjsq8YR47DbvFfvxXgJjouWb2djBEo9NonpIJzRGQ==",
+      "sha512": "AvGznVjsBuZixEWCmbqa4rdVb4zfUCVdlsEK0e+SToXGKJjPIkZ+CpjXXlNDwGij+JBqKRs8x9to4ilUuxhF/w==",
       "type": "package",
       "path": "cosmos.hal2/0.1.0-localbuild",
       "files": [
@@ -516,7 +516,7 @@
       ]
     },
     "Cosmos.System2/0.1.0-localbuild": {
-      "sha512": "7rei0XbOfHzOcJrEm9EXBO+nbOZYgW6z5bFUD43mduiElrDUTdxuo9KIoM0wPChtFQSog1VoOo5fZBIO9FL0Xg==",
+      "sha512": "cNc/bNduni2ndw3Hvm497C3MdCT4Q1ZlVie+d0ljMrV6jn1rSGP7a5E9xx23Oy4YuRyfsGJJjHOCE+doY+5u8w==",
       "type": "package",
       "path": "cosmos.system2/0.1.0-localbuild",
       "files": [
@@ -529,7 +529,7 @@
       ]
     },
     "IL2CPU.API/0.1.0-localbuild": {
-      "sha512": "eYSgK7OZp0EgxhqSqFeLG0aH4iA37eewwIu0Qg+z5koNHgX5QUR4CtnFSRIyVz5FfmKHjtCvHN4RJEZH6qKldw==",
+      "sha512": "+xXItxj447+WA3sPRlSwh4ER+UJk6pVl5J5XVRDBxxCOO3KyMYw2nQ9E+miluL/AQUl97fln4KzK2ud0vcSQJw==",
       "type": "package",
       "path": "il2cpu.api/0.1.0-localbuild",
       "files": [
@@ -613,16 +613,27 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.14, 6.0.14]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.14, 6.0.14]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.116/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.103/RuntimeIdentifierGraph.json"
       }
     }
   }

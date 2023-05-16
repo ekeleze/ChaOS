@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using ChaOS.CEL;
 using Sys = Cosmos.System;
 using Cosmos.System.FileSystem;
 using Cosmos.System.FileSystem.VFS;
@@ -12,7 +14,7 @@ namespace ChaOS
     public class Kernel : Sys.Kernel
     {
         public const string ver = "PT-2";
-        public const string copyright = "Copyright (c) 2023 Imperium Games. All Rights Reserved.";
+        public const string copyright = "Copyright (c) 2023 ChaOS Software. All Rights Reserved.";
 
         public static string username = "usr";
 
@@ -31,13 +33,13 @@ namespace ChaOS
                 LoadSettings();
 
                 Console.Clear();
-                log("Welcome to...\n");
+                //log("Welcome to...\n");
                 clog("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen);
                 log("\n" + ver + "\n" + copyright + "\nType \"help\" to get started!");
                 if (!disk) log("No hard drive detected, ChaOS will continue without disk support.");
                 log();
             }
-            catch (Exception ex) { Crash(ex, true); }
+            catch (Exception ex) { Crash(ex); }
         }
 
         protected override void Run()
@@ -163,7 +165,54 @@ namespace ChaOS
                     write("MrDumbrava - Contributor");
                     Console.SetCursorPosition(0, 24);
                 }
+                
+                else if (input.StartsWith("compile"))
+                {
+                    string preArgsCS = inputBeforeLower.Substring(8);
+                    string preArgs = input.Substring(8);
+                    string[] argsCS = preArgsCS.Split(' ');
+                    string[] args = preArgs.Split(' ');
 
+                    bool readyOne = false;
+                    bool readyTwo = false;
+
+                    string langToCompile = "PWR";
+                    string mainFile = "main.pwr";
+
+                    if (args[0].Contains("-pwr"))
+                    {
+                        langToCompile = "PWR";
+                        mainFile = "main.pwr";
+                        readyOne = true;
+                    }
+                    else if (args[0].Contains("-9xcode"))
+                    {
+                        langToCompile = "9xCode";
+                        mainFile = "main.9x";
+                        readyOne = true;
+                    }
+                    else
+                    {
+                        cwrite("ERROR: Missing args!", Red);
+                    }
+
+                    if (args[1].Contains("main:"))
+                    {
+                        string ass = argsCS[1].Substring(6);
+                        mainFile = ass.Remove('"');
+                        readyTwo = true;
+                    }
+                    else
+                    {
+                        cwrite("ERROR: Missing args!", Red);
+                    }
+
+                    if (langToCompile == "PWR" && readyOne && readyTwo)
+                    {
+                        PWR_to_CEL.PTC(mainFile);
+                    } 
+                }
+                
                 else if (input == "clear" || input == "cls")
                     Console.Clear();
 
@@ -363,7 +412,8 @@ namespace ChaOS
 
                 else
                 {
-                    Console.Beep();
+                    //Console.Beep();
+                    // I commented it out because it isn't async and freezes the os until the sound is done. -ekeleze
                     clog("Unknown command.\n", Red);
                 }
             }
