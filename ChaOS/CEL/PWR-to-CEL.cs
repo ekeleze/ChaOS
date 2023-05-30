@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Cosmos.HAL.Drivers.Network;
 using Cosmos.System;
 using Console = System.Console;
 
@@ -53,6 +54,18 @@ public class PWR_to_CEL
                 }
                 else // The rest of the code. AAAAAAA
                 {
+                    if (line.StartsWith("stop") || line.StartsWith("end") || line.StartsWith("close"))
+                    {
+                        if (line.Contains("with code"))
+                        {
+                            string number = line.Split(' ')[3];
+                            newLines.Add("t:" + number);
+                        }
+                        else
+                        {
+                            newLines.Add("t"); 
+                        }
+                    }
                     
                 }
             }

@@ -156,7 +156,7 @@ namespace ChaOS
                     Console.SetCursorPosition(0, 7);
                     cwrite("  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ", DarkGreen);
                     Console.SetCursorPosition(60, 9);
-                    cwrite("Version 1.2", Yellow);
+                    cwrite(ver, Yellow);
                     Console.SetCursorPosition(62, 11);
                     cwrite("Credits", Yellow);
                     Console.SetCursorPosition(57, 12);
@@ -196,7 +196,7 @@ namespace ChaOS
                         cwrite("ERROR: Missing args!", Red);
                     }
 
-                    if (args[1].Contains("main:"))
+                    if (args[1].Contains("main:") && readyOne)
                     {
                         string ass = argsCS[1].Substring(6);
                         mainFile = ass.Remove('"');
