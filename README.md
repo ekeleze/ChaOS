@@ -1,5 +1,5 @@
 # ChaOS
-### A lightweight GUI OS with Cosmos
+### A lightweight GUI OS made with [Cosmos](https://github.com/CosmosOS/Cosmos)
 
 ## What is the difference between ChaOS-Classic and the new ChaOS?
 
