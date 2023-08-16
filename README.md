@@ -1,5 +1,5 @@
 # ChaOS
-### A lightweight GUI OS in Cosmos
+### A lightweight GUI OS with Cosmos
 
 ## What is the difference between ChaOS-Classic and the new ChaOS?
 
