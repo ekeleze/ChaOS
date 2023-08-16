@@ -15,36 +15,47 @@
         <CosmosDebugPort>Serial: COM1</CosmosDebugPort>
         <Launch>VMware</Launch>
         <Profile>VMware</Profile>
-        <Description>Use VMware Player or Workstation to deploy and debug.</Description>
+        <Description>A lightweight GUI OS made with Cosmos.</Description>
         <PxeInterface>192.168.0.8</PxeInterface>
-        <BinFormat>Elf</BinFormat>
+        <OptimizationLevel>2</OptimizationLevel>
         <DebugEnabled>False</DebugEnabled>
         <VMWareEdition>Workstation</VMWareEdition>
-        <CompressionType>Gzip</CompressionType>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <RemoveBootDebugOutput>True</RemoveBootDebugOutput>
-        <CompileVBEMultiboot>False</CompileVBEMultiboot>
-        <EnableBochsDebug>False</EnableBochsDebug>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <Nullable>disable</Nullable>
-        <SignAssembly>True</SignAssembly>
-        <IsPublishable>False</IsPublishable>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <Optimize>True</Optimize>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-      <Optimize>True</Optimize>
+        <Title>ChaOS</Title>
+        <Copyright>Copyright © 2023 imperium. All rights reserved</Copyright>
+        <PackageProjectUrl>https://www.ekeleze.net/</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://www.ekeleze.net/projects/ChaOS</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+        <AnalysisLevel>6.0</AnalysisLevel>
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="main.map" />
+      <None Remove="Resources\Close.bmp" />
+      <None Remove="Resources\Font.btf" />
+      <None Remove="Resources\Maximize.bmp" />
+      <None Remove="Resources\Minimize.bmp" />
+      <None Remove="Resources\Mouse.bmp" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="..\.editorconfig" Link=".editorconfig" />
+      <EmbeddedResource Include="Resources\Close.bmp" />
+      <EmbeddedResource Include="Resources\Font.btf" />
+      <EmbeddedResource Include="Resources\Maximize.bmp" />
+      <EmbeddedResource Include="Resources\Minimize.bmp" />
+      <EmbeddedResource Include="Resources\Mouse.bmp" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\LICENSE.txt">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Include="..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -52,9 +63,11 @@
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
     </ItemGroup>
-	
-	<ItemGroup>
-		<PlugsReference Include="$(MSBuildProjectDirectory)\..\ChaOS.Plugs\bin\Debug\net6.0\ChaOS.Plugs.dll" />
-	</ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="PrismAPI">
+        <HintPath>PrismAPI.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 
 </Project>

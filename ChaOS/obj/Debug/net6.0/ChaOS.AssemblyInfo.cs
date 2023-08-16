@@ -13,12 +13,14 @@ using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChaOS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyDescriptionAttribute("Use VMware Player or Workstation to deploy and debug.")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright © 2023 imperium. All rights reserved")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("A lightweight GUI OS made with Cosmos.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChaOS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChaOS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyMetadataAttribute("RepositoryUrl", "https://www.ekeleze.net/projects/ChaOS")]
 
 // Generado por la clase WriteCodeFragment de MSBuild.
 

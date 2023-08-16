@@ -1,7 +1,0 @@
-﻿[*.cs]
-
-# CS0649: El campo 'WM.b_byte' nunca se asigna y siempre tendrá el valor predeterminado null
-dotnet_diagnostic.CS0649.severity = none
-
-# IDE0055: Fijar formato
-dotnet_diagnostic.IDE0055.severity = none
