@@ -8,19 +8,19 @@
     ".NETCoreApp,Version=v6.0": {
       "ChaOS/1.0.0": {
         "dependencies": {
-          "Cosmos.Build": "0.1.0-localbuild20230702085058",
-          "Cosmos.Debug.Kernel": "0.1.0-localbuild20230702085104",
-          "Cosmos.System2": "0.1.0-localbuild20230702085104",
+          "Cosmos.Build": "0.1.0-localbuild20230630061726",
+          "Cosmos.Debug.Kernel": "0.1.0-localbuild20230630061732",
+          "Cosmos.System2": "0.1.0-localbuild20230630061732",
           "PrismAPI": "0.0.0.0"
         },
         "runtime": {
           "ChaOS.dll": {}
         }
       },
-      "Cosmos.Build/0.1.0-localbuild20230702085058": {},
-      "Cosmos.Common/0.1.0-localbuild20230702085104": {
+      "Cosmos.Build/0.1.0-localbuild20230630061726": {},
+      "Cosmos.Common/0.1.0-localbuild20230630061732": {
         "dependencies": {
-          "Cosmos.Debug.Kernel": "0.1.0-localbuild20230702085104"
+          "Cosmos.Debug.Kernel": "0.1.0-localbuild20230630061732"
         },
         "runtime": {
           "lib/net6.0/Cosmos.Common.dll": {
@@ -29,10 +29,10 @@
           }
         }
       },
-      "Cosmos.Core/0.1.0-localbuild20230702085104": {
+      "Cosmos.Core/0.1.0-localbuild20230630061732": {
         "dependencies": {
-          "Cosmos.Debug.Kernel": "0.1.0-localbuild20230702085104",
-          "IL2CPU.API": "0.1.0-localbuild20230702085104"
+          "Cosmos.Debug.Kernel": "0.1.0-localbuild20230630061732",
+          "IL2CPU.API": "0.1.0-localbuild20230630061732"
         },
         "runtime": {
           "lib/net6.0/Cosmos.Core.dll": {
@@ -41,7 +41,7 @@
           }
         }
       },
-      "Cosmos.Debug.Kernel/0.1.0-localbuild20230702085104": {
+      "Cosmos.Debug.Kernel/0.1.0-localbuild20230630061732": {
         "runtime": {
           "lib/netstandard2.0/Cosmos.Debug.Kernel.dll": {
             "assemblyVersion": "10.0.0.0",
@@ -49,12 +49,12 @@
           }
         }
       },
-      "Cosmos.HAL2/0.1.0-localbuild20230702085104": {
+      "Cosmos.HAL2/0.1.0-localbuild20230630061732": {
         "dependencies": {
-          "Cosmos.Common": "0.1.0-localbuild20230702085104",
-          "Cosmos.Core": "0.1.0-localbuild20230702085104",
-          "Cosmos.Debug.Kernel": "0.1.0-localbuild20230702085104",
-          "IL2CPU.API": "0.1.0-localbuild20230702085104"
+          "Cosmos.Common": "0.1.0-localbuild20230630061732",
+          "Cosmos.Core": "0.1.0-localbuild20230630061732",
+          "Cosmos.Debug.Kernel": "0.1.0-localbuild20230630061732",
+          "IL2CPU.API": "0.1.0-localbuild20230630061732"
         },
         "runtime": {
           "lib/net6.0/Cosmos.HAL2.dll": {
@@ -63,12 +63,12 @@
           }
         }
       },
-      "Cosmos.System2/0.1.0-localbuild20230702085104": {
+      "Cosmos.System2/0.1.0-localbuild20230630061732": {
         "dependencies": {
-          "Cosmos.Common": "0.1.0-localbuild20230702085104",
-          "Cosmos.Debug.Kernel": "0.1.0-localbuild20230702085104",
-          "Cosmos.HAL2": "0.1.0-localbuild20230702085104",
-          "IL2CPU.API": "0.1.0-localbuild20230702085104"
+          "Cosmos.Common": "0.1.0-localbuild20230630061732",
+          "Cosmos.Debug.Kernel": "0.1.0-localbuild20230630061732",
+          "Cosmos.HAL2": "0.1.0-localbuild20230630061732",
+          "IL2CPU.API": "0.1.0-localbuild20230630061732"
         },
         "runtime": {
           "lib/net6.0/Cosmos.System2.dll": {
@@ -77,7 +77,7 @@
           }
         }
       },
-      "IL2CPU.API/0.1.0-localbuild20230702085104": {
+      "IL2CPU.API/0.1.0-localbuild20230630061732": {
         "runtime": {
           "lib/netstandard2.0/IL2CPU.API.dll": {
             "assemblyVersion": "10.0.0.0",
@@ -101,54 +101,54 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Cosmos.Build/0.1.0-localbuild20230702085058": {
+    "Cosmos.Build/0.1.0-localbuild20230630061726": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BLIy6WVvMWU4FbV4RgC9ZLdyxDMOmZJN4ocChmWAbm3L4W2XL0TiF6aUjdIyVuAeXIQBfLSaXFZmUjVdw16zmQ==",
-      "path": "cosmos.build/0.1.0-localbuild20230702085058",
-      "hashPath": "cosmos.build.0.1.0-localbuild20230702085058.nupkg.sha512"
+      "sha512": "sha512-2gaJakJ7YriPyA871MVyQTe0pnLStMXp7DfLQ4e1G/eFjQ3qRCiPo7zWFm40dmg/d56xTtHG9Uc38m9zMnFAGQ==",
+      "path": "cosmos.build/0.1.0-localbuild20230630061726",
+      "hashPath": "cosmos.build.0.1.0-localbuild20230630061726.nupkg.sha512"
     },
-    "Cosmos.Common/0.1.0-localbuild20230702085104": {
+    "Cosmos.Common/0.1.0-localbuild20230630061732": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BkqlyHN5qNNZx4HbBVSg4PF12p4PPQGCEnXm8ePQ6dnby9xwz9mg9y/ICAdhQ2+3bMuSYMh4OAIowoAg/rZmUg==",
-      "path": "cosmos.common/0.1.0-localbuild20230702085104",
-      "hashPath": "cosmos.common.0.1.0-localbuild20230702085104.nupkg.sha512"
+      "sha512": "sha512-Uj38Qif0NLiCNAjm2GTWMUGkziaTR8QzvI3jJ5MfscahNrGbjK7KC7R9DrTLzsCcikmXkgsTTvgDIGig4Vydug==",
+      "path": "cosmos.common/0.1.0-localbuild20230630061732",
+      "hashPath": "cosmos.common.0.1.0-localbuild20230630061732.nupkg.sha512"
     },
-    "Cosmos.Core/0.1.0-localbuild20230702085104": {
+    "Cosmos.Core/0.1.0-localbuild20230630061732": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-C9WOBpaf7HOb9ahkyB+moCTq0aU9POwoB1GSbN0+sld5fE+gYt9EBtO8s9HUDDkH6DfmgcJe4HxSUp095zWOCQ==",
-      "path": "cosmos.core/0.1.0-localbuild20230702085104",
-      "hashPath": "cosmos.core.0.1.0-localbuild20230702085104.nupkg.sha512"
+      "sha512": "sha512-wCoFKRdQ4lCcKgGzt3Ww/+1EVuxYtzMx6XHOHskaKZolBqgDfGcmfavRkqKoBtTFF4DpT3zByIscdJlI/o2egw==",
+      "path": "cosmos.core/0.1.0-localbuild20230630061732",
+      "hashPath": "cosmos.core.0.1.0-localbuild20230630061732.nupkg.sha512"
     },
-    "Cosmos.Debug.Kernel/0.1.0-localbuild20230702085104": {
+    "Cosmos.Debug.Kernel/0.1.0-localbuild20230630061732": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-CLag7GZYNlu0vnlnIO3xvfqdy9ZlueuToVEw1ENk4J81tWLwZjpx2NYnMf70aF2vKjmB5N9yFqWghuP5acQvGA==",
-      "path": "cosmos.debug.kernel/0.1.0-localbuild20230702085104",
-      "hashPath": "cosmos.debug.kernel.0.1.0-localbuild20230702085104.nupkg.sha512"
+      "sha512": "sha512-gZGX+Znee2GHv5VbJOPQgqSjr1v9fHrRj2t3rK8FQgRXIrnsuJvvGj6ASCfTM/MWu95tdquo+XnYgFp4xEZLgg==",
+      "path": "cosmos.debug.kernel/0.1.0-localbuild20230630061732",
+      "hashPath": "cosmos.debug.kernel.0.1.0-localbuild20230630061732.nupkg.sha512"
     },
-    "Cosmos.HAL2/0.1.0-localbuild20230702085104": {
+    "Cosmos.HAL2/0.1.0-localbuild20230630061732": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-33d+LGbZUTnvXpVT0sFKmYtShPbwF0/5KzcEv38aW5izsKY2EX2rhYgFkM9gPpZX9lqqrC1ychlr7ltQo5j+ig==",
-      "path": "cosmos.hal2/0.1.0-localbuild20230702085104",
-      "hashPath": "cosmos.hal2.0.1.0-localbuild20230702085104.nupkg.sha512"
+      "sha512": "sha512-zkg0qFQ3v2LJJ9YShR9POKDJHvV/TKpy+ogZ3DeEsZXT8+d68LBiuSKL5wcBNZgCW9nROnU68mYpq//1YGfJhg==",
+      "path": "cosmos.hal2/0.1.0-localbuild20230630061732",
+      "hashPath": "cosmos.hal2.0.1.0-localbuild20230630061732.nupkg.sha512"
     },
-    "Cosmos.System2/0.1.0-localbuild20230702085104": {
+    "Cosmos.System2/0.1.0-localbuild20230630061732": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+Gk0gitxP8HgUDxFNUwCN5ZuEu7eCun/l/jwYBPueNcRw8E/Fsg9OjnlgfGm4prtZPPieKTcxiIRMgcnQIf92Q==",
-      "path": "cosmos.system2/0.1.0-localbuild20230702085104",
-      "hashPath": "cosmos.system2.0.1.0-localbuild20230702085104.nupkg.sha512"
+      "sha512": "sha512-yZEqP+YcKcg2g+CkqUwfiOMj0dRgGWNGalf/i/b0/wQnSFQznJL39mPY4afSJkNtcpbgAzQ3LtrLL2715QkPhA==",
+      "path": "cosmos.system2/0.1.0-localbuild20230630061732",
+      "hashPath": "cosmos.system2.0.1.0-localbuild20230630061732.nupkg.sha512"
     },
-    "IL2CPU.API/0.1.0-localbuild20230702085104": {
+    "IL2CPU.API/0.1.0-localbuild20230630061732": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-IEF/w1h83I/hpwmcxdwiADqMfPfvAY2pu+t/r8o3JC+wpBic89q2I8jY6VEnrz1yf+Gs9jziIZeN6gYzHg2cIg==",
-      "path": "il2cpu.api/0.1.0-localbuild20230702085104",
-      "hashPath": "il2cpu.api.0.1.0-localbuild20230702085104.nupkg.sha512"
+      "sha512": "sha512-99v+ls429cj5YHBdPs9SkvrnfMd0vASbQiRgTs9OS+/cCoxOEfgR4ciwxJ5+IQYD9YcR1WlrvzH3GHQ6ZgF21A==",
+      "path": "il2cpu.api/0.1.0-localbuild20230630061732",
+      "hashPath": "il2cpu.api.0.1.0-localbuild20230630061732.nupkg.sha512"
     },
     "PrismAPI/0.0.0.0": {
       "type": "reference",
