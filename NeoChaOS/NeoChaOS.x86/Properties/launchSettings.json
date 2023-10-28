@@ -1,0 +1,10 @@
+{
+	"profiles": {
+		"NeoChaOS.x86": {
+			"commandName": "Executable",
+			"executablePath": "dotnet",
+			"commandLineArgs": "Tools/Mosa.Tool.Launcher.dll -autostart -oMax -output-asm -output-debug -output-hash -vmware-svga NeoChaOS.x86.dll",
+			"workingDirectory": ""
+		}
+	}
+}

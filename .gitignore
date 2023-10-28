@@ -4,8 +4,6 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # User-specific files
-*.bat
-*.sh
 *.rsuser
 *.suo
 *.user
@@ -399,7 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# Other (made by MrDumbrava)
-*.html
-*.asm
-ChaOS/bin/Debug/net6.0/ISO/boot/grub/i386-pc/modinfo.sh
+# Launch Settings
+launchSettings.json
