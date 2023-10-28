@@ -1,5 +1,5 @@
 # ChaOS
-### A GUI OS made with [MOSA]([https://github.com/CosmosOS/Cosmos](https://github.com/mosa/MOSA-Project))
+### A GUI OS made with [MOSA](https://github.com/mosa/MOSA-Project)
 
 ## What is the difference between ChaOS-Classic, ChaOS 2.0 Prototype, and ChaOS 2.0?
 
