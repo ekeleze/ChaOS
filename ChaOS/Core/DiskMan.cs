@@ -2,8 +2,9 @@
 using Cosmos.System.FileSystem.VFS;
 using System;
 using System.IO;
+using PrismAPI.Graphics;
 using static ChaOS.Core;
-using static System.ConsoleColor;
+using static SVGAIIColor;
 
 namespace ChaOS
 {
@@ -33,7 +34,7 @@ namespace ChaOS
                 if (Directory.Exists(systempath))
                 {
                     if (File.Exists(Files.userfile)) Kernel.username = File.ReadAllText(Files.userfile);
-                    if (File.Exists(Files.colorfile)) SetScreenColor((ConsoleColor)File.ReadAllBytes(Files.colorfile)[0], (ConsoleColor)File.ReadAllBytes(Files.colorfile)[1], false);
+                    //if (File.Exists(Files.colorfile)) SetScreenColor((Color)File.ReadAllBytes(Files.colorfile)[0], (ConsoleColor)File.ReadAllBytes(Files.colorfile)[1], false);
                 }
                 else
                 {

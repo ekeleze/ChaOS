@@ -4,18 +4,18 @@
     <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
     <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
     <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
-    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">/home/ekeleze/.nuget/packages/</NuGetPackageRoot>
-    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">/home/ekeleze/.nuget/packages/</NuGetPackageFolders>
+    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\ekeleze\.nuget\packages\</NuGetPackageFolders>
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
-    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.5.0</NuGetToolVersion>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.6.0</NuGetToolVersion>
   </PropertyGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <SourceRoot Include="/home/ekeleze/.nuget/packages/" />
+    <SourceRoot Include="C:\Users\ekeleze\.nuget\packages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)cosmos.build/0.1.0-localbuild/build/Cosmos.Build.props" Condition="Exists('$(NuGetPackageRoot)cosmos.build/0.1.0-localbuild/build/Cosmos.Build.props')" />
+    <Import Project="$(NuGetPackageRoot)cosmos.build\0.1.0-localbuild20231212040741\build\Cosmos.Build.props" Condition="Exists('$(NuGetPackageRoot)cosmos.build\0.1.0-localbuild20231212040741\build\Cosmos.Build.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgCosmos_Build Condition=" '$(PkgCosmos_Build)' == '' ">/home/ekeleze/.nuget/packages/cosmos.build/0.1.0-localbuild</PkgCosmos_Build>
+    <PkgCosmos_Build Condition=" '$(PkgCosmos_Build)' == '' ">C:\Users\ekeleze\.nuget\packages\cosmos.build\0.1.0-localbuild20231212040741</PkgCosmos_Build>
   </PropertyGroup>
 </Project>

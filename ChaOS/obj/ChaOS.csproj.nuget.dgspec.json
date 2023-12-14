@@ -1,26 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "/home/ekeleze/Documents/GitHub/ChaOS/ChaOS/ChaOS.csproj": {}
+    "C:\\Users\\ekeleze\\Documents\\GitKraken\\ChaOS\\ChaOS\\ChaOS.csproj": {}
   },
   "projects": {
-    "/home/ekeleze/Documents/GitHub/ChaOS/ChaOS/ChaOS.csproj": {
+    "C:\\Users\\ekeleze\\Documents\\GitKraken\\ChaOS\\ChaOS\\ChaOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/ekeleze/Documents/GitHub/ChaOS/ChaOS/ChaOS.csproj",
+        "projectUniqueName": "C:\\Users\\ekeleze\\Documents\\GitKraken\\ChaOS\\ChaOS\\ChaOS.csproj",
         "projectName": "ChaOS",
-        "projectPath": "/home/ekeleze/Documents/GitHub/ChaOS/ChaOS/ChaOS.csproj",
-        "packagesPath": "/home/ekeleze/.nuget/packages/",
-        "outputPath": "/home/ekeleze/Documents/GitHub/ChaOS/ChaOS/obj/",
+        "projectPath": "C:\\Users\\ekeleze\\Documents\\GitKraken\\ChaOS\\ChaOS\\ChaOS.csproj",
+        "packagesPath": "C:\\Users\\ekeleze\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ekeleze\\Documents\\GitKraken\\ChaOS\\ChaOS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/ekeleze/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ekeleze\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "/opt/cosmos/Packages/": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\ekeleze\\AppData\\Roaming\\Cosmos User Kit\\packages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -53,12 +55,20 @@
                 "NU1604"
               ]
             },
+            "Cosmos.Plugs": {
+              "target": "Package",
+              "version": "[0.1.0-localbuild20231212040747, )"
+            },
             "Cosmos.System2": {
               "target": "Package",
               "version": "[0.0.0-*, )",
               "noWarn": [
                 "NU1604"
               ]
+            },
+            "PrismAPI": {
+              "target": "Package",
+              "version": "[1.0.3, )"
             }
           },
           "imports": [
@@ -72,22 +82,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.14, 6.0.14]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.14, 6.0.14]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.103/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
