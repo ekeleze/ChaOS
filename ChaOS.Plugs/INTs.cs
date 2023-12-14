@@ -7,7 +7,10 @@ internal class INTs
 {
     public static void HandleException(uint eip, string desc, string name, ref IRQContext context, uint lastKnownAddressValue = 0)
     {
-        string Message = "STOP: 0x" + eip + " " + desc + " at 0x" + lastKnownAddressValue;
+        ChaOS.Kernel.Screen.IsEnabled = false;
+
+        string Message = "STOP: 0x" + eip.ToString("X") + " " + desc + " at 0x" + lastKnownAddressValue.ToString("X");
+
         Console.BackgroundColor = Blue; Console.ForegroundColor = White;
         Console.Clear();
         Console.CursorTop = 10; Console.WriteLine("              ChaOS has hit a brick wall and died in the wreckage!\n");

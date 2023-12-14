@@ -1,26 +1,26 @@
 {
   "version": 2,
-  "dgSpecHash": "3BNnT6pwpT0spGLJKWnPMh96qlxs3JV46ms1Yk2lL+FoHUPflTkw2oWm7Qf7a42AjNZbSpaSmmcYzyXaCq17ZA==",
+  "dgSpecHash": "QOR24KwWzQw999JO7tCSmvXGIBRwdi3ug1e3i53fa7+pBiZVjXaZ8YiJ1w4lWg3wURnioTf+GTKh4b05VgpbKQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ekeleze\\Documents\\GitKraken\\ChaOS\\ChaOS\\ChaOS.csproj",
+  "projectFilePath": "C:\\Users\\Eric\\Documents\\GitHub\\ChaOS\\ChaOS\\ChaOS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ekeleze\\.nuget\\packages\\cosmos.build\\0.1.0-localbuild20231212040741\\cosmos.build.0.1.0-localbuild20231212040741.nupkg.sha512",
-    "C:\\Users\\ekeleze\\.nuget\\packages\\cosmos.common\\0.1.0-localbuild20231212040747\\cosmos.common.0.1.0-localbuild20231212040747.nupkg.sha512",
-    "C:\\Users\\ekeleze\\.nuget\\packages\\cosmos.core\\0.1.0-localbuild20231212040747\\cosmos.core.0.1.0-localbuild20231212040747.nupkg.sha512",
-    "C:\\Users\\ekeleze\\.nuget\\packages\\cosmos.debug.kernel\\0.1.0-localbuild20231212040747\\cosmos.debug.kernel.0.1.0-localbuild20231212040747.nupkg.sha512",
-    "C:\\Users\\ekeleze\\.nuget\\packages\\cosmos.hal2\\0.1.0-localbuild20231212040747\\cosmos.hal2.0.1.0-localbuild20231212040747.nupkg.sha512",
-    "C:\\Users\\ekeleze\\.nuget\\packages\\cosmos.plugs\\0.1.0-localbuild20231212040747\\cosmos.plugs.0.1.0-localbuild20231212040747.nupkg.sha512",
-    "C:\\Users\\ekeleze\\.nuget\\packages\\cosmos.system2\\0.1.0-localbuild20231212040747\\cosmos.system2.0.1.0-localbuild20231212040747.nupkg.sha512",
-    "C:\\Users\\ekeleze\\.nuget\\packages\\il2cpu.api\\0.1.0-localbuild20231212040747\\il2cpu.api.0.1.0-localbuild20231212040747.nupkg.sha512",
-    "C:\\Users\\ekeleze\\.nuget\\packages\\prismapi\\1.0.3\\prismapi.1.0.3.nupkg.sha512",
-    "C:\\Users\\ekeleze\\.nuget\\packages\\tinymath\\1.0.1\\tinymath.1.0.1.nupkg.sha512"
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.build\\0.1.0-localbuild20231129033549\\cosmos.build.0.1.0-localbuild20231129033549.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.common\\0.1.0-localbuild20231129033555\\cosmos.common.0.1.0-localbuild20231129033555.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.core\\0.1.0-localbuild20231129033555\\cosmos.core.0.1.0-localbuild20231129033555.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.debug.kernel\\0.1.0-localbuild20231129033555\\cosmos.debug.kernel.0.1.0-localbuild20231129033555.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.hal2\\0.1.0-localbuild20231129033555\\cosmos.hal2.0.1.0-localbuild20231129033555.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.plugs\\0.1.0-localbuild20231129033555\\cosmos.plugs.0.1.0-localbuild20231129033555.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\cosmos.system2\\0.1.0-localbuild20231129033555\\cosmos.system2.0.1.0-localbuild20231129033555.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\il2cpu.api\\0.1.0-localbuild20231129033555\\il2cpu.api.0.1.0-localbuild20231129033555.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\prismapi\\1.0.3\\prismapi.1.0.3.nupkg.sha512",
+    "C:\\Users\\Eric\\.nuget\\packages\\tinymath\\1.0.1\\tinymath.1.0.1.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1603",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "PrismAPI 1.0.3 depends on Cosmos.HAL2 (>= 0.1.0-localbuild) but Cosmos.HAL2 0.1.0-localbuild was not found. An approximate best match of Cosmos.HAL2 0.1.0-localbuild20231212040747 was resolved.",
+      "message": "PrismAPI 1.0.3 depende de Cosmos.HAL2 (>= 0.1.0-localbuild), pero no se encontró Cosmos.HAL2 0.1.0-localbuild. Se resolvió una mejor coincidencia aproximada de Cosmos.HAL2 0.1.0-localbuild20231129033555.",
       "libraryId": "Cosmos.HAL2",
       "targetGraphs": [
         "net6.0"

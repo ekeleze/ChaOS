@@ -572,6 +572,7 @@ namespace ChaOS
             catch (Exception ex)
             {
                 Crash(ex);
+                return; // remove if it didn't do anything
             }
         }
 

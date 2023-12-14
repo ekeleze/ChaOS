@@ -1,9 +1,8 @@
 ﻿using Cosmos.System.FileSystem;
 using Cosmos.System.FileSystem.VFS;
-using System;
 using System.IO;
-using PrismAPI.Graphics;
 using static ChaOS.Core;
+using static ChaOS.Kernel;
 using static SVGAIIColor;
 
 namespace ChaOS
@@ -59,7 +58,7 @@ namespace ChaOS
             clog("Saving settings to disk...", Gray);
             Directory.CreateDirectory(systempath);
             File.WriteAllText(Files.userfile, Kernel.username);
-            File.WriteAllBytes(Files.colorfile, new byte[] { (byte)Console.BackgroundColor, (byte)Console.ForegroundColor });
+            //File.WriteAllBytes(Files.colorfile, new byte[] { (byte)Console.BackgroundColor, (byte)Console.ForegroundColor });
         }
     }
 }

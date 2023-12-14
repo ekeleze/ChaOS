@@ -44,7 +44,7 @@ public class SVGAIITerminal
 
     public void Clear()
     {
-        Contents.Clear();
+        Contents.Clear(BackgroundColor);
         CursorX = 0;
         CursorY = 0;
     }

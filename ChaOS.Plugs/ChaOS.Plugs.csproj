@@ -10,5 +10,9 @@
     <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
     <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
 	</ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\ChaOS\ChaOS.csproj" />
+  </ItemGroup>
 
 </Project>
