@@ -18,7 +18,7 @@ namespace ChaOS
         public static bool devMode = false;
         public static bool hasUpdatedConsoleSize = false;
 
-        public static ushort Width = 800, Height = 600; // 1200, 900
+        public static ushort Width = 800, Height = 600;
 
         [ManifestResourceStream(ResourceName = "ChaOS.Resources.Font_1x.btf")]
         static byte[] font_1x_raw;
@@ -79,9 +79,8 @@ namespace ChaOS
 
                     if (key.Key == ConsoleKey.Escape)
                     {
-                        // 1200, 900
-                        Width = 1200;
-                        Height = 900;
+                        Width = 1280;
+                        Height = 960;
                         
                         UpdateResolution();
                         devMode = true;
