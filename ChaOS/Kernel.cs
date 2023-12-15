@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using Sys = Cosmos.System;
 using Cosmos.System.FileSystem;
 using Cosmos.System.FileSystem.VFS;
@@ -15,6 +14,15 @@ namespace ChaOS
 {
     public class Kernel : Sys.Kernel
     {
+        public const string MajorVer = "1"; 
+        public const string MinorVer = "2";
+        public const string FixVer = "0";
+        public const string PreVer = "Prerelease 1";
+        
+        public const string ver = MajorVer + "." + MinorVer + "." + FixVer + " " + PreVer;
+        
+        
+        
         public static bool devMode = false;
         public static bool hasUpdatedConsoleSize = false;
 
@@ -24,11 +32,12 @@ namespace ChaOS
         static byte[] font_1x_raw;
 
         public static Font Font_1x = new Font(font_1x_raw, 16);
+        
+        public static string us = String.Empty;
 
         public static Display Screen;
         public static SVGAIITerminal Console;
-
-        public const string ver = "PT-2";
+        
         public const string copyright = "Copyright (c) 2023 ekeleze. All Rights Reserved.";
 
         public static string username = "usr";
@@ -60,7 +69,7 @@ namespace ChaOS
 
                 log();
                 log("ChaOS Version info:");
-                log("   ChaOS Version 2.0");
+                log("   ChaOS " + ver);
                 log();
 
                 log("Here are some planned features:");
@@ -113,36 +122,27 @@ namespace ChaOS
 
                 if (input.StartsWith("help"))
                 {
-                    var us = string.Empty;
-                    var color = Console.ForegroundColor;
-                    if (!disk)
-                    {
-                        us = " (unavailable)";
-                        color = Gray;
-                    }
-
                     clog("Functions:", DarkGreen);
-                    log(" help - Shows all functions, do \"help (page)\" for more commands");
-                    log(" credits - Shows all of the wonderful people that make ChaOS work");
-                    log(" cls/clear - Clears the screen");
-                    log(" time - Tells you the time");
-                    log(" echo - Echoes what you say");
-                    log(" calc - Allows you to do simple math");
-                    log(" sysinfo - Gives info about the system");
-                    log(" username - Username related functions");
-                    log(" color - Allows you to change the color scheme");
-                    log(" sd/shutdown - Shuts down ChaOS");
-                    log(" rb/reboot - Reboots the system");
-                    clog(" diskinfo - Gives info about the disk" + us, color);
-                    clog(" cd - Opens directory" + us, color);
-                    clog(" cd.. - Opens last directory" + us, color);
-                    clog(" dir - Lists files in the current directory" + us, color);
-                    clog(" mkdir - Creates a directory" + us, color);
-                    clog(" mkfile - Creates a file" + us, color);
-                    clog(" deldir - Deletes a directory" + us, color);
-                    clog(" delfile - Deletes a file" + us, color);
-                    clog(" lb - Relabels the disk" + us, color);
-                    clog(" notepad - Launches MIV (Minimalistic Vi)" + us + "\n", color);
+                    log(" help - Shows all functions, do \"help (page)\" for more commands\n" + 
+                        " cls/clear - Clears the screen\n" + 
+                        " time - Tells you the time\n" + 
+                        " echo - Echoes what you say\n" + 
+                        " calc - Allows you to do simple math\n" + 
+                        " sysinfo - Gives info about the system\n" + 
+                        " username - Username related functions\n" + 
+                        " color - Allows you to change the color scheme\n" + 
+                        " sd/shutdown - Shuts down ChaOS\n" + 
+                        " rb/reboot - Reboots the system\n" + 
+                        " diskinfo - Gives info about the disk" + us + "\n" +
+                        " cd - Opens directory" + us + "\n" +
+                        " cd.. - Opens last directory" + us + "\n" +
+                        " dir - Lists files in the current directory" + us + "\n" + 
+                        " mkdir - Creates a directory" + us + "\n" +
+                        " mkfile - Creates a file" + us + "\n" +
+                        " deldir - Deletes a directory" + us + "\n" +
+                        " delfile - Deletes a file" + us + "\n" +
+                        " lb - Relabels the disk" + us + "\n" +
+                        " notepad - Launches MIV (Minimalistic Vi)" + us + "\n");
                 }
 
                 #region Username functions
@@ -226,23 +226,6 @@ namespace ChaOS
 
                 #endregion
 
-                else if (input == "credits")
-                {
-                    Console.SetCursorPosition(0, 7);
-                    cwrite(
-                        "  ______   __                   ______    ______  \n /      \\ |  \\                 /      \\  /      \\ \n|  $$$$$$\\| $$____    ______  |  $$$$$$\\|  $$$$$$\\\n| $$   \\$$| $$    \\  |      \\ | $$  | $$| $$___\\$$\n| $$      | $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$    \\ \n| $$   __ | $$  | $$ /      $$| $$  | $$ _\\$$$$$$\\\n| $$__/  \\| $$  | $$|  $$$$$$$| $$__/ $$|  \\__| $$\n \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$ \\$$    $$\n  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$   \\$$$$$$ ",
-                        DarkGreen);
-                    Console.SetCursorPosition(60, 9);
-                    cwrite(ver, Yellow);
-                    Console.SetCursorPosition(62, 11);
-                    cwrite("Credits", Yellow);
-                    Console.SetCursorPosition(57, 12);
-                    write("ekeleze - Creator");
-                    Console.SetCursorPosition(53, 13);
-                    write("MrDumbrava - Contributor");
-                    Console.SetCursorPosition(0, 24);
-                }
-
                 else if (input == "clear" || input == "cls")
                     Console.Clear();
 
@@ -273,28 +256,7 @@ namespace ChaOS
 
                 else if (input.StartsWith("calc"))
                 {
-                    int result = 0;
-                    input = input.Remove(0, 5);
-                    input = input.Trim();
-                    if (input.Contains('+'))
-                        result = Convert.ToInt32(input.Split('+')[0]) + Convert.ToInt32(input.Split('+')[1]);
-                    else if (input.Contains('-'))
-                        result = Convert.ToInt32(input.Split('-')[0]) - Convert.ToInt32(input.Split('-')[1]);
-                    else if (input.Contains('*'))
-                        result = Convert.ToInt32(input.Split('*')[0]) * Convert.ToInt32(input.Split('*')[1]);
-                    else if (input.Contains('/'))
-                        result = Convert.ToInt32(input.Split('/')[0]) / Convert.ToInt32(input.Split('/')[1]);
-                    else if (input.EndsWith("calc"))
-                    {
-                        clog("Calculator subfunctions", DarkGreen);
-                        log(" + - Adds numbers");
-                        log(" - - Subtracts numbers");
-                        log(" * - Multiplies numbers");
-                        log(" / - Divides numbers");
-                        log("\nSyntax: calc (num)(func)(num)\n");
-                    }
-
-                    if (result != 0) clog("Result: " + result + "\n", Gray);
+                    log(Apps.Calc.Single(inputBeforeLower.Replace("calc ", "")));
                 }
 
                 else if (input == "sysinfo")

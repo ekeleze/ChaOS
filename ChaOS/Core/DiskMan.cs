@@ -22,8 +22,15 @@ namespace ChaOS
         public static void InitFS(CosmosVFS fs)
         {
             VFSManager.RegisterVFS(fs);
-            try { Directory.GetFiles(rootdir); }
-            catch { disk = false; }
+            try
+            {
+                Directory.GetFiles(rootdir);
+            }
+            catch
+            {
+                disk = false;
+                us = " (Unavailable)";
+            }
         }
 
         public static void LoadSettings()
